@@ -16,6 +16,7 @@ import org.semanticweb.ontop.model.OBDADataSource;
 import org.semanticweb.ontop.model.OBDAModel;
 import org.semanticweb.ontop.model.Predicate;
 import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
+import org.semanticweb.ontop.owlrefplatform.core.QuestConstants;
 import org.semanticweb.ontop.sql.DBMetadata;
 import org.semanticweb.ontop.sql.JDBCConnectionManager;
 import org.semanticweb.ontop.utils.DatalogDependencyGraphGenerator;
@@ -23,6 +24,7 @@ import org.semanticweb.ontop.utils.Mapping2DatalogConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.ontop.owlrefplatform.core.unfolding.DatalogUnfolder;
 
 import java.io.File;
 import java.io.IOException;

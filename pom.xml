@@ -25,9 +25,16 @@
             <artifactId>clipper-cli</artifactId>
             <version>${clipper.version}</version>
         </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ontop-obdalib-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ontop-reformulation-core</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
