@@ -15,6 +15,7 @@ import org.semanticweb.ontop.model.DatalogProgram;
 import org.semanticweb.ontop.model.OBDADataFactory;
 import org.semanticweb.ontop.model.OBDADataSource;
 import org.semanticweb.ontop.model.OBDAException;
+import org.semanticweb.ontop.model.OBDAMappingAxiom;
 import org.semanticweb.ontop.model.OBDAModel;
 import org.semanticweb.ontop.model.Predicate;
 import org.semanticweb.ontop.model.Term;
@@ -44,7 +45,6 @@ public class Ontology2MappingCompilation {
 
     static OBDADataFactory fac = OBDADataFactoryImpl.getInstance();
 
-    static Predicate ANS = fac.getPredicate("ans", 0);
 
     public static void compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException {
         QAHornSHIQ qaHornSHIQ = new QAHornSHIQ();
@@ -139,14 +139,14 @@ public class Ontology2MappingCompilation {
 
             DatalogProgram unfolding = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
 
-            DatalogProgram programForSourceQuery = removeFunctionsInHead(unfolding);
+            DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata);
+            OBDAMappingAxiom mappingAxiom = datalogToMappingAxiomTranslater.translate(unfolding.getRules().get(0));
 
-            SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, new SQL99DialectAdapter(), false);
+            System.out.println("---------------------------------------------------------------------");
 
-            String sourceQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, ImmutableList.of("x"));
+            System.out.println(mappingAxiom);
 
-            System.out.println(sourceQuery);
-
+            System.out.println("---------------------------------------------------------------------");
 
             newMappings = unfolding.getRules();
             mappingProgram.addAll(newMappings);
@@ -166,21 +166,5 @@ public class Ontology2MappingCompilation {
         return headPredicates;
     }
 
-    /*
-     * http://it.unibz.krdb/obda/test/simple#A(URI("http://it.unibz.krdb/obda/test/simple#{}",t1_1)) :- TABLE2(t1_1,t2_1,t3_1), LT(t1_1,5), TABLE2(t1_1,t2_2,t3_2), LT(t1_1,3), TABLE2(t1_1,t2_3,t3_3), GT(t1_1,1)
-     * ->
-     * ans(t1_1) :- TABLE2(t1_1,t2_1,t3_1), LT(t1_1,5), TABLE2(t1_1,t2_2,t3_2), LT(t1_1,3), TABLE2(t1_1,t2_3,t3_3), GT(t1_1,1)
-     */
-    public static DatalogProgram removeFunctionsInHead(DatalogProgram p){
-        List<CQIE> newRules = Lists.newArrayList();
 
-        for(CQIE rule : p.getRules()){
-            List<Variable> headVariables = QueryUtils.getVariablesInAtom(rule.getHead());
-            newRules.add( fac.getCQIE(fac.getFunction(ANS, (List<Term>) (List<?>) headVariables), rule.getBody()));
-        }
-
-        return fac.getDatalogProgram(newRules);
-
-
-    }
 }
