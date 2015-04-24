@@ -2,6 +2,7 @@ package org.semanticweb.ontop.clipper;
 
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -33,7 +34,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class OntologyMappingCompilation {
+public class Ontology2MappingCompilation {
 
     public static void compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException {
         QAHornSHIQ qaHornSHIQ = new QAHornSHIQ();
@@ -41,8 +42,6 @@ public class OntologyMappingCompilation {
 
         OWLOntology ontology = OWLManager.createOWLOntologyManager()
                 .loadOntologyFromOntologyDocument(new File(ontologyFile));
-
-
 
         qaHornSHIQ.setOntologies(ImmutableSet.of(ontology));
 
@@ -91,8 +90,15 @@ public class OntologyMappingCompilation {
         System.out.println("Generated mappings");
         System.out.println("------------------");
 
+
+
+
         List<CQIE> newMappings = Lists.newArrayList();
 
+
+        //npdv:Wellbore
+
+        //predicatesToDefine = ImmutableList.of(fac.getClassPredicate("http://sws.ifi.uio.no/vocab/npd-v2#Wellbore"));
 
         for(Predicate predicate : predicatesToDefine) {
 
@@ -107,14 +113,20 @@ public class OntologyMappingCompilation {
             }
 
             DatalogProgram queryProgram = fac.getDatalogProgram(cqies);
-            queryProgram.appendRule(mappingProgram);
+
+            DatalogProgram queryAndMappingProgram = fac.getDatalogProgram();
+            queryAndMappingProgram.appendRule(queryProgram.getRules());
+            queryAndMappingProgram.appendRule(mappingProgram);
+
+            //queryProgram.appendRule(mappingProgram);
 
 
-            DatalogUnfolder unfolder = new DatalogUnfolder(ontopProgram);
+            DatalogUnfolder unfolder = new DatalogUnfolder(fac.getDatalogProgram(mappingProgram));
 
             Multimap<Predicate, Integer> multiTypedFunctionSymbolIndex = ArrayListMultimap.create();
 
-            DatalogProgram unfolding = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, false, multiTypedFunctionSymbolIndex);
+            //DatalogProgram unfolding = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, false, multiTypedFunctionSymbolIndex);
+            DatalogProgram unfolding = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
 
             newMappings = unfolding.getRules();
             mappingProgram.addAll(newMappings);

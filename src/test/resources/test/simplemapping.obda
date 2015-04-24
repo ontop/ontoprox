@@ -1,0 +1,25 @@
+[PrefixDeclaration]
+:		http://it.unibz.krdb/obda/test/simple#
+quest:		http://obda.org/quest#
+
+[SourceDeclaration]
+sourceUri	h2
+connectionUrl	jdbc:h2:mem:questjunitdb
+username	sa
+password	
+driverClass	org.h2.Driver
+
+[MappingDeclaration] @collection [[
+mappingId	mapping-A1
+target		:{id} a :A1 . 
+source		SELECT id FROM TABLE2 WHERE id > 1
+
+mappingId	mapping-A2
+target		:{id} a :A2 . 
+source		SELECT id FROM TABLE2 WHERE id < 3
+
+mappingId	mapping-A3
+target		:{id} a :A3 . 
+source		SELECT id FROM TABLE2 WHERE id < 5
+]]
+
