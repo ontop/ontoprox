@@ -21,5 +21,9 @@ source		SELECT id FROM TABLE2 WHERE id < 3
 mappingId	mapping-A3
 target		:{id} a :A3 . 
 source		SELECT id FROM TABLE2 WHERE id < 5
+
+mappingId	mapping-P
+target		:{id} :P :{attr1} . 
+source		SELECT * FROM TABLE2
 ]]
 

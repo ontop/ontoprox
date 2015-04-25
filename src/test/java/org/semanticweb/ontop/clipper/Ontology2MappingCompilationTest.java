@@ -47,6 +47,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.*;
 
 /***
  * A simple test that check if the system is able to handle Mappings for
@@ -70,11 +71,10 @@ public class Ontology2MappingCompilationTest {
 
 	final String owlfile = "src/test/resources/test/simplemapping.owl";
 	final String obdafile = "src/test/resources/test/simplemapping.obda";
+    final String newobdafile = "src/test/resources/test/new-simplemapping.obda";
 
 	@Before
 	public void setUp() throws Exception {
-		
-		
 		/*
 		 * Initializing and H2 database with the stock exchange data
 		 */
@@ -139,15 +139,17 @@ public class Ontology2MappingCompilationTest {
 	}
 
 	private void runTests(Properties p) throws Exception {
+		OBDAModel newModel = compileHSHIQtoMappings(owlfile, obdafile);
 
+        ModelIOManager modelIOManager = new ModelIOManager(newModel);
 
-		Ontology2MappingCompilation.compileHSHIQtoMappings(owlfile, obdafile);
+        modelIOManager.save(newobdafile);
 	}
 
 
 
 	@Test
-	public void testViEqSig() throws Exception {
+	public void test() throws Exception {
 
 		QuestPreferences p = new QuestPreferences();
 		p.setCurrentValueOf(QuestPreferences.ABOX_MODE, QuestConstants.VIRTUAL);

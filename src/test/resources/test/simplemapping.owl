@@ -90,6 +90,12 @@
     
 
 
+    <!-- http://it.unibz.krdb/obda/test/simple#B -->
+
+    <owl:Class rdf:about="http://it.unibz.krdb/obda/test/simple#B"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -112,6 +118,11 @@
             <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A2"/>
         </owl:intersectionOf>
     </owl:Class>
+    <owl:Restriction>
+        <rdfs:subClassOf rdf:resource="http://it.unibz.krdb/obda/test/simple#B"/>
+        <owl:onProperty rdf:resource="http://it.unibz.krdb/obda/test/simple#P"/>
+        <owl:someValuesFrom rdf:resource="http://it.unibz.krdb/obda/test/simple#A"/>
+    </owl:Restriction>
 </rdf:RDF>
 
 
