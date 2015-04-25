@@ -114,10 +114,8 @@ public class Ontology2MappingCompilationTest {
 
 	@After
 	public void tearDown() throws Exception {
-	
-			dropTables();
-			conn.close();
-		
+		dropTables();
+		conn.close();
 	}
 
 	private void dropTables() throws SQLException, IOException {
@@ -140,9 +138,7 @@ public class Ontology2MappingCompilationTest {
 
 	private void runTests(Properties p) throws Exception {
 		OBDAModel newModel = compileHSHIQtoMappings(owlfile, obdafile);
-
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
-
         modelIOManager.save(newobdafile);
 	}
 

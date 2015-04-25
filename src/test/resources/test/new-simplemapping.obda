@@ -1,9 +1,6 @@
 [PrefixDeclaration]
-owl:		http://www.w3.org/2002/07/owl#
-rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
-xsd:		http://www.w3.org/2001/XMLSchema#
+:		http://it.unibz.krdb/obda/test/simple#
 quest:		http://obda.org/quest#
-rdfs:		http://www.w3.org/2000/01/rdf-schema#
 
 [SourceDeclaration]
 sourceUri	h2
@@ -14,25 +11,25 @@ driverClass	org.h2.Driver
 
 [MappingDeclaration] @collection [[
 mappingId	mapping-A1
-target		<http://it.unibz.krdb/obda/test/simple#{id}> a <http://it.unibz.krdb/obda/test/simple#A1> . 
+target		:{id} a :A1 . 
 source		SELECT id FROM TABLE2 WHERE id > 1
 
 mappingId	mapping-A2
-target		<http://it.unibz.krdb/obda/test/simple#{id}> a <http://it.unibz.krdb/obda/test/simple#A2> . 
+target		:{id} a :A2 . 
 source		SELECT id FROM TABLE2 WHERE id < 3
 
 mappingId	mapping-A3
-target		<http://it.unibz.krdb/obda/test/simple#{id}> a <http://it.unibz.krdb/obda/test/simple#A3> . 
+target		:{id} a :A3 . 
 source		SELECT id FROM TABLE2 WHERE id < 5
 
 mappingId	mapping-P
-target		<http://it.unibz.krdb/obda/test/simple#{id}> <http://it.unibz.krdb/obda/test/simple#P> <http://it.unibz.krdb/obda/test/simple#{attr1}> . 
+target		:{id} :P :{attr1} . 
 source		SELECT * FROM TABLE2
 
-mappingId	MAPID-ea3b9ca630b740949b43f78e202b96d5
-target		<http://it.unibz.krdb/obda/test/simple#{t1_1}> a <http://it.unibz.krdb/obda/test/simple#A> . 
+mappingId	MAPID-dbc1412a0c88425e864b2c568a7c040f
+target		:{t1_1} a :A . 
 source		SELECT 
-			   "QTABLE2TMP0"."ID" AS "x"
+			   "QTABLE2TMP0"."ID" AS "t1_1"
 			 FROM 
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1"
@@ -40,10 +37,10 @@ source		SELECT
 			("QTABLE2TMP0"."ID" < 5) AND
 			("QTABLE2TMP0"."ID" > 1)
 
-mappingId	MAPID-8a2ba3253b3f447b96d49259c0207198
-target		<http://it.unibz.krdb/obda/test/simple#{t1_1}> a <http://it.unibz.krdb/obda/test/simple#A> . 
+mappingId	MAPID-4b491d9ac0dd433488b07025e5bfe264
+target		:{t1_1} a :A . 
 source		SELECT 
-			   "QTABLE2TMP0"."ID" AS "x"
+			   "QTABLE2TMP0"."ID" AS "t1_1"
 			 FROM 
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1"
@@ -51,10 +48,10 @@ source		SELECT
 			("QTABLE2TMP0"."ID" < 3) AND
 			("QTABLE2TMP0"."ID" > 1)
 
-mappingId	MAPID-0f250c61eb394658aed98c9dd0e730ae
-target		<http://it.unibz.krdb/obda/test/simple#{t1_1}> a <http://it.unibz.krdb/obda/test/simple#B> . 
+mappingId	MAPID-2f5bcddbbdf1463182ff70a5e4196c5d
+target		:{t1_1} a :B . 
 source		SELECT 
-			   "QTABLE2TMP0"."ID" AS "x"
+			   "QTABLE2TMP0"."ID" AS "t1_1"
 			 FROM 
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1",
@@ -63,10 +60,10 @@ source		SELECT
 			("QTABLE2TMP0"."ATTR1" < 5) AND
 			("QTABLE2TMP0"."ATTR1" > 1)
 
-mappingId	MAPID-78711c9f02c24de88fd638b9f2bfb0d8
-target		<http://it.unibz.krdb/obda/test/simple#{t1_1}> a <http://it.unibz.krdb/obda/test/simple#B> . 
+mappingId	MAPID-265e15291a9d4ee39d640764eceb1cce
+target		:{t1_1} a :B . 
 source		SELECT 
-			   "QTABLE2TMP0"."ID" AS "x"
+			   "QTABLE2TMP0"."ID" AS "t1_1"
 			 FROM 
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1",

@@ -134,7 +134,6 @@ public class Ontology2MappingCompilation {
 
             Collection<CQIE> cqies = dg.getRuleIndex().get(predicate);
 
-
             for(CQIE cqie: cqies) {
 
                 DatalogProgram queryProgram = DATA_FACTORY.getDatalogProgram(cqie);
@@ -177,6 +176,7 @@ public class Ontology2MappingCompilation {
 
         extenededObdaModel.addMappings(obdaDataSource.getSourceID(), obdaModel.getMappings(obdaDataSource.getSourceID()));
         extenededObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
+        extenededObdaModel.setPrefixManager(obdaModel.getPrefixManager());
 
         return extenededObdaModel;
     }

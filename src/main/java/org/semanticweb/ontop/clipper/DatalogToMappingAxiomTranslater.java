@@ -39,7 +39,18 @@ public class DatalogToMappingAxiomTranslater {
 
         SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, new SQL99DialectAdapter(), false);
 
-        String sourceQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, ImmutableList.of("x"));
+        List<Term> headTerms = programForSourceQuery.getRules().get(0).getHead().getTerms();
+
+        List<String> signature = Lists.newArrayList();
+
+        for (Term headTerm: headTerms){
+            if (headTerm instanceof  Variable){
+                signature.add(((Variable) headTerm).getName());
+            }
+        }
+
+
+        String sourceQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, signature);
 
         CQIE targetQuery = generateTargetQuery(cqie);
 
