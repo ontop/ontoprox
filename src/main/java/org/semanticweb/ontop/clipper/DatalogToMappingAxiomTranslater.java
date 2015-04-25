@@ -13,6 +13,8 @@ import org.semanticweb.ontop.model.Term;
 import org.semanticweb.ontop.model.Variable;
 import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQL99DialectAdapter;
+import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLAdapterFactory;
+import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
 import org.semanticweb.ontop.sql.DBMetadata;
 import org.semanticweb.ontop.utils.QueryUtils;
 
@@ -37,7 +39,9 @@ public class DatalogToMappingAxiomTranslater {
     public OBDAMappingAxiom translate(CQIE cqie) throws OBDAException {
         DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram( removeFunctionsInHead(cqie));
 
-        SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, new SQL99DialectAdapter(), false);
+        SQLDialectAdapter sqladapter = SQLAdapterFactory.getSQLDialectAdapter(dbMetadata.getDriverName());
+
+        SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, sqladapter, false);
 
         List<Term> headTerms = programForSourceQuery.getRules().get(0).getHead().getTerms();
 

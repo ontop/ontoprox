@@ -20,6 +20,7 @@ import org.semanticweb.ontop.model.OBDAMappingAxiom;
 import org.semanticweb.ontop.model.OBDAModel;
 import org.semanticweb.ontop.model.Predicate;
 import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
+import org.semanticweb.ontop.model.impl.RDBMSourceParameterConstants;
 import org.semanticweb.ontop.owlrefplatform.core.QuestConstants;
 import org.semanticweb.ontop.renderer.SourceQueryRenderer;
 import org.semanticweb.ontop.renderer.TargetQueryRenderer;
@@ -103,6 +104,8 @@ public class Ontology2MappingCompilation {
         DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource);
         Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter(dbMetadata);
 
+
+
         /**
          * convert the mappings into a set of rules
          */
@@ -116,7 +119,7 @@ public class Ontology2MappingCompilation {
         List<Predicate> predicatesToDefine =  Lists.newArrayList(predicatesInBottomUp);
 
 
-        List<CQIE> newMappings = Lists.newArrayList();
+
 
 
         List<OBDAMappingAxiom> newObdaMappingAxioms = Lists.newArrayList();
@@ -149,12 +152,15 @@ public class Ontology2MappingCompilation {
                 /**
                  * Unfold the rules for the predicate w.r.t. the input mappings
                  */
-                DatalogProgram unfolding = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
+                DatalogProgram unfoldedQuery = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
 
+                /**
+                 * Unfolded query can already be translated to OBDA Mapping
+                 */
                 DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata);
-                List<OBDAMappingAxiom> obdaMappingAxioms = datalogToMappingAxiomTranslater.translate(unfolding.getRules());
+                List<OBDAMappingAxiom> obdaMappingAxioms = datalogToMappingAxiomTranslater.translate(unfoldedQuery.getRules());
 
-                newMappings = unfolding.getRules();
+                List<CQIE> newMappings = unfoldedQuery.getRules();
                 mappingProgram.addAll(newMappings);
 
                 // System.out.println(predicate);
