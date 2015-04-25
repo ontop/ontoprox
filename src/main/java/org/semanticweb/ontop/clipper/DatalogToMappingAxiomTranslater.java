@@ -16,6 +16,7 @@ import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQL99DialectAda
 import org.semanticweb.ontop.sql.DBMetadata;
 import org.semanticweb.ontop.utils.QueryUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,7 +45,15 @@ public class DatalogToMappingAxiomTranslater {
 
         OBDAMappingAxiom mappingAxiom = DATA_FACTORY.getRDBMSMappingAxiom(sourceQuery, targetQuery);
         return mappingAxiom;
+    }
 
+    public List<OBDAMappingAxiom> translate(List<CQIE> rules) throws OBDAException {
+        List<OBDAMappingAxiom> obdaMappingAxioms = Lists.newArrayList();
+        for (CQIE rule : rules) {
+            obdaMappingAxioms.add(translate(rule));
+        }
+
+        return obdaMappingAxioms;
     }
 
 

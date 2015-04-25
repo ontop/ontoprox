@@ -102,8 +102,14 @@
         <rdfs:subClassOf rdf:resource="http://it.unibz.krdb/obda/test/simple#A"/>
         <owl:intersectionOf rdf:parseType="Collection">
             <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A1"/>
-            <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A2"/>
             <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A3"/>
+        </owl:intersectionOf>
+    </owl:Class>
+    <owl:Class>
+        <rdfs:subClassOf rdf:resource="http://it.unibz.krdb/obda/test/simple#A"/>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A1"/>
+            <rdf:Description rdf:about="http://it.unibz.krdb/obda/test/simple#A2"/>
         </owl:intersectionOf>
     </owl:Class>
 </rdf:RDF>
