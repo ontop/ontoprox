@@ -118,12 +118,9 @@ public class Ontology2MappingCompilation {
 
         List<Predicate> predicatesToDefine =  Lists.newArrayList(predicatesInBottomUp);
 
-
-
-
-
         List<OBDAMappingAxiom> newObdaMappingAxioms = Lists.newArrayList();
 
+        int i = 0;
         /*
          * Construct new mapping following the bottom-up order
          */
@@ -132,6 +129,8 @@ public class Ontology2MappingCompilation {
 //            if(predicate.getName().equals("http://sws.ifi.uio.no/vocab/npd-v2#ProductionLicenceWorkObligation")){
 //                System.out.println("catch it!");
 //            }
+            log.debug("compute mapping for {} ({}/{})", new Object[]{ predicate, i, predicatesToDefine.size()});
+            i++;
 
             List<OBDAMappingAxiom> newObdaMappingAxiomsForAPredicate = Lists.newArrayList();
 
