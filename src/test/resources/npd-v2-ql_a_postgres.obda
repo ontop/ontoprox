@@ -20,7 +20,7 @@ diskosv:		http://sws.ifi.uio.no/vocab/diskos#
 
 [SourceDeclaration]
 sourceUri	x
-connectionUrl	jdbc:postgresql://obdalin3.inf.unibz.it/npd_no_spatial
+connectionUrl	jdbc:postgresql://localhost/npd
 username	postgres
 password	postgres
 driverClass	org.postgresql.Driver

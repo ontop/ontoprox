@@ -41,6 +41,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 
 public class Ontology2MappingCompilation {
@@ -113,12 +114,13 @@ public class Ontology2MappingCompilation {
 
         //Joiner.on("\n").appendTo(System.out, mappingProgram);
 
-
-        List<Predicate> predicatesDefinedByMapping = collectHeadPredicates(mappingProgram);
-
         List<Predicate> predicatesToDefine =  Lists.newArrayList(predicatesInBottomUp);
 
         List<OBDAMappingAxiom> newObdaMappingAxioms = Lists.newArrayList();
+
+
+        Map<Predicate, List<Integer>> pkeys = DBMetadata.extractPKs(dbMetadata, mappingProgram);
+
 
         int i = 0;
         /*
@@ -144,7 +146,9 @@ public class Ontology2MappingCompilation {
                 //queryAndMappingProgram.appendRule(queryProgram.getRules());
                 queryAndMappingProgram.appendRule(mappingProgram);
 
-                DatalogUnfolder unfolder = new DatalogUnfolder(DATA_FACTORY.getDatalogProgram(mappingProgram));
+
+
+                DatalogUnfolder unfolder = new DatalogUnfolder(DATA_FACTORY.getDatalogProgram(mappingProgram), pkeys);
 
                 Multimap<Predicate, Integer> multiTypedFunctionSymbolIndex = ArrayListMultimap.create();
 
