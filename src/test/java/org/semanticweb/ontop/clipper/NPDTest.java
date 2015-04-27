@@ -37,6 +37,11 @@ public class NPDTest {
     String extendedObdaFile = "src/test/resources/extended-npd-v2-ql_a_postgres.obda";
     String extendedOntologyFile = "src/test/resources/extended-npd-v2-ql_a_postgres.owl";
 
+    @Test
+    public void test(){
+
+    }
+
 
     @Test
     public  void testCompile() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
