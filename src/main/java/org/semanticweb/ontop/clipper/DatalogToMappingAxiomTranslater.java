@@ -6,12 +6,14 @@ import org.semanticweb.ontop.model.CQIE;
 import org.semanticweb.ontop.model.DatalogProgram;
 import org.semanticweb.ontop.model.Function;
 import org.semanticweb.ontop.model.OBDADataFactory;
+import org.semanticweb.ontop.model.OBDADataSource;
 import org.semanticweb.ontop.model.OBDAException;
 import org.semanticweb.ontop.model.OBDAMappingAxiom;
 import org.semanticweb.ontop.model.Predicate;
 import org.semanticweb.ontop.model.Term;
 import org.semanticweb.ontop.model.Variable;
 import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
+import org.semanticweb.ontop.model.impl.RDBMSourceParameterConstants;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQL99DialectAdapter;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLAdapterFactory;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
@@ -31,15 +33,19 @@ public class DatalogToMappingAxiomTranslater {
     static Predicate ANS = DATA_FACTORY.getPredicate("ans", 0);
 
     private final DBMetadata dbMetadata;
+    private final OBDADataSource obdaDataSource;
 
-    public DatalogToMappingAxiomTranslater(DBMetadata dbMetadata){
+    public DatalogToMappingAxiomTranslater(DBMetadata dbMetadata, OBDADataSource obdaDataSource){
         this.dbMetadata = dbMetadata;
+        this.obdaDataSource = obdaDataSource;
     }
 
     public OBDAMappingAxiom translate(CQIE cqie) throws OBDAException {
         DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram( removeFunctionsInHead(cqie));
 
-        SQLDialectAdapter sqladapter = SQLAdapterFactory.getSQLDialectAdapter(dbMetadata.getDriverName());
+        String parameter = obdaDataSource.getParameter(RDBMSourceParameterConstants.DATABASE_DRIVER);
+
+        SQLDialectAdapter sqladapter = SQLAdapterFactory.getSQLDialectAdapter(parameter);
 
         SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, sqladapter, false);
 

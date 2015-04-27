@@ -160,7 +160,7 @@ public class Ontology2MappingCompilation {
                 /**
                  * Unfolded query can already be translated to OBDA Mapping
                  */
-                DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata);
+                DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata, obdaDataSource);
                 List<OBDAMappingAxiom> obdaMappingAxioms = datalogToMappingAxiomTranslater.translate(unfoldedQuery.getRules());
 
                 List<CQIE> newMappings = unfoldedQuery.getRules();
