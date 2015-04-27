@@ -1,10 +1,14 @@
 package org.semanticweb.ontop.clipper;
 
 
+import com.google.common.collect.ImmutableSet;
 import org.junit.Test;
+import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
+import org.semanticweb.clipper.hornshiq.rule.CQ;
 import org.semanticweb.ontop.exception.DuplicateMappingException;
 import org.semanticweb.ontop.exception.InvalidMappingException;
 import org.semanticweb.ontop.io.ModelIOManager;
+import org.semanticweb.ontop.model.DatalogProgram;
 import org.semanticweb.ontop.model.OBDADataFactory;
 import org.semanticweb.ontop.model.OBDAException;
 import org.semanticweb.ontop.model.OBDAModel;
@@ -16,6 +20,7 @@ import org.semanticweb.ontop.owlrefplatform.owlapi3.QuestOWLConnection;
 import org.semanticweb.ontop.owlrefplatform.owlapi3.QuestOWLFactory;
 import org.semanticweb.ontop.owlrefplatform.owlapi3.QuestOWLResultSet;
 import org.semanticweb.ontop.owlrefplatform.owlapi3.QuestOWLStatement;
+import org.semanticweb.ontop.renderer.DatalogProgramRenderer;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLObject;
@@ -24,8 +29,10 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
@@ -34,19 +41,39 @@ public class NPDTest {
 
     private static final OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
 
+    String ontologyFile =  "src/test/resources/npd-v2.owl";
+    String datalogFile =  "src/test/resources/npd-v2.dl";
     String extendedObdaFile = "src/test/resources/extended-npd-v2-ql_a_postgres.obda";
     String extendedOntologyFile = "src/test/resources/extended-npd-v2-ql_a_postgres.owl";
 
     @Test
-    public void test(){
+    public void testClipperRewriting() throws OWLOntologyCreationException, IOException {
+        OWLOntology ontology = OWLManager.createOWLOntologyManager()
+                .loadOntologyFromOntologyDocument(new File(ontologyFile));
 
+        /** create a Clipper Reasoner instance */
+        QAHornSHIQ qaHornSHIQ = new QAHornSHIQ();
+
+        /** feed the ontology to Clipper reasoner */
+        qaHornSHIQ.setOntologies(ImmutableSet.of(ontology));
+
+        /** rewrite the ontology to a datalog program represented in Clipper Native API */
+        List<CQ> program = qaHornSHIQ.rewriteOntology();
+
+        /** convert the datalog program to Ontop Native API */
+        DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
+
+        String datalogString = DatalogProgramRenderer.encode(ontopProgram);
+
+        FileWriter writer = new FileWriter(datalogFile);
+        writer.write(datalogString);
+        writer.close();
     }
 
 
     @Test
     public  void testCompile() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
 
-        String ontologyFile =  "src/test/resources/npd-v2.owl";
         String obdaFile = "src/test/resources/npd-v2-ql_a_postgres.obda";
 
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
