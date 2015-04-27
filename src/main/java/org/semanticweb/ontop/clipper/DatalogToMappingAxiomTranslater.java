@@ -2,26 +2,28 @@ package org.semanticweb.ontop.clipper;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import org.semanticweb.ontop.model.CQIE;
-import org.semanticweb.ontop.model.DatalogProgram;
-import org.semanticweb.ontop.model.Function;
-import org.semanticweb.ontop.model.OBDADataFactory;
-import org.semanticweb.ontop.model.OBDADataSource;
-import org.semanticweb.ontop.model.OBDAException;
-import org.semanticweb.ontop.model.OBDAMappingAxiom;
-import org.semanticweb.ontop.model.Predicate;
-import org.semanticweb.ontop.model.Term;
-import org.semanticweb.ontop.model.Variable;
-import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
-import org.semanticweb.ontop.model.impl.RDBMSourceParameterConstants;
-import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQL99DialectAdapter;
-import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLAdapterFactory;
-import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
-import org.semanticweb.ontop.sql.DBMetadata;
-import org.semanticweb.ontop.utils.QueryUtils;
+import it.unibz.krdb.obda.model.CQIE;
+import it.unibz.krdb.obda.model.DatalogProgram;
+import it.unibz.krdb.obda.model.Function;
+import it.unibz.krdb.obda.model.OBDADataFactory;
+import it.unibz.krdb.obda.model.OBDADataSource;
+import it.unibz.krdb.obda.model.OBDAException;
+import it.unibz.krdb.obda.model.OBDAMappingAxiom;
+import it.unibz.krdb.obda.model.Predicate;
+import it.unibz.krdb.obda.model.Term;
+import it.unibz.krdb.obda.model.Variable;
+import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
+import it.unibz.krdb.obda.model.impl.RDBMSourceParameterConstants;
+import it.unibz.krdb.obda.model.impl.TermUtils;
+import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.SQLAdapterFactory;
+import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
+import it.unibz.krdb.sql.DBMetadata;
+import it.unibz.krdb.obda.utils.QueryUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class DatalogToMappingAxiomTranslater {
@@ -41,7 +43,7 @@ public class DatalogToMappingAxiomTranslater {
     }
 
     public OBDAMappingAxiom translate(CQIE cqie) throws OBDAException {
-        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram( removeFunctionsInHead(cqie));
+        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram(ImmutableList.of(removeFunctionsInHead(cqie)));
 
         String parameter = obdaDataSource.getParameter(RDBMSourceParameterConstants.DATABASE_DRIVER);
 
@@ -96,7 +98,11 @@ public class DatalogToMappingAxiomTranslater {
     }
 
     private static CQIE removeFunctionsInHead(CQIE rule) {
-        List<Variable> headVariables = QueryUtils.getVariablesInAtom(rule.getHead());
+        // LinkedHashSet preserves order
+        Set<Variable> headVariables = new LinkedHashSet<>();
+        TermUtils.addReferencedVariablesTo(headVariables, rule.getHead());
+
+        //List<Variable> headVariables = QueryUtils.getVariablesInAtom(rule.getHead());
         return DATA_FACTORY.getCQIE(DATA_FACTORY.getFunction(ANS, (List<Term>) (List<?>) headVariables), rule.getBody());
     }
 

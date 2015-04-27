@@ -1,22 +1,22 @@
 package org.semanticweb.ontop.clipper;
 
-
 import com.beust.jcommander.internal.Lists;
 
 
+import it.unibz.krdb.obda.model.CQIE;
+import it.unibz.krdb.obda.model.DatalogProgram;
+import it.unibz.krdb.obda.model.Function;
+import it.unibz.krdb.obda.model.OBDADataFactory;
+import it.unibz.krdb.obda.model.ValueConstant;
+import it.unibz.krdb.obda.model.Variable;
+import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import org.semanticweb.clipper.hornshiq.rule.Atom;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
 
 import org.semanticweb.clipper.hornshiq.rule.DLPredicate;
 import org.semanticweb.clipper.hornshiq.rule.Predicate;
 import org.semanticweb.clipper.hornshiq.rule.Term;
-import org.semanticweb.ontop.model.CQIE;
-import org.semanticweb.ontop.model.DatalogProgram;
-import org.semanticweb.ontop.model.Function;
-import org.semanticweb.ontop.model.OBDADataFactory;
-import org.semanticweb.ontop.model.ValueConstant;
-import org.semanticweb.ontop.model.Variable;
-import org.semanticweb.ontop.model.impl.OBDADataFactoryImpl;
+
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class ClipperRuleToOntopRuleTranslator {
     private static Function translate(Atom atom) {
         Function function;
         Predicate predicate = atom.getPredicate();
-        org.semanticweb.ontop.model.Predicate ontopPredicate = translate(predicate);
-        List<org.semanticweb.ontop.model.Term> ontopTerms = new ArrayList<>();
+        it.unibz.krdb.obda.model.Predicate ontopPredicate = translate(predicate);
+        List<it.unibz.krdb.obda.model.Term> ontopTerms = new ArrayList<>();
 
         for (Term term : atom.getTerms()) {
             ontopTerms.add(translate(term));
@@ -60,7 +60,7 @@ public class ClipperRuleToOntopRuleTranslator {
 
     }
 
-    private static org.semanticweb.ontop.model.Term translate(Term term) {
+    private static it.unibz.krdb.obda.model.Term translate(Term term) {
         if (term.isVariable()) {
             Variable variable = dataFactory.getVariable(term.getName());
             return variable;
@@ -72,7 +72,7 @@ public class ClipperRuleToOntopRuleTranslator {
         }
     }
 
-    private static org.semanticweb.ontop.model.Predicate translate(Predicate predicate) {
+    private static it.unibz.krdb.obda.model.Predicate translate(Predicate predicate) {
         String name = predicate.getName();
 
         if(predicate.isDLPredicate()){
@@ -80,7 +80,7 @@ public class ClipperRuleToOntopRuleTranslator {
             name = owlEntity.getIRI().toString();
         }
 
-        org.semanticweb.ontop.model.Predicate ontopPredicate = null;
+        it.unibz.krdb.obda.model.Predicate ontopPredicate = null;
         int arity = predicate.getArity();
         if (arity == 1) {
             ontopPredicate = dataFactory.getClassPredicate(name);
