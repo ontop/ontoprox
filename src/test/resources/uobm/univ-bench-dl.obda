@@ -69,47 +69,47 @@ source		SELECT deptID, uniID, courseID FROM Courses WHERE courseType = 'G'
 
 mappingId	Undergraduate Course is Taught By Full Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/Course{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/FullProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'full' and courseType = 'U'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'FullProfessor' and courseType = 'U'
 
 mappingId	Graduate Course is Taught By Full Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/GraduateCourse{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/FullProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'full' and courseType = 'G'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'FullProfessor' and courseType = 'G'
 
 mappingId	Undergraduate Course is Taught By Associate Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/Course{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/AssociateProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'assoc' and courseType = 'U'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'AssociateProfessor' and courseType = 'U'
 
 mappingId	Graduate Course is Taught By Associate Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/GaraduateCourse{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/AssociateProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'assoc' and courseType = 'G'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'AssociateProfessor' and courseType = 'G'
 
 mappingId	Undergraduate Course is Taught By Assistant Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/Course{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/AssistantProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'assist' and courseType = 'U'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'AssistantProfessor' and courseType = 'U'
 
 mappingId	Graduate Course is Taught By Assistant Professor
 target		<http://www.Department{deptID}.University{uniID}.edu/GraduateCourse{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/AssistantProfessor{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'assist' and courseType = 'G'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'AssistantProfessor' and courseType = 'G'
 
 mappingId	Undergraduate Course is Taught By Lecturer
 target		<http://www.Department{deptID}.University{uniID}.edu/Course{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/Lecturer{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'lecturer' and courseType = 'U'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'Lecturer' and courseType = 'U'
 
 mappingId	Graduate Course is Taught By Lecturer
 target		<http://www.Department{deptID}.University{uniID}.edu/GraduateCourse{courseID}> benchmark-dl:isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/Lecturer{teacherID}> . 
-source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'lecturer' and courseType = 'G'
+source		SELECT deptID, uniID, courseID, teacherID FROM Teaching WHERE teacherType = 'Lecturer' and courseType = 'G'
 
 mappingId	Full Professor Works For Department
 target		<http://www.Department{deptID}.University{uniID}.edu/FullProfessor{profID}> benchmark-dl:worksFor <http://www.Department{deptID}.University{uniID}.edu> . 
-source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'full' and worksFor = 1
+source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'FullProfessor' and worksFor = 1
 
 mappingId	Associate Professor Works For Department
 target		<http://www.Department{deptID}.University{uniID}.edu/AssociateProfessor{profID}> benchmark-dl:worksFor <http://www.Department{deptID}.University{uniID}.edu> . 
-source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'assoc' and worksfor = 1
+source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'AssociateProfessor' and worksfor = 1
 
 mappingId	Assistant Professor Works For Department
 target		<http://www.Department{deptID}.University{uniID}.edu/AssistantProfessor{profID}> benchmark-dl:worksFor <http://www.Department{deptID}.University{uniID}.edu> . 
-source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'assist' and worksFor = 1
+source		SELECT deptID, uniID, profID FROM Professors WHERE profType = 'AssistantProfessor' and worksFor = 1
 
 mappingId	Lecturer Works For Department
 target		<http://www.Department{deptID}.University{uniID}.edu/Lecturer{lecturerID}> benchmark-dl:worksFor <http://www.Department{deptID}.University{uniID}.edu> . 
