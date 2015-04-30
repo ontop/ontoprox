@@ -1,3 +1,4 @@
+from multiprocessing import Pool
 from rdflib import Graph
 import time
 import glob
@@ -14,19 +15,20 @@ def parse_triple_file(rdf_file):
     print "Current file is: " + rdf_file
     outfile = rdf_file + '.sql'
     # check if file exists for resume purpose
-    # try:
-    #     with open(outfile):
-    #         print "File already written, does nothing. Bye!"
-    #         return
-    # except:
-    #     pass
+    try:
+        with open(outfile):
+            print "File already written, does nothing. Bye!"
+            return
+    except:
+        pass
 
     f = open(outfile, "w")
     print >> f, "USE uobm;"
 
     graph = Graph()
     print "Start loading the file"
-    graph.parse(rdf_file, format="nt")
+    #graph.parse(rdf_file, format="nt")
+    graph.parse(rdf_file, format="xml")
 
     # NOTE: how to convert from RDF/XML to N-triples
     # graph.parse(triple_file, format="xml")
@@ -511,14 +513,16 @@ def extract_ids(resource_uri):
 
 
 if __name__ == '__main__':
-    #po = Pool()
+    po = Pool(processes=4)
+    results = []
     start_time = time.time()
-    #jobs = []
-    for triple_file in glob.glob(os.path.join('.', '*.nt')):
-        # p = multiprocessing.Process(target=parsefile, args=(infile,))
-        # jobs.append(p)
-        # p.start()
-        parse_triple_file(triple_file)
 
-    # jobs[0].join()
-    print "Time elapsed: ", time.time() - start_time, "s"
+    #extension = "nt"
+    extension = "owl"
+    files = glob.glob(os.path.join('.', '*.%s' % extension))
+    for triple_file in files:
+        results.append(po.apply_async(parse_triple_file, args=(triple_file,)))
+
+    for r in results:
+        r.get()
+        print "Time elapsed: ", time.time() - start_time, "s"
