@@ -37,7 +37,7 @@ import java.util.List;
 import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
 
-public class NPDTest {
+public class CompilationTest {
 
     private static final OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
 
@@ -52,22 +52,22 @@ public class NPDTest {
     }
 
     @Test
-    public void testRewritieUOBM() throws OWLOntologyCreationException, IOException {
+    public void testRewriteUOBM() throws OWLOntologyCreationException, IOException {
         rewriteOntology("src/test/resources/univ-bench-dl.owl", "src/test/resources/univ-bench-dl.dl");
     }
 
     @Test
-    public void testRewritieNPD() throws OWLOntologyCreationException, IOException {
+    public void testRewriteNPD() throws OWLOntologyCreationException, IOException {
         rewriteOntology("src/test/resources/npd-v2.owl", "src/test/resources/npd-v2.dl");
     }
 
     @Test
-    public void testRewritieFabio() throws OWLOntologyCreationException, IOException {
+    public void testRewriteFabio() throws OWLOntologyCreationException, IOException {
         rewriteOntology("src/test/resources/fabio.owl", "src/test/resources/fabio.dl");
     }
 
     @Test
-    public void testRewritiePeriodic() throws OWLOntologyCreationException, IOException {
+    public void testRewritePeriodic() throws OWLOntologyCreationException, IOException {
         rewriteOntology("src/test/resources/periodic.owl", "src/test/resources/periodic.dl");
     }
 
@@ -105,6 +105,16 @@ public class NPDTest {
         String ontologyFile =  "src/test/resources/npd-v2.owl";
         String obdaFile = "src/test/resources/npd-v2.obda";
         String extendedObdaFile = "src/test/resources/extended-npd-v2-ql_a_postgres.obda";
+        OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
+        ModelIOManager modelIOManager = new ModelIOManager(newModel);
+        modelIOManager.save(extendedObdaFile);
+    }
+
+    @Test
+    public  void testCompileUOBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+        String ontologyFile = "src/test/resources/uobm/univ-bench-dl.owl";
+        String obdaFile =     "src/test/resources/uobm/univ-bench-dl.obda";
+        String extendedObdaFile = "src/test/resources/uobm/extended-univ-bench-dl.obda";
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);

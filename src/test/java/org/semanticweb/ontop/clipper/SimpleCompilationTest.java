@@ -57,7 +57,7 @@ import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.*;
  * We are going to create an H2 DB, the .sql file is fixed. We will map directly
  * there and then query on top.
  */
-public class Ontology2MappingCompilationTest {
+public class SimpleCompilationTest {
 
 	// TODO We need to extend this test to import the contents of the mappings
 	// into OWL and repeat everything taking form OWL
