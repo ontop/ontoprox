@@ -232,16 +232,16 @@ def insert_graduate_students(graph, f):
 
 
 def insert_interests(graph, f):
-    print "Insert interests"
+    print "Insert normal interests"
     normal_interest_query = """
     PREFIX : <http://semantics.crl.ibm.com/univ-bench-dl.owl#>
-    SELECT DISTINCT ?person ?interest
+    SELECT ?person ?interest
     WHERE {
-        ?person ?p ?interest .
-
-        VALUES (?p) {
-            (:like)
-            (:love)
+        {
+            ?person :like ?interest .
+        }
+        UNION {
+            ?person :love ?interest .
         }
     }"""
 
@@ -251,9 +251,10 @@ def insert_interests(graph, f):
             person_id, dep_id, uni_id, role, r["interest"]
         )
 
+    print "Insert crazy interests"
     crazy_interest_query = """
     PREFIX : <http://semantics.crl.ibm.com/univ-bench-dl.owl#>
-    SELECT DISTINCT ?person ?interest
+    SELECT ?person ?interest
     WHERE {
         ?person :isCrazyAbout ?interest .
     }"""
