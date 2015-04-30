@@ -67,10 +67,13 @@ public class Ontology2MappingCompilation {
         ioManager.load(obdafile);
 
         OBDAModel newOBDAModel = compileHSHIQOntologyToMappings(ontology, obdaModel);
+
         return newOBDAModel;
     }
 
     private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel) throws SQLException, OBDAException, DuplicateMappingException {
+
+        long t1 = System.currentTimeMillis();
 
         /** create a Clipper Reasoner instance */
         QAHornSHIQ qaHornSHIQ = new QAHornSHIQ();
@@ -84,7 +87,13 @@ public class Ontology2MappingCompilation {
         /** convert the datalog program to Ontop Native API */
         DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
 
-        log.debug("translate program from Clipper {}", ontopProgram);
+        long t2 = System.currentTimeMillis();
+
+        System.err.println("Datalog generation time: " + (t2-t1) + "ms");
+
+        //log.debug("translate program from Clipper {}", ontopProgram);
+
+        t1 = System.currentTimeMillis();
 
         /**
          * construct a dependency graph
@@ -105,8 +114,6 @@ public class Ontology2MappingCompilation {
         DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource);
         Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter(dbMetadata);
 
-
-
         /**
          * convert the mappings into a set of rules
          */
@@ -116,7 +123,7 @@ public class Ontology2MappingCompilation {
 
         List<Predicate> predicatesToDefine =  Lists.newArrayList(predicatesInBottomUp);
 
-        List<OBDAMappingAxiom> newObdaMappingAxioms = Lists.newArrayList();
+        List<CQIE> newMappingRules = Lists.newArrayList();
 
 
         Map<Predicate, List<Integer>> pkeys = DBMetadata.extractPKs(dbMetadata, mappingProgram);
@@ -155,29 +162,34 @@ public class Ontology2MappingCompilation {
                 /**
                  * Unfold the rules for the predicate w.r.t. the input mappings
                  */
+                //DatalogProgram unfoldedQuery = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
                 DatalogProgram unfoldedQuery = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
 
-                /**
-                 * Unfolded query can already be translated to OBDA Mapping
-                 */
-                DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata, obdaDataSource);
-                List<OBDAMappingAxiom> obdaMappingAxioms = datalogToMappingAxiomTranslater.translate(unfoldedQuery.getRules());
 
                 List<CQIE> newMappings = unfoldedQuery.getRules();
                 mappingProgram.addAll(newMappings);
 
+                newMappingRules.addAll(newMappings);
                 // System.out.println(predicate);
                 // System.out.println(unfolding);
 
-                newObdaMappingAxiomsForAPredicate.addAll(obdaMappingAxioms);
+//                newObdaMappingAxiomsForAPredicate.addAll(obdaMappingAxioms);
             }
 
 
-            newObdaMappingAxioms.addAll(newObdaMappingAxiomsForAPredicate);
+            //newObdaMappingAxioms.addAll(newObdaMappingAxiomsForAPredicate);
 
         }
 
-        printOBDAMappingAxioms(newObdaMappingAxioms, obdaModel.getPrefixManager());
+        /**
+         * Unfolded query can already be translated to OBDA Mapping
+         */
+        DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata, obdaDataSource);
+        List<OBDAMappingAxiom> newObdaMappingAxioms = datalogToMappingAxiomTranslater.translate(newMappingRules);
+
+
+
+        //printOBDAMappingAxioms(newObdaMappingAxioms, obdaModel.getPrefixManager());
 
 
         OBDAModel extenededObdaModel = DATA_FACTORY.getOBDAModel();
@@ -186,6 +198,13 @@ public class Ontology2MappingCompilation {
         extenededObdaModel.addMappings(obdaDataSource.getSourceID(), obdaModel.getMappings(obdaDataSource.getSourceID()));
         extenededObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
         extenededObdaModel.setPrefixManager(obdaModel.getPrefixManager());
+
+
+
+        t2 = System.currentTimeMillis();
+
+        System.err.println("Mapping generation time: " + (t2 - t1) + "ms");
+
 
         return extenededObdaModel;
     }

@@ -261,7 +261,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 	 * Generates and SQL query ready to be executed by Quest. Each query is a
 	 * SELECT FROM WHERE query. To know more about each of these see the inner
 	 * method descriptions. Observe that the SQL itself will be done by
-	 * {@link #generateQuery(DatalogProgram, List, String, Map, List, Set)}
+	 * {generateQuery(DatalogProgram, List, String, Map, List, Set)}
 	 *
 	 * @param queryProgram
 	 *            This is an arbitrary Datalog Program. In this program ans
@@ -709,7 +709,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 		// log.debug("Before pulling out equalities: \n{}", cq);
 
 		// we dont need this anymore, done before
-		// DatalogNormalizer.pullOutEqualities(cq);
+		DatalogNormalizer.pullOutEqualities(cq);
 
 		// log.debug("Before pulling out Left Join Conditions: \n{}", cq);
 

@@ -48,6 +48,32 @@ public class NPDTest {
 
     @Test
     public void testClipperRewriting() throws OWLOntologyCreationException, IOException {
+        rewriteOntology(ontologyFile, datalogFile);
+    }
+
+    @Test
+    public void testRewritieUOBM() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/univ-bench-dl.owl", "src/test/resources/univ-bench-dl.dl");
+    }
+
+    @Test
+    public void testRewritieNPD() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/npd-v2.owl", "src/test/resources/npd-v2.dl");
+    }
+
+    @Test
+    public void testRewritieFabio() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/fabio.owl", "src/test/resources/fabio.dl");
+    }
+
+    @Test
+    public void testRewritiePeriodic() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/periodic.owl", "src/test/resources/periodic.dl");
+    }
+
+    private void rewriteOntology(String ontologyFile, String datalogFile) throws OWLOntologyCreationException, IOException {
+        long t1 = System.currentTimeMillis();
+
         OWLOntology ontology = OWLManager.createOWLOntologyManager()
                 .loadOntologyFromOntologyDocument(new File(ontologyFile));
 
@@ -63,6 +89,9 @@ public class NPDTest {
         /** convert the datalog program to Ontop Native API */
         DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
 
+        long t2 = System.currentTimeMillis();
+        System.err.println("Datalog Generation time: " + (t2-t1) +  "ms");
+
         String datalogString = DatalogProgramRenderer.encode(ontopProgram);
 
         FileWriter writer = new FileWriter(datalogFile);
@@ -72,10 +101,10 @@ public class NPDTest {
 
 
     @Test
-    public  void testCompile() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
-
-        String obdaFile = "src/test/resources/npd-v2-ql_a_postgres.obda";
-
+    public  void testCompileNPD() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+        String ontologyFile =  "src/test/resources/npd-v2.owl";
+        String obdaFile = "src/test/resources/npd-v2.obda";
+        String extendedObdaFile = "src/test/resources/extended-npd-v2-ql_a_postgres.obda";
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
