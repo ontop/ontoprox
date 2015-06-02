@@ -53,12 +53,22 @@ public class CompilationTest {
 
     @Test
     public void testRewriteUOBM() throws OWLOntologyCreationException, IOException {
-        rewriteOntology("src/test/resources/univ-bench-dl.owl", "src/test/resources/univ-bench-dl.dl");
+        rewriteOntology("src/test/resources/uobm/univ-bench-dl.owl", "src/test/resources/uobm/univ-bench-dl.dl");
     }
 
     @Test
     public void testRewriteNPD() throws OWLOntologyCreationException, IOException {
         rewriteOntology("src/test/resources/npd-v2.owl", "src/test/resources/npd-v2.dl");
+    }
+
+    @Test
+    public void testRewriteNPDQL() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/npd_ql/npd-v2-ql_a.owl", "src/test/resources/npd_ql/npd-v2-ql_a.dl");
+    }
+
+    @Test
+    public void testRewriteLUBM() throws OWLOntologyCreationException, IOException {
+        rewriteOntology("src/test/resources/lubm/univ-benchQL.owl", "src/test/resources/lubm/univ-benchQL.dl");
     }
 
     @Test
@@ -111,10 +121,30 @@ public class CompilationTest {
     }
 
     @Test
+    public  void testCompileNPDQL() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+        String ontologyFile =  "src/test/resources/npd_ql/npd-v2-ql_a.owl";
+        String obdaFile = "src/test/resources/npd_ql/npd-v2-ql_a_postgres.obda";
+        String extendedObdaFile = "src/test/resources/npd_ql/extended-npd-v2-ql_a_postgres.obda";
+        OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
+        ModelIOManager modelIOManager = new ModelIOManager(newModel);
+        modelIOManager.save(extendedObdaFile);
+    }
+
+    @Test
     public  void testCompileUOBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
         String ontologyFile = "src/test/resources/uobm/univ-bench-dl.owl";
         String obdaFile =     "src/test/resources/uobm/univ-bench-dl.obda";
         String extendedObdaFile = "src/test/resources/uobm/extended-univ-bench-dl.obda";
+        OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
+        ModelIOManager modelIOManager = new ModelIOManager(newModel);
+        modelIOManager.save(extendedObdaFile);
+    }
+
+    @Test
+    public  void testCompileLUBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+        String ontologyFile = "src/test/resources/lubm/univ-benchQL.owl";
+        String obdaFile =     "src/test/resources/lubm/univ-benchQL.obda";
+        String extendedObdaFile = "src/test/resources/lubm/extended-univ-benchQL.obda";
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);

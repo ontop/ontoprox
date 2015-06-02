@@ -133,7 +133,7 @@ source		SELECT studDeptID, studUniID, studentID, courseDeptID,courseUniID, cours
 
 mappingId	like
 target		<http://www.Department{deptID}.University{uniID}.edu/{role}{ID}> benchmark-dl:like {interest} . 
-source		SELECT deptID, uniID, role, ID interest FROM Interests
+source		SELECT deptID, uniID, role, ID, interest FROM Interests
 
 mappingId	isCrazyAbout
 target		<http://www.Department{deptID}.University{uniID}.edu/{role}{ID}> benchmark-dl:isCrazyAbout {interest} . 

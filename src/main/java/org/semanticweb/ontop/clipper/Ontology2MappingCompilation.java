@@ -105,6 +105,14 @@ public class Ontology2MappingCompilation {
          */
         List<Predicate> predicatesInBottomUp = dg.getPredicatesInBottomUp();
 
+        //
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee"));
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#Person"));
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization"));
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication"));
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#Student"));
+        predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject"));
+        //predicatesInBottomUp.add(DATA_FACTORY.getClassPredicate("http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf"));
         /**
          * We assume we are in Virtual mode and therefore we only have one data source.
          */
@@ -182,7 +190,7 @@ public class Ontology2MappingCompilation {
         }
 
         /**
-         * Unfolded query can already be translated to OBDA Mapping
+         * Unfolded query can already be translated tso OBDA Mapping
          */
         DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata, obdaDataSource);
         List<OBDAMappingAxiom> newObdaMappingAxioms = datalogToMappingAxiomTranslater.translate(newMappingRules);
@@ -192,21 +200,20 @@ public class Ontology2MappingCompilation {
         //printOBDAMappingAxioms(newObdaMappingAxioms, obdaModel.getPrefixManager());
 
 
-        OBDAModel extenededObdaModel = DATA_FACTORY.getOBDAModel();
-        extenededObdaModel.addSource(obdaDataSource);
+        OBDAModel extendedObdaModel = DATA_FACTORY.getOBDAModel();
+        extendedObdaModel.addSource(obdaDataSource);
 
-        extenededObdaModel.addMappings(obdaDataSource.getSourceID(), obdaModel.getMappings(obdaDataSource.getSourceID()));
-        extenededObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
-        extenededObdaModel.setPrefixManager(obdaModel.getPrefixManager());
-
-
+        extendedObdaModel.addMappings(obdaDataSource.getSourceID(), obdaModel.getMappings(obdaDataSource.getSourceID()));
+        extendedObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
+        extendedObdaModel.setPrefixManager(obdaModel.getPrefixManager());
 
         t2 = System.currentTimeMillis();
 
+        System.err.println("#  new mappings " + newMappingRules.size());
         System.err.println("Mapping generation time: " + (t2 - t1) + "ms");
 
 
-        return extenededObdaModel;
+        return extendedObdaModel;
     }
 
     private static void printOBDAMappingAxioms(List<OBDAMappingAxiom> newObdaMappingAxiomsForAPredicate, PrefixManager prefixManager) {
