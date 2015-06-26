@@ -31,24 +31,12 @@ expand(Goal, Expansion, Depth) :- clause(Goal, Body),  expand(Body, Expansion, D
 
 expand_L(Goal, EL, Depth) :- expand(Goal, Expansion, Depth), ft(Expansion, EL).
 
-
-
 ft(T, [T]) :- var(T), !.
 ft(T, [T]) :- atomic(T), !.
 ft((T1, T2), L) :- ft(T1, L1), ft(T2, L2), append(L1, L2, L), !.
 ft(T, [T]) :- compound(T), !.
 
-flatten_term(Term,[Term]):-
-    atomic(Term),!.
 
-flatten_term(Term,Flat):-
-    Term =.. TermList,
-    flatten_term_list(TermList,Flat),!.
+expands(G, Expansions, Depth) :- findall(Expansion, expand_L(G, Expansion, Depth), Expansions).
 
-flatten_term_list([],[]):-!.
-flatten_term_list([H|T],List):-
-    flatten_term(H,HList),
-    flatten_term_list(T,TList),
-    append(HList,TList,List),!.
-
-% expand(reach(X, Y), Expansion)
+equivalentExpansions(E1, E2) :- unifiable(E1, E2, _), unifiable(E2, E1, _) .
