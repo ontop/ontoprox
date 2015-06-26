@@ -4,6 +4,9 @@
 %    :- expand(Goal1, Expansion1), expand(Goal2 , Expansion2).
 %expand(call(X), Y) :- !, fail. % critical !!!
 
+:- dynamic
+        edge/2.
+
 reach(X, Y) :- edge(X, Y).
 %reach(X, Y) :- edge(X, Z), reach(Z, Y).
 reach(X, Y) :- reach(X, Z), reach(Z, Y).
@@ -39,11 +42,6 @@ ft(T, [T]) :- compound(T), !.
 
 expands(G, Expansions, Depth) :- findall(Expansion, expand_L(G, Expansion, Depth), Expansions).
 
-equivalentExpansions(E1, E2) :- unifiable(E1, E2, _), unifiable(E2, E1, _) .
-
-
-
-
 
 %% sorts lists of lists by length
 %% adapted quick sort.
@@ -67,7 +65,7 @@ splitByLength(H, [A|X], Y, [A|Z]) :-
 
 %% remove equivalent expansions
 
-member(X,[Y|_]) :-  equivalentExpansions(X,Y), !.
+member(X,[Y|_]) :- X =@= Y, !.
 member(X,[_|T]) :- member(X,T).
 
 removeEquivalent([],[]).
