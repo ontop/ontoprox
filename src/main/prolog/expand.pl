@@ -1,0 +1,54 @@
+%:- op(500, xfy, <==).
+%expand(true,true).
+%expand((Goal1,Goal2), (Expansion1, Expansion2)) 
+%    :- expand(Goal1, Expansion1), expand(Goal2 , Expansion2).
+%expand(call(X), Y) :- !, fail. % critical !!!
+
+reach(X, Y) :- edge(X, Y).
+%reach(X, Y) :- edge(X, Z), reach(Z, Y).
+reach(X, Y) :- reach(X, Z), reach(Z, Y).
+%reach(X, Y) :- edge(X, Z), edge(Z, W), reach(W, Y).
+
+reach3(X, Y) :- edge(X, Z),  edge(Z, W), edge(W, Y).
+
+edb(edge(_,_)).
+
+
+expand(call(_), _, _) :- !, fail. % critical !!!
+
+expand(Goal, Goal, _) :- edb(Goal), !. % EDB predicate should not be expanded. They will be defined by the mappings
+
+expand(Goal, Goal, 0) :- !, fail. % this means you reach an IDB predicate, which should not be expanded further
+
+
+
+expand((Goal1,Goal2), (Expansion1, Expansion2), Depth) :- 
+    Depth >= 1, Depth_1 is Depth - 1,  expand(Goal1, Expansion1, Depth_1), expand(Goal2, Expansion2, Depth_1).
+
+
+
+expand(Goal, Expansion, Depth) :- clause(Goal, Body),  expand(Body, Expansion, Depth).
+
+expand_L(Goal, EL, Depth) :- expand(Goal, Expansion, Depth), ft(Expansion, EL).
+
+
+
+ft(T, [T]) :- var(T), !.
+ft(T, [T]) :- atomic(T), !.
+ft((T1, T2), L) :- ft(T1, L1), ft(T2, L2), append(L1, L2, L), !.
+ft(T, [T]) :- compound(T), !.
+
+flatten_term(Term,[Term]):-
+    atomic(Term),!.
+
+flatten_term(Term,Flat):-
+    Term =.. TermList,
+    flatten_term_list(TermList,Flat),!.
+
+flatten_term_list([],[]):-!.
+flatten_term_list([H|T],List):-
+    flatten_term(H,HList),
+    flatten_term_list(T,TList),
+    append(HList,TList,List),!.
+
+% expand(reach(X, Y), Expansion)
