@@ -40,3 +40,52 @@ ft(T, [T]) :- compound(T), !.
 expands(G, Expansions, Depth) :- findall(Expansion, expand_L(G, Expansion, Depth), Expansions).
 
 equivalentExpansions(E1, E2) :- unifiable(E1, E2, _), unifiable(E2, E1, _) .
+
+
+
+
+
+%% sorts lists of lists by length
+%% adapted quick sort.
+
+sortByLength([], []).  
+sortByLength([H|T], S) :- 
+    splitByLength(H, T, L, R), 
+    sortByLength(L, LS), 
+    sortByLength(R, RS), 
+    append(LS, [H|RS], S).
+
+splitByLength(_, [], [], []).  
+splitByLength(H, [A|X], [A|Y], Z) :- 
+    length(H, HL), length(A, AL), 
+    AL =< HL, !, splitByLength(H, X, Y, Z).  
+splitByLength(H, [A|X], Y, [A|Z]) :- 
+    length(H, HL), length(A, AL), 
+    AL > HL, !, splitByLength(H, X, Y, Z).
+
+
+
+%% remove equivalent expansions
+
+member(X,[Y|_]) :-  equivalentExpansions(X,Y), !.
+member(X,[_|T]) :- member(X,T).
+
+removeEquivalent([],[]).
+removeEquivalent([H|T],[H|Out]) :-
+    not(member(H,T)),
+    removeEquivalent(T,Out).
+removeEquivalent([H|T],Out) :-
+    member(H,T),
+    removeEquivalent(T,Out).
+
+
+%% works also without sort
+solutions(P, Depth, Unique) :- 
+    findall(Expansion, expand_L(P, Expansion, Depth), Expansions), 
+    removeEquivalent(Expansions, Unique).
+
+%% with sort
+%solutions(P, Depth, Unique) :- 
+%    findall(Expansion, expand_L(P, Expansion, Depth), Expansions), 
+%    sortByLength(Expansions, Sorted), 
+%    removeEquivalent(Sorted, Unique).
