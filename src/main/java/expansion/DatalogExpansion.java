@@ -1,4 +1,4 @@
-package jpl_test;
+package expansion;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -17,26 +17,25 @@ public class DatalogExpansion {
         init();
 
         int k = 4;
-        String predicate = "reach";
-        int arity = 2;
-
-        System.out.format("Expansions of %s/%d\n", predicate, arity);
-
-        List<List<Term>> expansions = expand(predicate, arity, k);
-
-        Joiner.on(",\n").appendTo(System.out, expansions);
-
-        predicate = "start";
-        arity = 1;
-
-        System.out.format("Expansions of %s/%d\n", predicate, arity);
-
-        expansions = expand(predicate, arity, k);
-
-        Joiner.on(",\n").appendTo(System.out, expansions);
+        testExpand("reach", 2, k);
+        testExpand("start", 1, k);
+        testExpand("end", 1, k);
     }
 
-    private static List<List<Term>> expand(String predicate, int arity, int depth) {
+    private static void testExpand(String predicate, int arity, int k) throws IOException {
+        List<DatalogRule> expansions;
+
+        System.out.println("------------------------------------------");
+
+        System.out.format("Expansions of %s/%d:\n", predicate, arity);
+        expansions = expand(predicate, arity, k);
+
+        Joiner.on("\n").appendTo(System.out, expansions);
+
+        System.out.println();
+    }
+
+    private static List<DatalogRule> expand(String predicate, int arity, int depth) {
         String termTemplate;
         if(arity == 1){
             termTemplate = String.format("%s(_)", predicate);
@@ -53,7 +52,9 @@ public class DatalogExpansion {
 
         //--------------------------------------------------
 
-        List<List<Term>> datalogExpansions = Lists.newArrayList();
+        //List<List<Term>> datalogExpansions = Lists.newArrayList();
+
+        List<DatalogRule> rules = Lists.newArrayList();
 
         if (q2.hasMoreSolutions()) {
             Hashtable s4 = q2.nextSolution();
@@ -65,12 +66,14 @@ public class DatalogExpansion {
             for (Term t : expansion_list) {
 
                 List<Term> expansion = flatten((Compound) t);
-                datalogExpansions.add(expansion);
+                //datalogExpansions.add(expansion);
+                DatalogRule datalogRule = new DatalogRule(expansion);
+                rules.add(datalogRule);
                 //System.out.println(expansion);
             }
         }
 
-        return datalogExpansions;
+        return rules;
     }
 
     private static void init() {

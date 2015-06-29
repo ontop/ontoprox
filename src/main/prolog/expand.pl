@@ -5,12 +5,12 @@ reach(X, Y) :- edge(X, Y).
 %reach(X, Y) :- edge(X, Z), reach(Z, Y).
 reach(X, Y) :- reach(X, Z), reach(Z, Y).
 
-start(X) :-
+start(X) :- reach(X, _).
+end(Y) :- reach(_, Y).
 
 reach3(X, Y) :- edge(X, Z),  edge(Z, W), edge(W, Y).
 
 edb(edge(_,_)).
-
 
 expand(call(_), _, _) :- !, fail. % critical !!!
 
@@ -21,10 +21,9 @@ expand(Goal, Goal, 0) :- !, fail. % this means you reach an IDB predicate, which
 expand((Goal1,Goal2), (Expansion1, Expansion2), Depth) :- 
     Depth >= 1, Depth_1 is Depth - 1,  expand(Goal1, Expansion1, Depth_1), expand(Goal2, Expansion2, Depth_1).
 
-
 expand(Goal, Expansion, Depth) :- clause(Goal, Body),  expand(Body, Expansion, Depth).
 
-expand_list(Goal, EL, Depth) :- expand(Goal, Expansion, Depth), flatten(Expansion, EL).
+expand_list(Goal, ELWithGoal, Depth) :- expand(Goal, Expansion, Depth), flatten(Expansion, EL), ELWithGoal = (Goal, EL).
 
 flatten(T, [T]) :- var(T), !.
 flatten(T, [T]) :- atomic(T), !.
