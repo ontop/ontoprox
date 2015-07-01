@@ -63,3 +63,6 @@ remove_equivalent([H|T],Out) :-
 datalog_expansions(P, Depth, Expansions) :-
     findall(Expansion, expand_list(P, Expansion, Depth), IntermediateExpansions),
     remove_equivalent(IntermediateExpansions, Expansions).
+    
+print([H | T]) :- write_term(H, []), nl, print(T).
+print([]) :- nl.  
