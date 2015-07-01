@@ -16,10 +16,17 @@ public class DatalogExpansion {
 
         init();
 
-        int k = 4;
-        testExpand("reach", 2, k);
-        testExpand("start", 1, k);
-        testExpand("end", 1, k);
+        int depth = 5;
+//        testExpand("reach", 2, depth);
+//        testExpand("start", 1, depth);
+//        testExpand("end", 1, depth);
+//        testExpand("p", 1, depth);
+//        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Person", 1, depth);
+//        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Student", 1, depth);
+//        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_subOrganizationOf", 2, depth);
+//        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Employee", 1, depth);
+        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Chair", 1, depth);
+
     }
 
     private static void testExpand(String predicate, int arity, int k) throws IOException {
@@ -81,6 +88,11 @@ public class DatalogExpansion {
         Query q1 = new Query(t1);
 
         System.out.println(t1 + " " + (q1.hasSolution() ? "succeeded" : "failed"));
+
+        String t2 = "consult('src/main/prolog/univ_bench_dl.pl')";
+        Query q2 = new Query(t2);
+
+        System.out.println(t2 + " " + (q2.hasSolution() ? "succeeded" : "failed"));
     }
 
     public static List<Term> flatten(Compound compound){

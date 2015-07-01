@@ -19,8 +19,11 @@ public class DatalogRule {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(head);
-        sb.append(" :- ");
-        Joiner.on(", ").appendTo(sb, body);
+        if(body.size() > 0) {
+            sb.append(" :- ");
+            Joiner.on(", ").appendTo(sb, body);
+        }
+        sb.append(".");
         return sb.toString();
     }
 }

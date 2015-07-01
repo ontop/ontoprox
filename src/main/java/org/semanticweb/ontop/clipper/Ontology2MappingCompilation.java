@@ -44,12 +44,14 @@ import java.util.List;
 import java.util.Map;
 
 
+
 public class Ontology2MappingCompilation {
 
     private static OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
 
     private static Logger log = LoggerFactory.getLogger(Ontology2MappingCompilation.class);
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     public static OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
 
         /**

@@ -1,0 +1,87 @@
+[PrefixDeclaration]
+xsd:		http://www.w3.org/2001/XMLSchema#
+owl:		http://www.w3.org/2002/07/owl#
+benchmark-dl:	http://uob.iodt.ibm.com/univ-bench-dl.owl#
+:		http://uob.iodt.ibm.com/univ-bench-dl.owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+dc:		http://purl.org/dc/elements/1.1/
+
+[SourceDeclaration]
+sourceUri	uobm
+connectionUrl	jdbc:mysql://10.7.20.39:3306/uobm
+username	fish
+password	fish
+driverClass	com.mysql.jdbc.Driver
+
+[MappingDeclaration] @collection [[
+mappingId	Graduate Student
+target		<http://www.Department{deptID}.University{uniID}.edu/{role}{studentID}> a :GraduateStudent ; :enrollIn <http://www.Department{deptID}.University{uniID}.edu> ; :hasUndergraduateDegreeFrom <http://www.University{underGradUnvID}.edu> ; :hasMajor {major} . 
+source		SELECT deptID, uniID, studentID, underGradUnvID, major, 'GraduateStudent' as role FROM GraduateStudents
+
+mappingId	Graduate Student is advisedBy FullProfessor
+target		<http://www.Department{deptID}.University{uniID}.edu/{gradRole}{studentID}> :isAdvisedBy <http://www.Department{deptID}.University{uniID}.edu/{fullProfRole}{advisorID}> . 
+source		SELECT deptID, uniID, studentID, advisorID, advisorType, 'GraduateStudent' as gradRole, 'FullProfessor' as fullProfRole FROM GraduateStudents WHERE advisorType = 'FullProfessor'
+
+mappingId	Graduate Student is Advised By Associate Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{gradRole}{studentID}> :isAdvisedBy <http://www.Department{deptID}.University{uniID}.edu/{assocProfRole}{advisorID}> . 
+source		SELECT deptID, uniID, studentID, advisorID, advisorType, 'GraduateStudent' as gradRole, 'FullProfessor' as assocProfRole FROM GraduateStudents WHERE advisorType = 'AssociateProfessor'
+
+mappingId	Graduate Student is Advised By Assistant Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{gradRole}{studentID}> :isAdvisedBy <http://www.Department{deptID}.University{uniID}.edu/{asstProfRole}{advisorID}> . 
+source		SELECT deptID, uniID, studentID, advisorID, advisorType, 'GraduateStudent' as gradRole, 'AssistantProfessor' as asstProfRole FROM GraduateStudents WHERE advisorType = 'AssistantProfessor'
+
+mappingId	Graduate Student is Advised By Lecturer
+target		<http://www.Department{deptID}.University{uniID}.edu/{gradRole}{studentID}> :isAdvisedBy <http://www.Department{deptID}.University{uniID}.edu/{lecturerRole}{advisorID}> . 
+source		SELECT deptID, uniID, studentID, advisorID, advisorType, 'GraduateStudent' as gradRole, 'Lecturer' as lecturerRole FROM GraduateStudents WHERE advisorType = 'Lecturer'
+
+mappingId	Personal Information
+target		<http://www.Department{deptID}.University{uniID}.edu/{role}{ID}> a :Person ; :firstName {firstName} ; :lastName {lastName} ; :emailAddress {email} ; :telephone {telephone} . 
+source		SELECT ID, deptID,uniID, firstName, lastName, email, telephone FROM People
+
+mappingId	Undergraduate Student
+target		<http://www.Department{deptID}.University{uniID}.edu/{role}{studentID}> a :UndergraduateStudent ; :enrollIn <http://www.Department{deptID}.University{uniID}.edu> ; :hasMajor {major} . 
+source		SELECT deptID, uniID, studentID, major, 'UndergraduateStudent' as role FROM UnderGradStudents
+
+mappingId	Full Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{profType}{profID}> a :FullProfessor ; :hasUndergraduateDegreeFrom <http://www.University{underGradDegreeID}.edu> ; :hasMasterDegreeFrom <http://www.University{masterDegreeID}.edu> ; :hasDoctoralDegreeFrom <http://www.University{doctoralDegreeID}.edu> ; :researchInterest <http://www.Department{deptID}.University{uniID}.edu/Research{researchInterestID}> ; :isMemberOf <http://www.Department{deptID}.University{uniID}.edu> . 
+source		SELECT deptID, uniID, profID, underGradDegreeID, masterDegreeID, doctoralDegreeID, researchInterestID FROM Professors WHERE profType = 'FullProfessor'
+
+mappingId	Associate Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{profType}{profID}> a :AssociateProfessor ; :worksFor <http://www.Department{deptID}.University{uniID}.edu> ; :hasUndergraduateDegreeFrom <http://www.University{underGradDegreeID}.edu> ; :hasMasterDegreeFrom <http://www.University{masterDegreeID}.edu> ; :hasDoctoralDegreeFrom <http://www.University{doctoralDegreeID}.edu> ; :researchInterest <http://www.Department{deptID}.University{uniID}.edu/Research{researchInterestID}> ; :isMemberOf <http://www.Department{deptID}.University{uniID}.edu> . 
+source		SELECT deptID, uniID, profID, underGradDegreeID, masterDegreeID, doctoralDegreeID, researchInterestID FROM Professors WHERE profType = 'AssociateProfessor'
+
+mappingId	Assistant Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{profType}{profID}> a :AssistantProfessor ; :worksFor <http://www.Department{deptID}.University{uniID}.edu> ; :hasUndergraduateDegreeFrom <http://www.University{underGradDegreeID}.edu> ; :hasMasterDegreeFrom <http://www.University{masterDegreeID}.edu> ; :hasDoctoralDegreeFrom <http://www.University{doctoralDegreeID}.edu> ; :researchInterest <http://www.Department{deptID}.University{uniID}.edu/Research{researchInterestID}> ; :isMemberOf <http://www.Department{deptID}.University{uniID}.edu> . 
+source		SELECT deptID, uniID, profID, underGradDegreeID, masterDegreeID, doctoralDegreeID, researchInterestID FROM Professors WHERE profType = 'AssistantProfessor'
+
+mappingId	Lecturer
+target		<http://www.Department{deptID}.University{uniID}.edu/{role}{lecturerID}> a :Lecturer ; :worksFor <http://www.Department{deptID}.University{uniID}.edu> ; :hasUndergraduateDegreeFrom <http://www.University{underGradDegreeID}.edu> ; :hasMasterDegreeFrom <http://www.University{masterDegreeID}.edu> ; :hasDoctoralDegreeFrom <http://www.University{doctoralDegreeID}.edu> ; :isMemberOf <http://www.Department{deptID}.University{uniID}.edu> . 
+source		SELECT deptID, uniID, lecturerID, underGradDegreeID, masterDegreeID, doctoralDegreeID, 'Lecturer' as role FROM Lecturers
+
+mappingId	Undergraduate Course
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> a :Course . 
+source		SELECT deptID, uniID, courseID, courseType FROM Courses WHERE courseType = 'Course'
+
+mappingId	Graduate Course
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> a :Course . 
+source		SELECT deptID, uniID, courseID, courseType FROM Courses WHERE courseType = 'GraduateCourse'
+
+mappingId	Undergraduate Course is Taught By Full Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> :isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/{teacherType}{teacherID}> . 
+source		SELECT deptID, uniID, courseID, teacherID, courseType, teacherType FROM Teaching WHERE teacherType = 'FullProfessor' and courseType = 'Course'
+
+mappingId	Graduate Course is Taught By Full Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> :isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/{teacherType}{teacherID}> . 
+source		SELECT deptID, uniID, courseID, teacherID, courseType, teacherType FROM Teaching WHERE teacherType = 'FullProfessor' and courseType = 'GraduateCourse'
+
+mappingId	Undergraduate Course is Taught By Associate Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> :isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/{teacherType}{teacherID}> . 
+source		SELECT deptID, uniID, courseID, teacherID, courseType, teacherType FROM Teaching WHERE teacherType = 'AssociateProfessor' and courseType = 'Course'
+
+mappingId	Graduate Course is Taught By Associate Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{courseID}> :isTaughtBy <http://www.Department{deptID}.University{uniID}.edu/{teacherType}{teacherID}> . 
+source		SELECT deptID, uniID, courseID, teacherID, courseType, teacherType  FROM Teaching WHERE teacherType = 'AssociateProfessor' and courseType = 'GraduateCourse'
+
+mappingId	Undergraduate Course is Taught By Assistant Professor
+target		<http://www.Department{deptID}.University{uniID}.edu/{courseType}{cou
