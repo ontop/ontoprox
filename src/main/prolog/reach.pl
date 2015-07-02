@@ -7,18 +7,21 @@ node(3).
 
 edge(1,2).
 edge(2,3).
-edge(3,2).
+edge(3,4).
+edge(4,5).
+edge(2,4).
+edge(3,1).
 
 
-reach(L1, L2) :-
-  t_reach(L1, L2, [L1]).                   % <-- [L1] instead of []
+reach(X, Y) :-
+  t_reach(X, Y, [X]).                   
 
-t_reach(X, Y, L) :- edge(X, Y), L = [X].
+t_reach(X, Y, L) :- 
+  edge(X, Y), not(member(Y, L)).
 
-t_reach(X1, X2, IntermediateNodes) :-      % <-- this cXause is unchanged
-  edge(X1, X3),
-  \+ member(X3, IntermediateNodes),
-  t_reach(X3, X2, [X3 | IntermediateNodes]).
+t_reach(X, Y, IntermediateNodes) :-     
+  edge(X, Z), not(member(Z, IntermediateNodes)),
+  t_reach(Z, Y, [Z | IntermediateNodes]).
 
 
 %reach(X, Y) :- edge(X, Y).
