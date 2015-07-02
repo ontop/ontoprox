@@ -1,8 +1,8 @@
-:- dynamic
-        edge/2.
+%:- dynamic
+%        edb/1.
 
-:- dynamic
-        edb/1.
+
+:- dynamic tab_rdfs_subsumes/2. % for Memoization
 
 
 reach(X, Y) :- edge(X, Y).
@@ -88,12 +88,24 @@ print([]) :- nl.
 
 
 
+%rdfs_subsumes
 
+%rdfs_subsumes(A,B) :- compound(B), tab_rdfs_subsumes(A,B), !.
 
-rdfs_subsumes((A,B)) :- clause(A, B), not(B = (_,_)), not(edb(B)).   % A :- B 
+rdfs_subsumes_0(A,B) :-
+    clause(A, B), not(B = (_,_)), not(edb(B)).
 
-rdfs_subsumes((A,B)) :- clause(A, C), not(C = (_,_)), not(edb(C)), rdfs_subsumes((C,B)). 
+rdfs_subsumes(A,B) :-
+    rdfs_subsumes_0(A,B), asserta(tab_rdfs_subsumes(A,B)).
 
+% rdfs_subsumes(A,B) :-
+%     rdfs_subsumes_0(A,C), not(tab_rdfs_subsumes(A,B)),
+%     rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
+
+rdfs_subsumes(A,B) :-
+    not(tab_rdfs_subsumes(A,B)),
+    rdfs_subsumes_0(A,C), 
+    rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
 
 
 
