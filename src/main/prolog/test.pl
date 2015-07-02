@@ -16,11 +16,27 @@ member_seq(X,(_,T)) :- member_seq(X,T).
 %member(X, [X|_]) :- !.
 %member(X,[_|T]) :- member(X,T).
 
+%% checks whether the exact syntactic form of Item appears in List  
+%% member_list(Item, List) 
+member_list(X, [Y|_]) :- X==Y, !.
+member_list(X,[_|T]) :- member_list(X,T).
+
+%% removes the exact multiple syntactic occurrences from a list
+remove_duplicates([],[]).
+remove_duplicates([H|T],[H|Out]) :-
+    not(member_list(H,T)), !, %%% check here
+    remove_duplicates(T,Out).
+remove_duplicates([H|T],Out) :-
+    remove_duplicates(T,Out).
+
+
+%% checks whether a variation (=@=) of Item appears in List  
+%% member_list(Item, List) 
 memberEq(X,[Y|_]) :- X =@= Y, !.
 memberEq(X,[_|T]) :- memberEq(X,T).
 
-
-%% remove redundant equivalent expansions
+%% removes occurrences of items for which there is an 
+%% "equivalent" (=@=) item in a list
 remove_equivalent([],[]).
 remove_equivalent([H|T],[H|Out]) :-
     not(memberEq(H,T)), !,  %%% check here
@@ -30,14 +46,7 @@ remove_equivalent([H|T],Out) :-
     remove_equivalent(T,Out).
 
 
-remove_duplicates([],[]).
-remove_duplicates([H|T],[H|Out]) :-
-    not(member(H,T)), !, %%% check here
-    remove_duplicates(T,Out).
-remove_duplicates([H|T],Out) :-
-    remove_duplicates(T,Out).
-
-    
+:- redefine_system_predicate(print(_)).
 print([H | T]) :- write_term(H, []), nl, print(T).
 print([]) :- nl.  
 
@@ -45,6 +54,10 @@ print([]) :- nl.
 
 %%%%%%%%%% Predicates that implement the semantics of Description Logics %%%%%%%%%% 
 %%%%%%%%%% used in optimizing the expansions %%%%%%%%%%
+
+:- dynamic table_subsumptions/2.
+:- dynamic table_subsumptions_el/2.
+:- dynamic table_subsumptions_rdfs/2.
 
 %rdfs_subsumes(A,B) :- compound(B), tab_rdfs_subsumes(A,B), !.
 %rdfs_subsumes(A,B) :-
@@ -57,31 +70,41 @@ print([]) :- nl.
 %    rdfs_subsumes_0(A,C), 
 %    rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
 
-rdfs_subsumes_0(A,B) :-
-	clause(A, B), not(B = (_,_)), not(edb(B)).
+%rdfs_subsumes(X, Y) :- 
+%        table_subsumptions(X,Y), !.
+%rdfs_subsumes(X, Y) :-
+%	t_rdfs_subsumes(X, Y, [X]), 
+%        asserta(table_subsumptions(X,Y)).    
+%
+%t_rdfs_subsumes(A, B, L) :- 
+%	rdfs_subsumes_0(A,B), not(member(B, L)).
+%t_rdfs_subsumes(A, B, IntermediateNodes) :-     
+%	rdfs_subsumes_0(A,C), not(member(C, IntermediateNodes)),
+%	t_rdfs_subsumes(C, B, [C | IntermediateNodes]).
 
-rdfs_subsumes(X, Y) :-
-	t_rdfs_subsumes(X, Y, [X]).                   
 
-t_rdfs_subsumes(A, B, L) :- 
-	rdfs_subsumes_0(A,B), not(member(B, L)).
+el_subsumes(A,B) :- table_subsumptions(A,B), !.
+el_subsumes(A,B) :-
+	t_el_subsumes(A, B, [A]),
+        asserta(table_subsumptions(A,B)).                   
 
-t_rdfs_subsumes(A, B, IntermediateNodes) :-     
-	rdfs_subsumes_0(A,C), not(member(C, IntermediateNodes)),
-	t_rdfs_subsumes(C, B, [C | IntermediateNodes]).
-
-
+el_subsumes_0(A,B) :- 
+        table_subsumptions_el(A,B), !.
+el_subsumes_0(A,B) :-
+        rdfs_subsumes_0(A,B).
 el_subsumes_0(A,B) :-
 	idb(B), clause(B, C), C = (Left,Right), 
 	not(Left = (_,_)), not(Right = (_,_)), not(edb(Left)), not(edb(Right)), 
-	(rdfs_subsumes(A, Left); rdfs_subsumes(A, Right)).
-
-el_subsumes(A,B) :-
-	t_el_subsumes(A, B, [A]).                   
+	(rdfs_subsumes_0(A, Left); rdfs_subsumes_0(A, Right)),
+        asserta(table_subsumptions_el(A,B)).
+rdfs_subsumes_0(A,B) :- 
+        table_subsumptions_rdfs(A,B), !.
+rdfs_subsumes_0(A,B) :-
+	clause(A, B), not(B = (_,_)), not(edb(B)),
+        asserta(table_subsumptions_rdfs(A,B)).
 
 t_el_subsumes(A, B, L) :- 
 	el_subsumes_0(A,B), not(member(B, L)).
-
 t_el_subsumes(A, B, IntermediateNodes) :-     
 	el_subsumes_0(A,C), not(member(C, IntermediateNodes)),
 	t_el_subsumes(C, B, [C | IntermediateNodes]).
