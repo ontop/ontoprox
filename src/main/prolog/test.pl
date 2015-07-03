@@ -55,58 +55,26 @@ print([]) :- nl.
 %%%%%%%%%% Predicates that implement the semantics of Description Logics %%%%%%%%%% 
 %%%%%%%%%% used in optimizing the expansions %%%%%%%%%%
 
-%rdfs_subsumes(A,B) :- compound(B), tab_rdfs_subsumes(A,B), !.
+
+%% using assert
+%
+%:- dynamic table_subsumptions/2.
+%
+%rdfs_subsumes(A,B) :- table_subsumptions(A,B), !.
 %rdfs_subsumes(A,B) :-
-%    rdfs_subsumes_0(A,B), asserta(tab_rdfs_subsumes(A,B)).
-%% rdfs_subsumes(A,B) :-
-%%     rdfs_subsumes_0(A,C), not(tab_rdfs_subsumes(A,B)),
-%%     rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
-%rdfs_subsumes(A,B) :-
-%    not(tab_rdfs_subsumes(A,B)),
-%    rdfs_subsumes_0(A,C), 
-%    rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
-
-
-%%%%% second version %%%%%
-:- dynamic table_subsumptions/2.
-:- dynamic table_subsumptions_el/2.
-:- dynamic table_subsumptions_rdfs/2.
-
-subsumes(A,B) :- table_subsumptions(A,B), !.
-subsumes(A,B) :-
-  t_subsumes(A, B, [A]),
-  asserta(table_subsumptions(A,B)).                   
-
-subsumes_0(A,B) :- 
-  table_subsumptions_el(A,B), !.
-subsumes_0(A,B) :-
-  basic_subsumes_0(A,B).
-subsumes_0(A,B) :-
-  idb(B), clause(B, C), C = (Left,Right), 
-  not(Left = (_,_)), not(Right = (_,_)), not(edb(Left)), not(edb(Right)), 
-  (basic_subsumes_0(A, Left); basic_subsumes_0(A, Right)),
-  asserta(table_subsumptions_el(A,B)).
-  
-basic_subsumes_0(A,B) :- 
-  table_subsumptions_rdfs(A,B), !.
-basic_subsumes_0(A,B) :-
-  clause(A, B), not(B = (_,_)), not(edb(B)),
-  asserta(table_subsumptions_rdfs(A,B)).
-
-t_subsumes(A, B, L) :- 
-  subsumes_0(A,B), not(member(B, L)).
-t_subsumes(A, B, IntermediateNodes) :-     
-  subsumes_0(A,C), not(member(C, IntermediateNodes)),
-  t_subsumes(C, B, [C | IntermediateNodes]).
-%%%%% end of second version %%%%%
-
-
-%%%%% first version %%%%%
-rdfs_subsumes_0(A,B) :-
-	clause(A, B), not(B = (_,_)), not(edb(B)).
+%  t_rdfs_subsumes(A, B, [A]),
+%  asserta(table_subsumptions(A,B)).                   
+%
+%rdfs_subsumes_0(A,B) :- table_subsumptions(A,B), !.
+%rdfs_subsumes_0(A,B) :-
+%  clause(A, B), not(B = (_,_)), not(edb(B)).
+%  asserta(table_subsumptions(A,B)).                   
 
 rdfs_subsumes(A, B) :-
 	t_rdfs_subsumes(A, B, [A]).                   
+
+rdfs_subsumes_0(A,B) :-
+	clause(A, B), not(B = (_,_)), not(edb(B)).
 
 t_rdfs_subsumes(A, B, L) :- 
 	rdfs_subsumes_0(A,B), not(member(B, L)).
@@ -115,27 +83,6 @@ t_rdfs_subsumes(A, B, IntermediateNodes) :-
 	rdfs_subsumes_0(A,C), not(member(C, IntermediateNodes)),
 	t_rdfs_subsumes(C, B, [C | IntermediateNodes]).
 
-
-%% this is not sound, we can only do rdfs_subsumes
-el_subsumes_0(A,B) :-
-	idb(B), clause(B, C), C = (Left,Right), 
-	not(Left = (_,_)), not(Right = (_,_)), not(edb(Left)), not(edb(Right)), 
-	(rdfs_subsumes(A, Left); rdfs_subsumes(A, Right)).
-
-el_subsumes(A,B) :-
-	rdfs_subsumes(A, B).
-	
-el_subsumes(A,B) :-
-	t_el_subsumes(A, B, [A]).                   
-
-t_el_subsumes(A, B, L) :- 
-	el_subsumes_0(A,B), not(member(B, L)).
-
-t_el_subsumes(A, B, IntermediateNodes) :-     
-	el_subsumes_0(A,C), not(member(C, IntermediateNodes)),
-	t_el_subsumes(C, B, [C | IntermediateNodes]).
-
-%%%%% end of first version %%%%%
 
 subsumptions(A,B) :- idb(A), rdfs_subsumes(A,B).
 
@@ -157,8 +104,8 @@ remove_subsumers(L,Out) :-
 
 
 subsumes_from_list(_, []) :- fail.
-subsumes_from_list(Elem, [H|_]) :- Elem = view(Sup), H = view(Sub), el_subsumes(Sup, Sub), !.  
-subsumes_from_list(Elem, [H|_]) :- el_subsumes(Elem, H), !.  
+subsumes_from_list(Elem, [H|_]) :- Elem = view(Sup), H = view(Sub), rdfs_subsumes(Sup, Sub), !.  
+subsumes_from_list(Elem, [H|_]) :- rdfs_subsumes(Elem, H), !.  
 subsumes_from_list(Elem, [_|T]) :- subsumes_from_list(Elem, T).  
 
 
@@ -198,21 +145,28 @@ optimized_expand(OriginalGoal, Goal, Expansion, Depth) :-
     optimized_expand(OriginalGoal, Body, Expansion, Depth_1).
 
 
-subsumption_optimized_expand(_, call(_), _, _) :- !, fail. % critical !!!
 
-subsumption_optimized_expand(_, Goal, Goal, _) :- edb(Goal), !. % EDB predicate should not be expanded. They will be defined by the mappings
+subsumption_optimized_expand_0(_, call(_), _, _) :- !, fail. % critical !!!
 
-subsumption_optimized_expand(_, Goal, Goal, 0) :- !, fail. % this means you reach an IDB predicate, which should not be expanded further
+subsumption_optimized_expand_0(_, Goal, [Goal], _) :- edb(Goal), !. % EDB predicate should not be expanded. They will be defined by the mappings
 
-subsumption_optimized_expand(OriginalGoal, (Goal1,Goal2), Expansions, Depth) :- 
-    subsumption_optimized_expand(OriginalGoal, Goal1, Expansion1, Depth), 
+subsumption_optimized_expand_0(_, Goal, [Goal], 0) :- !, fail. % this means you reach an IDB predicate, which should not be expanded further
+
+subsumption_optimized_expand_0(OriginalGoal, Goal, Expansion, Depth) :-
+    clause(Goal, Body),  flatten(Body, BodyList), 
+    not(member_list(OriginalGoal, BodyList)), Depth >= 1, Depth_1 is Depth - 1, 
+    remove_subsumers(BodyList, OptBody), %print([OptBodySequence]),nl,
+    subsumption_optimized_expand(OriginalGoal, OptBody, Expansion, Depth_1).
+
+subsumption_optimized_expand(_, [], [], _) :- !. 
+
+subsumption_optimized_expand(OriginalGoal, [Goal1|Goal2], Expansions, Depth) :- 
+    subsumption_optimized_expand_0(OriginalGoal, Goal1, Expansion1, Depth), 
     subsumption_optimized_expand(OriginalGoal, Goal2, Expansion2, Depth),
-	flatten((Expansion1, Expansion2), OrigExps), remove_subsumers(OrigExps, OptExps), to_sequence(OptExps, Expansions).
+	append(Expansion1, Expansion2, OrigExps), remove_subsumers(OrigExps, Expansions).
 
-subsumption_optimized_expand(OriginalGoal, Goal, Expansion, Depth) :-
-    clause(Goal, Body),  not(member_seq(OriginalGoal, Body)), Depth >= 1, Depth_1 is Depth - 1, 
-    flatten(Body, OrigBody), remove_subsumers(OrigBody, OptBody), to_sequence(OptBody, OptBodySequence), %print([OptBodySequence]),nl,
-    subsumption_optimized_expand(OriginalGoal, OptBodySequence, Expansion, Depth_1).
+
+
 
 %expand_0(OriginalGoal, Goal, Expansion, Depth) :-
 %    clause(Goal, Body),  not(member_seq(OriginalGoal, Body)), Depth >= 1. %do we need depth?
@@ -238,8 +192,8 @@ subsumption_optimized_expand(OriginalGoal, Goal, Expansion, Depth) :-
 %    flatten(Expansion, ExpansionList), GoalAndExpansion = (Goal, ExpansionList).
 expand_list(Goal, GoalAndExpansion, Depth) :- optimized_expand(Goal, Goal, Expansion, Depth),
     flatten(Expansion, ExpansionList), GoalAndExpansion = (Goal, ExpansionList).
-expand_list_opt(Goal, GoalAndExpansion, Depth) :- subsumption_optimized_expand(Goal, Goal, Expansion, Depth),
-    flatten(Expansion, ExpansionList), GoalAndExpansion = (Goal, ExpansionList).
+expand_list_opt(Goal, GoalAndExpansion, Depth) :- subsumption_optimized_expand(Goal, [Goal], Expansion, Depth),
+    GoalAndExpansion = (Goal, Expansion).
 
 
 datalog_expansions(P, Depth, Expansions) :-
