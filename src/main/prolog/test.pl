@@ -16,6 +16,15 @@ member_seq(X,(_,T)) :- member_seq(X,T).
 %member(X, [X|_]) :- !.
 %member(X,[_|T]) :- member(X,T).
 
+%% removes duplicates
+remove_unifiable([],[]).
+remove_unifiable([H|T],[H|Out]) :-
+    not(member(H,T)), !, %%% check here
+    remove_unifiable(T,Out).
+remove_unifiable([H|T],Out) :-
+    remove_unifiable(T,Out).
+
+
 %% checks whether the exact syntactic form of Item appears in List  
 %% member_list(Item, List) 
 member_list(X, [Y|_]) :- X==Y, !.
@@ -153,10 +162,17 @@ subsumption_optimized_expand_0(_, Goal, [Goal], _) :- edb(Goal), !. % EDB predic
 subsumption_optimized_expand_0(_, Goal, [Goal], 0) :- !, fail. % this means you reach an IDB predicate, which should not be expanded further
 
 subsumption_optimized_expand_0(OriginalGoal, Goal, Expansion, Depth) :-
-    clause(Goal, Body),  flatten(Body, BodyList), 
-    not(member_list(OriginalGoal, BodyList)), Depth >= 1, Depth_1 is Depth - 1, 
-    remove_subsumers(BodyList, OptBody), %print([OptBodySequence]),nl,
-    subsumption_optimized_expand(OriginalGoal, OptBody, Expansion, Depth_1).
+    expand_0(OriginalGoal, Goal, Body),
+    %% 
+    %% expand first the fresh predicates and then remove subsumers 
+    %%
+    expand_fresh(OriginalGoal, Body, ExpansionOfFresh), 
+    remove_subsumers(ExpansionOfFresh, Optimized), %print([OptBodySequence]),nl,
+	%%
+	%% the recursive call
+    %%
+    Depth >= 1, Depth_1 is Depth - 1,
+    subsumption_optimized_expand(OriginalGoal, Optimized, Expansion, Depth_1).
 
 subsumption_optimized_expand(_, [], [], _) :- !. 
 
@@ -166,35 +182,74 @@ subsumption_optimized_expand(OriginalGoal, [Goal1|Goal2], Expansions, Depth) :-
 	append(Expansion1, Expansion2, OrigExps), remove_subsumers(OrigExps, Expansions).
 
 
+expand_fresh(_, [], []) :- !.
+
+expand_fresh(OriginalGoal, [Goal1|Goal2], Expansion) :- 
+	fresh(Goal1), expand_0(OriginalGoal, Goal1, Body1), 
+	expand_fresh(OriginalGoal, Goal2, Expansion2), 
+	append(Body1, Expansion2, Expansion), !.    
+
+expand_fresh(OriginalGoal, [Goal1|Goal2], [Goal1|Expansion2]) :- 
+	expand_fresh(OriginalGoal, Goal2, Expansion2).    
 
 
-%expand_0(OriginalGoal, Goal, Expansion, Depth) :-
-%    clause(Goal, Body),  not(member_seq(OriginalGoal, Body)), Depth >= 1. %do we need depth?
+%% the basic expand
+%% - gets a body of goal
+%% - flattens it to a list
+%% - checks that the original goal is not the list <-- we bring this check down  ??? TODO check if it's really an optimization
+expand_0(OriginalGoal, Goal, Expansion) :-
+    clause(Goal, Body), flatten(Body, Expansion), not(member_list(OriginalGoal, Expansion)).
 
-%breadth_first_expand(OriginalGoal, (Goal1, Goal), (Expansion1, Expansion), Depth) :-
-%	expand_0(OriginalGoal, Goal1, Expansion1, Depth), breadth_first_expand(OriginalGoal, Goal, Expansion, Depth).
 
-%breadth_first_expand(OriginalGoal, Goal, Expansion, Depth) :-
-%    expand_0(OriginalGoal, Goal, Expansion, Depth).
 
-%subsumption_optimized_expand(OriginalGoal, (Goal1,Goal2), Expansions, Depth) :- 
-%	breadth_first_expand(OriginalGoal, (Goal1,Goal2), (Expansion1,Expansion2), Depth),    
-%	flatten((Expansion1, Expansion2), OrigExps), remove_subsumers(OrigExps, OptExps), to_sequence(OptExps, CurrentExpansions),
-%	Depth >= 1, Depth_1 is Depth - 1,
-%	subsumption_optimized_expand(OriginalGoal, CurrentExpansions, Expansions, Depth_1). 
-%   %flatten(Body, OrigBody), remove_subsumers(OrigBody, OptBody), to_sequence(OptBody, OptBodySequence),
-    
-%subsumption_optimized_expand(OriginalGoal, Goal, Expansion, Depth) :-
-%    expand_0(OriginalGoal, Goal, Expansion, Depth).
+
+%%%%%%%%%%%%% breadth first expand %%%%%%%%%%%%%
+%% slower than the normal one
+
+optimized_bf_expand(_, Goal, Goal, _) :-
+	edb_expansions(Goal), !.
+
+optimized_bf_expand(OriginalGoal, Goal, Expansions, Depth) :-
+    Depth >= 1, Depth_1 is Depth - 1,
+	expand_one_level(OriginalGoal, Goal, FirstLevelExpansion), 
+	expand_fresh(OriginalGoal, FirstLevelExpansion, ExpansionOfFresh), 
+    remove_subsumers(ExpansionOfFresh, Optimized), 
+	optimized_bf_expand(OriginalGoal, Optimized, Expansions, Depth_1).
+
+edb_expansions([]) :- !.
+edb_expansions([H|T]) :- edb(H), edb_expansions(T). 
+
+bf_expand_0(_, call(_), _) :-
+    !, fail. 			%% check here
+bf_expand_0(_, Goal, [Goal]) :-
+    edb(Goal), !. 		%% check here
+bf_expand_0(OriginalGoal, Goal, Expansion) :-
+    clause(Goal, Body), flatten(Body, Expansion), not(member_list(OriginalGoal, Expansion)).
+
+expand_one_level(_, [], []) :- !.
+expand_one_level(OriginalGoal, [Goal1|Goal2], Expansion) :- 
+	bf_expand_0(OriginalGoal, Goal1, Body1), 
+	expand_one_level(OriginalGoal, Goal2, Expansion2), 
+	append(Body1, Expansion2, Expansion).    
+
+%%%%%%%%%%%%% end of breadth first expand %%%%%%%%%%%%%
+
 
 
 %expand_list(Goal, GoalAndExpansion, Depth) :- expand(Goal, Expansion, Depth), 
 %    flatten(Expansion, ExpansionList), GoalAndExpansion = (Goal, ExpansionList).
 expand_list(Goal, GoalAndExpansion, Depth) :- optimized_expand(Goal, Goal, Expansion, Depth),
     flatten(Expansion, ExpansionList), GoalAndExpansion = (Goal, ExpansionList).
-expand_list_opt(Goal, GoalAndExpansion, Depth) :- subsumption_optimized_expand(Goal, [Goal], Expansion, Depth),
+
+expand_list_opt(Goal, GoalAndExpansion, Depth) :- 
+	subsumption_optimized_expand(Goal, [Goal], Expansion, Depth),
     GoalAndExpansion = (Goal, Expansion).
 
+%% breadth first
+expand_list_bf(Goal, GoalAndExpansion, Depth) :- 
+	optimized_bf_expand(Goal, [Goal], Expansion, Depth), 
+	edb_expansions(Expansion),
+    GoalAndExpansion = (Goal, Expansion).
 
 datalog_expansions(P, Depth, Expansions) :-
     findall(Expansion, expand_list(P, Expansion, Depth), IntermediateExpansions),
@@ -202,6 +257,10 @@ datalog_expansions(P, Depth, Expansions) :-
 
 datalog_expansions_opt(P, Depth, Expansions) :-
     findall(Expansion, expand_list_opt(P, Expansion, Depth), IntermediateExpansions),
+    remove_equivalent(IntermediateExpansions, Expansions).
+
+datalog_expansions_bf(P, Depth, Expansions) :-
+    findall(Expansion, expand_list_bf(P, Expansion, Depth), IntermediateExpansions),
     remove_equivalent(IntermediateExpansions, Expansions).
 
 
