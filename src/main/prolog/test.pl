@@ -55,10 +55,6 @@ print([]) :- nl.
 %%%%%%%%%% Predicates that implement the semantics of Description Logics %%%%%%%%%% 
 %%%%%%%%%% used in optimizing the expansions %%%%%%%%%%
 
-:- dynamic table_subsumptions/2.
-:- dynamic table_subsumptions_el/2.
-:- dynamic table_subsumptions_rdfs/2.
-
 %rdfs_subsumes(A,B) :- compound(B), tab_rdfs_subsumes(A,B), !.
 %rdfs_subsumes(A,B) :-
 %    rdfs_subsumes_0(A,B), asserta(tab_rdfs_subsumes(A,B)).
@@ -70,47 +66,78 @@ print([]) :- nl.
 %    rdfs_subsumes_0(A,C), 
 %    rdfs_subsumes(C,B), asserta(tab_rdfs_subsumes(A,B)).
 
-%rdfs_subsumes(X, Y) :- 
-%        table_subsumptions(X,Y), !.
-%rdfs_subsumes(X, Y) :-
-%	t_rdfs_subsumes(X, Y, [X]), 
-%        asserta(table_subsumptions(X,Y)).    
-%
-%t_rdfs_subsumes(A, B, L) :- 
-%	rdfs_subsumes_0(A,B), not(member(B, L)).
-%t_rdfs_subsumes(A, B, IntermediateNodes) :-     
-%	rdfs_subsumes_0(A,C), not(member(C, IntermediateNodes)),
-%	t_rdfs_subsumes(C, B, [C | IntermediateNodes]).
+
+%%%%% second version %%%%%
+:- dynamic table_subsumptions/2.
+:- dynamic table_subsumptions_el/2.
+:- dynamic table_subsumptions_rdfs/2.
+
+subsumes(A,B) :- table_subsumptions(A,B), !.
+subsumes(A,B) :-
+  t_subsumes(A, B, [A]),
+  asserta(table_subsumptions(A,B)).                   
+
+subsumes_0(A,B) :- 
+  table_subsumptions_el(A,B), !.
+subsumes_0(A,B) :-
+  basic_subsumes_0(A,B).
+subsumes_0(A,B) :-
+  idb(B), clause(B, C), C = (Left,Right), 
+  not(Left = (_,_)), not(Right = (_,_)), not(edb(Left)), not(edb(Right)), 
+  (basic_subsumes_0(A, Left); basic_subsumes_0(A, Right)),
+  asserta(table_subsumptions_el(A,B)).
+  
+basic_subsumes_0(A,B) :- 
+  table_subsumptions_rdfs(A,B), !.
+basic_subsumes_0(A,B) :-
+  clause(A, B), not(B = (_,_)), not(edb(B)),
+  asserta(table_subsumptions_rdfs(A,B)).
+
+t_subsumes(A, B, L) :- 
+  subsumes_0(A,B), not(member(B, L)).
+t_subsumes(A, B, IntermediateNodes) :-     
+  subsumes_0(A,C), not(member(C, IntermediateNodes)),
+  t_subsumes(C, B, [C | IntermediateNodes]).
+%%%%% end of second version %%%%%
 
 
-el_subsumes(A,B) :- table_subsumptions(A,B), !.
-el_subsumes(A,B) :-
-	t_el_subsumes(A, B, [A]),
-        asserta(table_subsumptions(A,B)).                   
+%%%%% first version %%%%%
+rdfs_subsumes_0(A,B) :-
+	clause(A, B), not(B = (_,_)), not(edb(B)).
 
-el_subsumes_0(A,B) :- 
-        table_subsumptions_el(A,B), !.
-el_subsumes_0(A,B) :-
-        rdfs_subsumes_0(A,B).
+rdfs_subsumes(A, B) :-
+	t_rdfs_subsumes(A, B, [A]).                   
+
+t_rdfs_subsumes(A, B, L) :- 
+	rdfs_subsumes_0(A,B), not(member(B, L)).
+
+t_rdfs_subsumes(A, B, IntermediateNodes) :-     
+	rdfs_subsumes_0(A,C), not(member(C, IntermediateNodes)),
+	t_rdfs_subsumes(C, B, [C | IntermediateNodes]).
+
+
+%% this is not sound, we can only do rdfs_subsumes
 el_subsumes_0(A,B) :-
 	idb(B), clause(B, C), C = (Left,Right), 
 	not(Left = (_,_)), not(Right = (_,_)), not(edb(Left)), not(edb(Right)), 
-	(rdfs_subsumes_0(A, Left); rdfs_subsumes_0(A, Right)),
-        asserta(table_subsumptions_el(A,B)).
-rdfs_subsumes_0(A,B) :- 
-        table_subsumptions_rdfs(A,B), !.
-rdfs_subsumes_0(A,B) :-
-	clause(A, B), not(B = (_,_)), not(edb(B)),
-        asserta(table_subsumptions_rdfs(A,B)).
+	(rdfs_subsumes(A, Left); rdfs_subsumes(A, Right)).
+
+el_subsumes(A,B) :-
+	rdfs_subsumes(A, B).
+	
+el_subsumes(A,B) :-
+	t_el_subsumes(A, B, [A]).                   
 
 t_el_subsumes(A, B, L) :- 
 	el_subsumes_0(A,B), not(member(B, L)).
+
 t_el_subsumes(A, B, IntermediateNodes) :-     
 	el_subsumes_0(A,C), not(member(C, IntermediateNodes)),
 	t_el_subsumes(C, B, [C | IntermediateNodes]).
 
+%%%%% end of first version %%%%%
 
-subsumptions(A,B) :- idb(A), el_subsumes(A,B).
+subsumptions(A,B) :- idb(A), rdfs_subsumes(A,B).
 
 
 remove_subsumers_1(_, [], []).
@@ -169,9 +196,6 @@ optimized_expand(OriginalGoal, (Goal1,Goal2), (Expansion1, Expansion2), Depth) :
 optimized_expand(OriginalGoal, Goal, Expansion, Depth) :-
     clause(Goal, Body),  not(member_seq(OriginalGoal, Body)), Depth >= 1, Depth_1 is Depth - 1, 
     optimized_expand(OriginalGoal, Body, Expansion, Depth_1).
-
-
-
 
 
 subsumption_optimized_expand(_, call(_), _, _) :- !, fail. % critical !!!
@@ -304,6 +328,21 @@ idb(http___www_example_org_fresh_fresh6(_)).
 idb(http___www_example_org_fresh_fresh7(_)).
 idb(http___www_example_org_fresh_fresh8(_)).
 idb(http___www_example_org_fresh_fresh9(_)).
+
+fresh(http___www_example_org_fresh_fresh1(_)).
+fresh(http___www_example_org_fresh_fresh10(_)).
+fresh(http___www_example_org_fresh_fresh11(_)).
+fresh(http___www_example_org_fresh_fresh12(_)).
+fresh(http___www_example_org_fresh_fresh13(_)).
+fresh(http___www_example_org_fresh_fresh14(_)).
+fresh(http___www_example_org_fresh_fresh2(_)).
+fresh(http___www_example_org_fresh_fresh3(_)).
+fresh(http___www_example_org_fresh_fresh4(_)).
+fresh(http___www_example_org_fresh_fresh5(_)).
+fresh(http___www_example_org_fresh_fresh6(_)).
+fresh(http___www_example_org_fresh_fresh7(_)).
+fresh(http___www_example_org_fresh_fresh8(_)).
+fresh(http___www_example_org_fresh_fresh9(_)).
 
 http___uob_iodt_ibm_com_univ_bench_dl_owl_Article(X) :- view(http___uob_iodt_ibm_com_univ_bench_dl_owl_Article(X)).
 http___uob_iodt_ibm_com_univ_bench_dl_owl_AssistantProfessor(X) :- view(http___uob_iodt_ibm_com_univ_bench_dl_owl_AssistantProfessor(X)).
