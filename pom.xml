@@ -71,9 +71,9 @@
 
         <!-- install manually -->
         <dependency>
-            <groupId>org.jpl</groupId>
+            <groupId>org.jpl7</groupId>
             <artifactId>jpl</artifactId>
-            <version>6</version>
+            <version>7.0.1</version>
         </dependency>
 
     </dependencies>

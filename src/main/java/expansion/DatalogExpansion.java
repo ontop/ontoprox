@@ -3,12 +3,15 @@ package expansion;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Joiner;
-import jpl.Compound;
-import jpl.Query;
-import jpl.Term;
+import org.jpl7.Atom;
+import org.jpl7.Compound;
+import org.jpl7.Query;
+import org.jpl7.Term;
+
 
 public class DatalogExpansion {
 
@@ -25,7 +28,7 @@ public class DatalogExpansion {
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Student", 1, depth);
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_subOrganizationOf", 2, depth);
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Employee", 1, depth);
-        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Chair", 1, depth);
+        testExpand("'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'", 1, depth);
 
     }
 
@@ -64,7 +67,7 @@ public class DatalogExpansion {
         List<DatalogRule> rules = Lists.newArrayList();
 
         if (q2.hasMoreSolutions()) {
-            Hashtable s4 = q2.nextSolution();
+            Map<String, Term> s4 = q2.nextSolution();
             Compound expansions = (Compound) s4.get("Expansions");
 
             List<Term> expansion_list = flatten(expansions);
@@ -72,10 +75,18 @@ public class DatalogExpansion {
 
             for (Term t : expansion_list) {
 
-                List<Term> expansion = flatten((Compound) t);
+                List<Term> expansion = null;
+                if (t instanceof Compound) {
+                    expansion = flatten((Compound) t);
+                    DatalogRule datalogRule = new DatalogRule(expansion);
+                    rules.add(datalogRule);
+
+                } else {
+                    System.out.println("catch it");
+                }
+
+
                 //datalogExpansions.add(expansion);
-                DatalogRule datalogRule = new DatalogRule(expansion);
-                rules.add(datalogRule);
                 //System.out.println(expansion);
             }
         }
@@ -84,15 +95,21 @@ public class DatalogExpansion {
     }
 
     private static void init() {
-        String t1 = "consult('src/main/prolog/expand.pl')";
+        String t1 = "consult('src/main/prolog/test.pl')";
         Query q1 = new Query(t1);
 
         System.out.println(t1 + " " + (q1.hasSolution() ? "succeeded" : "failed"));
 
-        String t2 = "consult('src/main/prolog/univ_bench_dl.pl')";
-        Query q2 = new Query(t2);
 
-        System.out.println(t2 + " " + (q2.hasSolution() ? "succeeded" : "failed"));
+//        String t1 = "consult('src/main/prolog/expand.pl')";
+//        Query q1 = new Query(t1);
+//
+//        System.out.println(t1 + " " + (q1.hasSolution() ? "succeeded" : "failed"));
+//
+//        String t2 = "consult('src/main/prolog/univ_bench_dl.pl')";
+//        Query q2 = new Query(t2);
+//
+//        System.out.println(t2 + " " + (q2.hasSolution() ? "succeeded" : "failed"));
     }
 
     public static List<Term> flatten(Compound compound){
@@ -102,7 +119,20 @@ public class DatalogExpansion {
             // 1 based
             Term arg1 = compound.arg(1);
             list.add(arg1);
-            compound = (Compound) compound.arg(2);
+
+
+            if(compound.arg(2) instanceof Compound){
+                compound = (Compound) compound.arg(2);
+            } else {
+                list.add(compound.arg(2));
+                break;
+            }
+
+//            try {
+//                compound = (Compound) compound.arg(2);
+//            }catch (Exception e){
+//                System.out.println("catch it!");
+//            }
         }
 
         return list;

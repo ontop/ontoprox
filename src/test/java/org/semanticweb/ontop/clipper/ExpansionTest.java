@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +37,7 @@ public class ExpansionTest {
     @Test
     public void test() throws IOException, InvalidMappingException {
 
-        String obdaFile =     "src/test/resources/uobm/univ-bench-dl.obda";
+        String obdaFile = "src/test/resources/uobm/univ-bench-dl.obda";
 
         OBDAModel obdaModel = DATA_FACTORY.getOBDAModel();
         ModelIOManager ioManager = new ModelIOManager(obdaModel);
@@ -53,7 +54,7 @@ public class ExpansionTest {
         Set<Predicate> predicates = new HashSet<>();
 
         for (OBDAMappingAxiom mappingAxiom : mappingAxioms) {
-            CQIE targetQuery = (CQIE)mappingAxiom.getTargetQuery();
+            CQIE targetQuery = (CQIE) mappingAxiom.getTargetQuery();
 
             for (Function function : targetQuery.getBody()) {
 
@@ -68,7 +69,7 @@ public class ExpansionTest {
         Collections.sort(orderedPredicates, new Comparator<Predicate>() {
             @Override
             public int compare(Predicate o1, Predicate o2) {
-                if(o1.getArity() != o2.getArity()){
+                if (o1.getArity() != o2.getArity()) {
                     return o1.getArity() - o2.getArity();
                 } else {
                     return o1.getName().compareTo(o2.getName());
@@ -78,13 +79,30 @@ public class ExpansionTest {
         });
 
 
+        sb.append("edb(view(_)).\n");
+
+
+//        for (Predicate predicate : orderedPredicates) {
+//            switch (predicate.getArity()) {
+//                case 1:
+//                    sb.append(String.format("edb(view(%s(_))).\n", normalizeName(predicate.getName())));
+//                    break;
+//                case 2:
+//                    sb.append(String.format("edb(view(%s(_,_))).\n", normalizeName(predicate.getName())));
+//                    break;
+//                default:
+//                    throw new IllegalStateException();
+//            }
+//        }
+
+
         for (Predicate predicate : orderedPredicates) {
             switch (predicate.getArity()) {
                 case 1:
-                    sb.append(String.format("edb(v_%s(_)).\n", normalizeName(predicate.getName())));
+                    sb.append(String.format("idb(%s(_)).\n", normalizeName(predicate.getName())));
                     break;
                 case 2:
-                    sb.append(String.format("edb(v_%s(_,_)).\n", normalizeName(predicate.getName())));
+                    sb.append(String.format("idb(%s(_,_)).\n", normalizeName(predicate.getName())));
                     break;
                 default:
                     throw new IllegalStateException();
@@ -94,10 +112,10 @@ public class ExpansionTest {
         for (Predicate predicate : orderedPredicates) {
             switch (predicate.getArity()) {
                 case 1:
-                    sb.append(String.format("%1$s(X) :- v_%1$s(X).\n", normalizeName(predicate.getName())));
+                    sb.append(String.format("%1$s(X) :- view(%1$s(X)).\n", normalizeName(predicate.getName())));
                     break;
                 case 2:
-                    sb.append(String.format("%1$s(X, Y) :- v_%1$s(X, Y).\n", normalizeName(predicate.getName())));
+                    sb.append(String.format("%1$s(X, Y) :- view(%1$s(X, Y)).\n", normalizeName(predicate.getName())));
                     break;
                 default:
                     throw new IllegalStateException();
@@ -109,8 +127,13 @@ public class ExpansionTest {
     }
 
 
+    public static String normalizeName(String input) {
 
-    public static String normalizeName(String input){
+//        if (Pattern.matches(".*[^a-zA-Z0-9].*", input)) {
+//            return "'" + input + "'";
+//        } else {
+//            return input;
+//        }
 
         String alphaAndDigits = input.replaceAll("[^a-zA-Z0-9]","_");
         return alphaAndDigits;

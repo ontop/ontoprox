@@ -28,24 +28,15 @@ We rely on SWI-prolog. The following is the instruction on Mac.
 On Mac, use homebrew:
 
 ```
-brew cask install swi-prolog
-```
-
-### fix the library
-
-```
-$ install_name_tool -change @executable_path/../swipl/lib/x86_64-darwin13.1.0/libswipl.dylib \
-/opt/homebrew-cask/Caskroom/swi-prolog/6.6.6/SWI-Prolog.app/Contents/swipl/lib/x86_64-darwin13.1.0/libswipl.dylib \
-libjpl.dylib
+brew  install swi-prolog
 ```
 
 ### install the library to the local maven repository
 
 ```
-$ mvn install:install-file -Dfile=/opt/homebrew-cask/Caskroom/swi-prolog/6.6.6/SWI-Prolog.app/Contents/swipl/lib/jpl.jar \
- -DgroupId=org.jpl -DartifactId=jpl -Dversion=6 -Dpackaging=jar
+$ cd /usr/local/opt/swi-prolog/libexec/lib/swipl-7.2.2/lib
+$ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -Dversion=7.0.1 -Dpackaging=jar
 ```
-
  
 
 

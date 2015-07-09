@@ -2,7 +2,7 @@ package expansion;
 
 
 import com.google.common.base.Joiner;
-import jpl.Term;
+import org.jpl7.Term;
 
 import java.util.List;
 
