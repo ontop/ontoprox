@@ -1,16 +1,16 @@
 package expansion;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Joiner;
-import org.jpl7.Atom;
 import org.jpl7.Compound;
 import org.jpl7.Query;
 import org.jpl7.Term;
+import org.jpl7.Variable;
+import org.semanticweb.ontop.model.CQIE;
 
 
 public class DatalogExpansion {
@@ -43,6 +43,13 @@ public class DatalogExpansion {
         Joiner.on("\n").appendTo(System.out, expansions);
 
         System.out.println();
+
+        System.out.println("------------------------------------------");
+
+
+        for(DatalogRule datalogRule : expansions){
+            System.out.println(datalogRule.toCQIE());
+        }
     }
 
     private static List<DatalogRule> expand(String predicate, int arity, int depth) {
@@ -70,17 +77,17 @@ public class DatalogExpansion {
             Map<String, Term> s4 = q2.nextSolution();
             Compound expansions = (Compound) s4.get("Expansions");
 
-            List<Term> expansion_list = flatten(expansions);
+            //List<Term> expansion_list = flatten(expansions);
+            //List<Term> expansion_list = flattenList(expansions);
+
+            Term[] expansion_list = expansions.toTermArray();
 
 
             for (Term t : expansion_list) {
 
-                List<Term> expansion = null;
                 if (t instanceof Compound) {
-                    expansion = flatten((Compound) t);
-                    DatalogRule datalogRule = new DatalogRule(expansion);
-                    rules.add(datalogRule);
-
+                    DatalogRule cq = new DatalogRule(t);
+                    rules.add(cq);
                 } else {
                     System.out.println("catch it");
                 }
@@ -124,7 +131,7 @@ public class DatalogExpansion {
             if(compound.arg(2) instanceof Compound){
                 compound = (Compound) compound.arg(2);
             } else {
-                list.add(compound.arg(2));
+                //list.add(compound.arg(2));
                 break;
             }
 
