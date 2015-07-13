@@ -26,7 +26,7 @@ mappingId	mapping-P
 target		:{id} :P :{attr1} . 
 source		SELECT * FROM TABLE2
 
-mappingId	MAPID-1283436767e74a85a62f130df04a9543
+mappingId	MAPID-7cf344fdf1af4398ab1e8f8ffa67a36f
 target		:{t1_1} a :A . 
 source		SELECT 
 			   "QTABLE2TMP0"."ID" AS "t1_1"
@@ -36,7 +36,7 @@ source		SELECT
 			("QTABLE2TMP0"."ID" < 5) AND
 			("QTABLE2TMP0"."ID" > 1)
 
-mappingId	MAPID-64a3b10a36c14d4a8598d69bd3dda8e7
+mappingId	MAPID-e9151c96e36846d18e30c6eeba0521f5
 target		:{t1_1} a :A . 
 source		SELECT 
 			   "QTABLE2TMP0"."ID" AS "t1_1"
@@ -46,7 +46,7 @@ source		SELECT
 			("QTABLE2TMP0"."ID" < 3) AND
 			("QTABLE2TMP0"."ID" > 1)
 
-mappingId	MAPID-dc0d2300506d47a78b01ca2569fb0880
+mappingId	MAPID-2c836315ecd243cfaf605ef15277aa1d
 target		:{t1_1} a :B . 
 source		SELECT 
 			   "QTABLE2TMP0"."ID" AS "t1_1"
@@ -54,10 +54,11 @@ source		SELECT
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1"
 			WHERE 
+			("QTABLE2TMP0"."ATTR1" = "QTABLE2TMP1"."ID") AND
 			("QTABLE2TMP0"."ATTR1" < 5) AND
 			("QTABLE2TMP0"."ATTR1" > 1)
 
-mappingId	MAPID-0e6312d4519e4fa1bfb4fdcdc2bfb56c
+mappingId	MAPID-9e24d5c864034766a65b07c84947390c
 target		:{t1_1} a :B . 
 source		SELECT 
 			   "QTABLE2TMP0"."ID" AS "t1_1"
@@ -65,6 +66,7 @@ source		SELECT
 			TABLE2 "QTABLE2TMP0",
 			TABLE2 "QTABLE2TMP1"
 			WHERE 
+			("QTABLE2TMP0"."ATTR1" = "QTABLE2TMP1"."ID") AND
 			("QTABLE2TMP0"."ATTR1" < 3) AND
 			("QTABLE2TMP0"."ATTR1" > 1)
 ]]

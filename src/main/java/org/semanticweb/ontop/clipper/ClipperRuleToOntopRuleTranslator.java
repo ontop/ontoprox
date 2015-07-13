@@ -22,7 +22,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"UnnecessaryLocalVariable"})
 public class ClipperRuleToOntopRuleTranslator {
 
     static OBDADataFactory dataFactory = OBDADataFactoryImpl.getInstance();

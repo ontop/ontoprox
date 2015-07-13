@@ -20,6 +20,7 @@ import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.obda.utils.QueryUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -43,7 +44,8 @@ public class DatalogToMappingAxiomTranslater {
     }
 
     public OBDAMappingAxiom translate(CQIE cqie) throws OBDAException {
-        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram(ImmutableList.of(removeFunctionsInHead(cqie)));
+
+        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram(Lists.newArrayList(removeFunctionsInHead(cqie)));
 
         String parameter = obdaDataSource.getParameter(RDBMSourceParameterConstants.DATABASE_DRIVER);
 

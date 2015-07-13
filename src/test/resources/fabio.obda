@@ -1,0 +1,14 @@
+[PrefixDeclaration]
+:		http://purl.org/spar/fabio/
+dc:		http://purl.org/dc/elements/1.1/
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xsd:		http://www.w3.org/2001/XMLSchema#
+frbr:		http://purl.org/vocab/frbr/core#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+skos:		http://www.w3.org/2004/02/skos/core#
+spar:		http://purl.org/spar/
+vann:		http://purl.org/vocab/vann/
+prism:		http://prismstandard.org/namespaces/basic/2.0/
+dcterms:		http://purl.org/dc/terms/
+

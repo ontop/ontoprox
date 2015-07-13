@@ -1,0 +1,1310 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#"
+     xml:base="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:pto="http://www.co-ode.org/roberts/pto.owl#">
+    <owl:Ontology rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasMeasurement -->
+
+    <owl:ObjectProperty rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasMeasurement">
+        <rdfs:range rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Measurement"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasQuantity -->
+
+    <owl:ObjectProperty rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasQuantity">
+        <rdfs:range rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit -->
+
+    <owl:ObjectProperty rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:range rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Unit"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#inCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#inCondition">
+        <rdfs:domain rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Measurement"/>
+        <rdfs:range rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasQuantity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topDataProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.co-ode.org/roberts/pto.owl#AtomicVolume -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/roberts/pto.owl#AtomicVolume">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetrePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.co-ode.org/roberts/pto.owl#DomainEntity -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/roberts/pto.owl#DomainEntity"/>
+    
+
+
+    <!-- http://www.co-ode.org/roberts/pto.owl#HexahydrateMolarMass -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/roberts/pto.owl#HexahydrateMolarMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.co-ode.org/roberts/pto.owl#PentahydrateMolarMass -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/roberts/pto.owl#PentahydrateMolarMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.co-ode.org/roberts/pto.owl#ThermalConductivity -->
+
+    <owl:Class rdf:about="http://www.co-ode.org/roberts/pto.owl#ThermalConductivity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#WattPerMetrePerDegreeKelvin"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Ampere -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Ampere">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalCurrent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMass -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMassUnit"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMassUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMassUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicRadius -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicRadius">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Picometre"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicVolume -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicVolume">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetrePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Unit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Candela -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Candela">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LuminousIntensity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Celsius -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Celsius">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit"/>
+        <owl:disjointWith rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CelsiusBoilingPoint -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CelsiusBoilingPoint">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Celsius"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CelsiusMeltingPoint -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CelsiusMeltingPoint">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Celsius"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Centimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Centimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit"/>
+        <owl:disjointWith rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicMillimetre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetrePerMole -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicCentimetrePerMole">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicMillimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#CubicMillimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DecompositionPoint -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DecompositionPoint">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Density -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Density">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#grammesPerCentimetreCubed"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Unit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DihydrateMolarMass -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DihydrateMolarMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalConductivity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalConductivity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SiemensPerMetre"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalCurrent -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalCurrent">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectronVolt -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectronVolt">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyQuantity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyQuantity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#FirstIonisationEnergy -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#FirstIonisationEnergy">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonisationEnergy"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Force -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Force">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Gramme -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Gramme">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammesPerOneHundredCentimetresCubed -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammesPerOneHundredCentimetresCubed">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit"/>
+        <owl:disjointWith rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#grammesPerCentimetreCubed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfAtomisation -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfAtomisation">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfFusion -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfFusion">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfVapourisation -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#HeatOfVapourisation">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonicRadius -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonicRadius">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Picometre"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonisationEnergy -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonisationEnergy">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Joule -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Joule">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#JoulePerGrammePerDegreeKelvin -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#JoulePerGrammePerDegreeKelvin">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KelvinBoilingPoint -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KelvinBoilingPoint">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KelvinMeltingPoint -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KelvinMeltingPoint">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kelvin"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoule -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoule">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloPascal -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloPascal">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit"/>
+        <owl:disjointWith rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Pascal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kilogramme -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kilogramme">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LuminousIntensity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LuminousIntensity">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassQuantity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassQuantity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Measurement -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Measurement">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasQuantity"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#inCondition"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Metre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Metre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Microgramme -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Microgramme">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Micrometre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Micrometre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Milligramme -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Milligramme">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millisecond -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millisecond">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Minute -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Minute">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Mole -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Mole">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanogramme -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanogramme">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanometre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanometre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanosecond -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanosecond">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Newton -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Newton">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Force"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Pascal -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Pascal">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kilogramme per square metre</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PaulingScale -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PaulingScale">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dimensionless unit that is a measure of electronegativity</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Picometre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Picometre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Second -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Second">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SecondIonisationEnergy -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SecondIonisationEnergy">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonisationEnergy"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SiemensPerMetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SiemensPerMetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unit of electric conductance and is the inverse of resistivity</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SolubilityInWater -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SolubilityInWater">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammesPerOneHundredCentimetresCubed"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SpecificHeatCapacity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SpecificHeatCapacity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#JoulePerGrammePerDegreeKelvin"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareCentimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareCentimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit"/>
+        <owl:disjointWith rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMillimetre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMillimetre -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMillimetre">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#StandardPressure -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#StandardPressure">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloPascal"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasValue"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">101.325</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#StandardTemperature -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#StandardTemperature">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Celsius"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasValue"/>
+                        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#double">20.0</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureQuantity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureQuantity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TetrahydrateMolarMass -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TetrahydrateMolarMass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MolarMass"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ThirdIonisationEnergy -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ThirdIonisationEnergy">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#IonisationEnergy"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#BaseUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Unit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Unit"/>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Watt -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Watt">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">power, radiant flux</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#WattPerMetrePerDegreeKelvin -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#WattPerMetrePerDegreeKelvin">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#DerivedUnit"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unit for thermal conductivity</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#electronAffinity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#electronAffinity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoulePerMole"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#electronegativity -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#electronegativity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Quantity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#hasUnit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PaulingScale"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#grammesPerCentimetreCubed -->
+
+    <owl:Class rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#grammesPerCentimetreCubed">
+        <rdfs:subClassOf rdf:resource="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Force"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SiemensPerMetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Centimetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Metre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Micrometre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millimetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanometre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Picometre"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Millisecond"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Minute"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanosecond"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Second"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectricalCurrent"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LenthUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#LuminousIntensity"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Mole"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TemperatureUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#TimeUnit"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AtomicMassUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Gramme"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Kilogramme"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Microgramme"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Milligramme"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Nanogramme"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#AreaUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#EnergyUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Force"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#GrammePerMole"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#MassPerVolumeUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PaulingScale"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#PressureUnit"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SiemensPerMetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#VolumeUnit"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareCentimetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMetre"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#SquareMillimetre"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#ElectronVolt"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#Joule"/>
+            <rdf:Description rdf:about="http://www.cs.man.ac.uk/~stevensr/ontology/units.owl#KiloJoule"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.0.0.1443) http://owlapi.sourceforge.net -->
+
