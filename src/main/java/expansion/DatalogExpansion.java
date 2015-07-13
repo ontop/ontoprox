@@ -32,13 +32,13 @@ public class DatalogExpansion {
 
     }
 
-    private static void testExpand(String predicate, int arity, int k) throws IOException {
-        List<DatalogRule> expansions;
+    private static void testExpand(String predicate, int arity, int depth) throws IOException {
+        List<CQIE> expansions;
 
         System.out.println("------------------------------------------");
 
         System.out.format("Expansions of %s/%d:\n", predicate, arity);
-        expansions = expand(predicate, arity, k);
+        expansions = expand(predicate, arity, depth);
 
         Joiner.on("\n").appendTo(System.out, expansions);
 
@@ -47,12 +47,10 @@ public class DatalogExpansion {
         System.out.println("------------------------------------------");
 
 
-        for(DatalogRule datalogRule : expansions){
-            System.out.println(datalogRule.toCQIE());
-        }
+
     }
 
-    private static List<DatalogRule> expand(String predicate, int arity, int depth) {
+    public static List<CQIE> expand(String predicate, int arity, int depth) {
         String termTemplate;
         if(arity == 1){
             termTemplate = String.format("%s(_)", predicate);
@@ -64,7 +62,7 @@ public class DatalogExpansion {
 
         //--------------------------------------------------
 
-        String t2 = String.format("datalog_expansions(%s, %d, Expansions)", termTemplate, depth);
+        String t2 = String.format("datalog_expansions_opt(%s, %d, Expansions)", termTemplate, depth);
         Query q2 = new Query(t2);
 
         //--------------------------------------------------
@@ -75,33 +73,41 @@ public class DatalogExpansion {
 
         if (q2.hasMoreSolutions()) {
             Map<String, Term> s4 = q2.nextSolution();
-            Compound expansions = (Compound) s4.get("Expansions");
 
-            //List<Term> expansion_list = flatten(expansions);
-            //List<Term> expansion_list = flattenList(expansions);
+            Term expansions1 = s4.get("Expansions");
 
-            Term[] expansion_list = expansions.toTermArray();
+            if(expansions1.isCompound()){
+                Compound expansions = (Compound) expansions1;
 
+                Term[] expansion_list = expansions.toTermArray();
 
-            for (Term t : expansion_list) {
-
-                if (t instanceof Compound) {
-                    DatalogRule cq = new DatalogRule(t);
-                    rules.add(cq);
-                } else {
-                    System.out.println("catch it");
+                for (Term t : expansion_list) {
+                    if (t instanceof Compound) {
+                        DatalogRule cq = new DatalogRule(t);
+                        rules.add(cq);
+                    } else {
+                        System.out.println("catch it");
+                        throw new IllegalArgumentException();
+                    }
                 }
-
-
-                //datalogExpansions.add(expansion);
-                //System.out.println(expansion);
             }
+
+
         }
 
-        return rules;
+        List<CQIE> cqies = Lists.newArrayList();
+
+        for(DatalogRule datalogRule : rules){
+            cqies.add(datalogRule.toCQIE());
+            System.out.println(datalogRule.toCQIE());
+        }
+
+
+
+        return cqies;
     }
 
-    private static void init() {
+    public static void init() {
         String t1 = "consult('src/main/prolog/test.pl')";
         Query q1 = new Query(t1);
 
@@ -119,31 +125,6 @@ public class DatalogExpansion {
 //        System.out.println(t2 + " " + (q2.hasSolution() ? "succeeded" : "failed"));
     }
 
-    public static List<Term> flatten(Compound compound){
-        List<Term> list = Lists.newArrayList();
-
-        while(compound.arity() == 2){
-            // 1 based
-            Term arg1 = compound.arg(1);
-            list.add(arg1);
-
-
-            if(compound.arg(2) instanceof Compound){
-                compound = (Compound) compound.arg(2);
-            } else {
-                //list.add(compound.arg(2));
-                break;
-            }
-
-//            try {
-//                compound = (Compound) compound.arg(2);
-//            }catch (Exception e){
-//                System.out.println("catch it!");
-//            }
-        }
-
-        return list;
-    }
 
 
 }

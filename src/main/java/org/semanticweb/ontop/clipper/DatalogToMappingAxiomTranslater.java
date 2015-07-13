@@ -2,6 +2,8 @@ package org.semanticweb.ontop.clipper;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.reflect.Invokable;
+import com.google.common.reflect.TypeToken;
 import org.semanticweb.ontop.model.CQIE;
 import org.semanticweb.ontop.model.DatalogProgram;
 import org.semanticweb.ontop.model.Function;
@@ -17,9 +19,11 @@ import org.semanticweb.ontop.model.impl.RDBMSourceParameterConstants;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQL99DialectAdapter;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLAdapterFactory;
 import org.semanticweb.ontop.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
+import org.semanticweb.ontop.owlrefplatform.core.unfolding.DatalogUnfolder;
 import org.semanticweb.ontop.sql.DBMetadata;
 import org.semanticweb.ontop.utils.QueryUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +45,8 @@ public class DatalogToMappingAxiomTranslater {
     }
 
     public OBDAMappingAxiom translate(CQIE cqie) throws OBDAException {
-        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram( removeFunctionsInHead(cqie));
+
+        DatalogProgram programForSourceQuery = DATA_FACTORY.getDatalogProgram(removeFunctionsInHead(cqie));
 
         String parameter = obdaDataSource.getParameter(RDBMSourceParameterConstants.DATABASE_DRIVER);
 

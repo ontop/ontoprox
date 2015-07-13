@@ -44,7 +44,6 @@ public class DatalogRule {
         List<Function> bodyAtoms = Lists.newArrayList();
 
         for (Term bodyAtom : body) {
-            // TOOD: view(...)
             try{
                 bodyAtoms.add(translate((Compound)bodyAtom.arg(1)));
             }catch (Exception e){
