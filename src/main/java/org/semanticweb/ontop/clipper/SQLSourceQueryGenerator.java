@@ -21,26 +21,18 @@ package org.semanticweb.ontop.clipper;
  */
 
 
-import com.beust.jcommander.internal.Sets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import it.unibz.krdb.obda.model.DatatypePredicate;
-import it.unibz.krdb.obda.model.StringOperationPredicate;
-import it.unibz.krdb.obda.model.impl.TermUtils;
-import it.unibz.krdb.obda.owlrefplatform.core.abox.XsdDatatypeConverter;
-import it.unibz.krdb.obda.owlrefplatform.core.basicoperations.EQNormalizer;
 import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.HSQLDBDialectAdapter;
-import it.unibz.krdb.obda.utils.QueryUtils;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.DataDefinition;
 import it.unibz.krdb.sql.TableDefinition;
 import it.unibz.krdb.sql.ViewDefinition;
 import it.unibz.krdb.sql.api.Attribute;
-import it.unibz.krdb.sql.api.ParsedSQLQuery;
 import org.openrdf.model.Literal;
 import it.unibz.krdb.obda.model.AlgebraOperatorPredicate;
 import it.unibz.krdb.obda.model.BNode;
@@ -69,14 +61,12 @@ import it.unibz.krdb.obda.owlrefplatform.core.abox.SemanticIndexURIMap;
 import it.unibz.krdb.obda.owlrefplatform.core.basicoperations.DatalogNormalizer;
 import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.DB2SQLDialectAdapter;
 import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.SQLDialectAdapter;
-import it.unibz.krdb.obda.owlrefplatform.core.srcquerygeneration.SQLQueryGenerator;
 import org.slf4j.LoggerFactory;
 
 
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -98,7 +88,7 @@ import java.util.Set;
  * @author mrezk, mariano, guohui
  *
  */
-public class SQLSourceQueryGenerator implements SQLQueryGenerator {
+public class SQLSourceQueryGenerator {
 
 	private static final long serialVersionUID = 7477161929752147045L;
 
@@ -206,7 +196,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 	 *
 	 * @return A cloned object without any query-dependent value
 	 */
-	public SQLQueryGenerator cloneGenerator() {
+	public SQLSourceQueryGenerator cloneGenerator() {
 		return new SQLSourceQueryGenerator(metadata, sqladapter, generatingREPLACE, uriRefIds);
 	}
 
@@ -271,16 +261,15 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 	 * SELECT FROM WHERE query. To know more about each of these see the inner
 	 * method descriptions. Observe that the SQL itself will be done by
 	 * {@link #generateQuery(DatalogProgram, List, String, Map, List, Set)}
-	 *
-	 * @param queryProgram
+	 *  @param queryProgram
 	 *            This is an arbitrary Datalog Program. In this program ans
 	 *            predicates will be translated to Views.
 	 * @param signature
-	 *            The Select variables in the SPARQL query
-	 */
-	@Override
+     * @param newVariableMap
+     */
+
 	public String generateSourceQuery(DatalogProgram queryProgram,
-									  List<String> signature) throws OBDAException {
+                                      List<String> signature, Map<Variable, ValueConstant> newVariableMap) throws OBDAException {
 
 		normalizeProgram(queryProgram);
 
@@ -307,7 +296,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 			final String outerViewName = "SUB_QVIEW";
 			String subquery = generateQuery(queryProgram, signature, indent,
 					ruleIndex, ruleIndexByBodyPredicate, predicatesInBottomUp,
-					extensionalPredicates);
+					extensionalPredicates, newVariableMap);
 
 			String modifier = "";
 
@@ -341,7 +330,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 		} else {
 			return generateQuery(queryProgram, signature, "", ruleIndex,
 					ruleIndexByBodyPredicate, predicatesInBottomUp,
-					extensionalPredicates);
+					extensionalPredicates, newVariableMap);
 		}
 	}
 
@@ -394,7 +383,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 								 String indent, Multimap<Predicate, CQIE> ruleIndex,
 								 Multimap<Predicate, CQIE> ruleIndexByBodyPredicate,
 								 List<Predicate> predicatesInBottomUp,
-								 List<Predicate> extensionalPredicates) throws OBDAException {
+								 List<Predicate> extensionalPredicates, Map<Variable, ValueConstant> newVariableMap) throws OBDAException {
 
 		int numPreds = predicatesInBottomUp.size();
 		int i = 0;
@@ -416,10 +405,11 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 				/*
 				 * extensional predicates are defined by DBs
 				 */
+
 			} else {
 				boolean isAns1 = false;
 				createViewFrom(pred, metadata, ruleIndex,
-						ruleIndexByBodyPredicate, query, signature, isAns1, viewNames);
+						ruleIndexByBodyPredicate, query, signature, isAns1, viewNames, newVariableMap);
 			}
 			i++;
 		}
@@ -446,7 +436,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 			 * form of a normal SQL algebra as possible,
 			 */
 			boolean isAns1 = true;
-			String querystr = generateQueryFromSingleRule(cq, signature, isAns1, headDatatypes);
+			String querystr = generateQueryFromSingleRule(cq, signature, isAns1, headDatatypes, newVariableMap);
 
 			queryStrings.add(querystr);
 		}
@@ -602,11 +592,12 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 	 * @param cq
 	 * @param signature
 	 * @param headDatatypes
-	 * @return
+	 * @param newVarialbeMap
+     * @return
 	 * @throws OBDAException
 	 */
 	public String generateQueryFromSingleRule(CQIE cq, List<String> signature,
-											  boolean isAns1, List<Predicate> headDatatypes) throws OBDAException {
+                                              boolean isAns1, List<Predicate> headDatatypes, Map<Variable, ValueConstant> newVariableMap) throws OBDAException {
 		QueryAliasIndex index = new QueryAliasIndex(cq);
 
 		boolean innerdistincts = false;
@@ -619,7 +610,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 		String FROM = getFROM(cq.getBody(), index);
 		String WHERE = getWHERE(cq.getBody(), index);
 
-		String SELECT = getSelectClause(signature, cq, index, innerdistincts, isAns1, headDatatypes);
+		String SELECT = getSelectClause(signature, cq, index, innerdistincts, isAns1, headDatatypes, newVariableMap);
 		//String GROUP = getGroupBy(cq.getBody(), index);
 		//String HAVING = getHaving(cq.getBody(), index);
 
@@ -781,7 +772,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 								Multimap<Predicate, CQIE> ruleIndex,
 								Multimap<Predicate, CQIE> ruleIndexByBodyPredicate,
 								DatalogProgram query, List<String> signature, boolean isAns1,
-								Set<String> viewNames)
+								Set<String> viewNames, Map<Variable, ValueConstant> newVariableMap)
 			throws OBDAException {
 
 		/* Creates BODY of the view query */
@@ -808,7 +799,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 
 			/* Creates the SQL for the View */
 			String sqlQuery = generateQueryFromSingleRule(rule, varContainer,
-					isAns1, headDatatypes);
+					isAns1, headDatatypes, newVariableMap);
 
 			sqls.add(sqlQuery);
 		}
@@ -1370,10 +1361,11 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 	 * @param query
 	 *            the query
 	 * @param headDatatypes
-	 * @return the sql select clause
+	 * @param newVarialbeMap
+     * @return the sql select clause
 	 */
 	private String getSelectClause(List<String> signature, CQIE query,
-								   QueryAliasIndex index, boolean distinct, boolean isAns1, List<Predicate> headDatatypes)
+                                   QueryAliasIndex index, boolean distinct, boolean isAns1, List<Predicate> headDatatypes, Map<Variable, ValueConstant> newVariableMap)
 			throws OBDAException {
 		/*
 		 * If the head has size 0 this is a boolean query.
@@ -1421,7 +1413,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 			}
 
 			//String typeColumn = getTypeColumnForSELECT(ht, varName, index, sqlVariableNames);
-			String mainColumn = getMainColumnForSELECT(ht, varName, index, headDataTtype, sqlVariableNames);
+			String mainColumn = getMainColumnForSELECT(ht, varName, index, headDataTtype, sqlVariableNames, newVariableMap);
 			//String langColumn = getLangColumnForSELECT(ht, varName, index, sqlVariableNames);
 
 			sb.append("\n   ");
@@ -1442,7 +1434,7 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 
 	private String getMainColumnForSELECT(Term ht, String signatureVarName,
 										  QueryAliasIndex index, Predicate typePredicate,
-										  Set<String> sqlVariableNames) {
+										  Set<String> sqlVariableNames, Map<Variable, ValueConstant> newVariableMap) {
 
 		final String varName = sqladapter.nameTopVariable(signatureVarName, MAIN_COLUMN_SUFFIX, sqlVariableNames);
 		sqlVariableNames.add(varName);
@@ -1451,9 +1443,13 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 
 		String mainTemplate = "%s AS %s";
 
+        Variable signatureVariable = obdaDataFactory.getVariable(signatureVarName);
+        if (newVariableMap.containsKey(signatureVariable)){
+            mainColumn = "'" + newVariableMap.get(signatureVariable).getValue() + "'";
+        } else
 		if (ht instanceof URIConstant) {
 			URIConstant uc = (URIConstant) ht;
-			mainColumn = sqladapter.getSQLLexicalFormString(uc.getURI().toString());
+            mainColumn = sqladapter.getSQLLexicalFormString(uc.getURI().toString());
 		} else if (ht instanceof Variable) {
 			Variable termVar = (Variable) ht;
 			mainColumn = getSQLString(termVar, index, false);
@@ -2146,10 +2142,13 @@ public class SQLSourceQueryGenerator implements SQLQueryGenerator {
 			Variable var = (Variable) term;
 			Collection<String> posList = index.getColumnReferences(var);
 			if (posList == null || posList.size() == 0) {
-				throw new RuntimeException(
-						"Unbound variable found in WHERE clause: " + term);
-			}
-			return posList.iterator().next();
+                // TODO
+                return term.toString();
+//				throw new RuntimeException(
+//						"Unbound variable found in WHERE clause: " + term);
+			} else {
+                return posList.iterator().next();
+            }
 		}
 
 		/* If its not constant, or variable its a function */

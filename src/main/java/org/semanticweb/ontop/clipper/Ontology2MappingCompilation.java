@@ -31,6 +31,7 @@ import it.unibz.krdb.sql.JDBCConnectionManager;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
@@ -106,20 +107,9 @@ public class Ontology2MappingCompilation {
         t1 = System.currentTimeMillis();
 
         /**
-         * construct a dependency graph
+         *
          */
-        DatalogDependencyGraphGenerator dg = new DatalogDependencyGraphGenerator(ontopProgram);
-
-        /**
-         * When the program is non-recursive, a topological order exists
-         */
-        List<Predicate> predicates = dg.getPredicatesInBottomUp();
-
-        Set<OWLClass> classesInSignature = ontology.getClassesInSignature();
-
-        for (OWLClass owlClass : classesInSignature) {
-            predicates.add(DATA_FACTORY.getClassPredicate(owlClass.getIRI().toString()));
-        }
+        List<Predicate> predicatesToDefine = getDeclaredPredicates(ontology);
 
         /**
          * We assume we are in Virtual mode and therefore we only have one data source.
@@ -135,75 +125,44 @@ public class Ontology2MappingCompilation {
          */
         List<CQIE> mappingProgram = mapping2DatalogConverter.constructDatalogProgram(mappingAxioms, dbMetadata);
 
-        //Joiner.on("\n").appendTo(System.out, mappingProgram);
-
-        List<Predicate> predicatesToDefine = Lists.newArrayList(predicates);
 
         List<CQIE> newMappingRules = Lists.newArrayList();
 
-
-        // --------------------------------------------
-
-
         Map<Predicate, List<Integer>> pkeys = DBMetadata.extractPKs(dbMetadata, mappingProgram);
 
-
         int i = 0;
-
 
         DatalogExpansion.init();
 
         for (Predicate predicate : predicatesToDefine) {
 
-//            if(predicate.getName().equals("http://sws.ifi.uio.no/vocab/npd-v2#ProductionLicenceWorkObligation")){
-//                System.out.println("catch it!");
-//            }
             log.debug("compute mapping for {} ({}/{})", new Object[]{predicate, i, predicatesToDefine.size()});
             i++;
 
-            List<OBDAMappingAxiom> newObdaMappingAxiomsForAPredicate = Lists.newArrayList();
-
-            // Collection<CQIE> cqies = dg.getRuleIndex().get(predicate);
-
-
             // FIXME: DatalogExpansion only works for UOBM now!!
 
-            List<CQIE> cqies = DatalogExpansion.expand("'" + predicate.getName() + "'", 1, 5);
+            int depth = 5;
+
+            List<CQIE> cqies = DatalogExpansion.expand("'" + predicate.getName() + "'", predicate.getArity(), depth);
 
             for (CQIE cqie : cqies) {
 
-
-                CQIE query = generateTargetQuery(cqie);
-
-                DatalogProgram queryProgram = DATA_FACTORY.getDatalogProgram(Lists.newArrayList(query));
+                DatalogProgram queryProgram = DATA_FACTORY.getDatalogProgram(Lists.newArrayList(cqie));
 
                 DatalogProgram queryAndMappingProgram = DATA_FACTORY.getDatalogProgram();
-                //queryAndMappingProgram.appendRule(queryProgram.getRules());
                 queryAndMappingProgram.appendRule(mappingProgram);
 
-
                 DatalogUnfolder unfolder = new DatalogUnfolder(mappingProgram, pkeys);
-
 
                 /**
                  * Unfold the rules for the predicate w.r.t. the input mappings
                  */
-                //DatalogProgram unfoldedQuery = unfolder.unfold(queryProgram, predicate.getName(), QuestConstants.BUP, true, multiTypedFunctionSymbolIndex);
-                DatalogProgram unfoldedQuery = unfoldQueryWRTMappings(unfolder, queryProgram);
-
+                DatalogProgram unfoldedQuery = unfolder.unfold(queryProgram, null);
 
                 List<CQIE> newMappings = unfoldedQuery.getRules();
-                //mappingProgram.addAll(newMappings);
 
                 newMappingRules.addAll(newMappings);
-                // System.out.println(predicate);
-                // System.out.println(unfolding);
-
-//                newObdaMappingAxiomsForAPredicate.addAll(obdaMappingAxioms);
             }
-
-
-            //newObdaMappingAxioms.addAll(newObdaMappingAxiomsForAPredicate);
 
         }
 
@@ -214,15 +173,8 @@ public class Ontology2MappingCompilation {
         List<OBDAMappingAxiom> newObdaMappingAxioms = datalogToMappingAxiomTranslater.translate(newMappingRules);
 
 
-        //printOBDAMappingAxioms(newObdaMappingAxioms, obdaModel.getPrefixManager());
-
-
         OBDAModel extendedObdaModel = DATA_FACTORY.getOBDAModel();
         extendedObdaModel.addSource(obdaDataSource);
-
-        // WE DO NOT NEED THE OLD MAPPINGS ANY MORE!!
-        // extendedObdaModel.addMappings(obdaDataSource.getSourceID(), obdaModel.getMappings(obdaDataSource.getSourceID()));
-
 
         extendedObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
         extendedObdaModel.setPrefixManager(obdaModel.getPrefixManager());
@@ -236,83 +188,22 @@ public class Ontology2MappingCompilation {
         return extendedObdaModel;
     }
 
+    private static List<Predicate> getDeclaredPredicates(OWLOntology ontology) {
+        List<Predicate> predicatesToDefine = Lists.newArrayList();
 
-    /**
-     *
-     * unfold the query w.r.t. to the mappings
-     *
-     * The logic is basically the same with unfold in DatalogUnfolder, but we do not need the step of
-     * EQNormalizer.enforceEqualities. Therefore, we call  `computePartialEvaluationWRTMappings` directly using reflection
-     *
-     * @param unfolder
-     * @param queryProgram
-     * @return
-     */
-    private static DatalogProgram unfoldQueryWRTMappings(DatalogUnfolder unfolder, DatalogProgram queryProgram) {
-
-        Multimap<Predicate, Integer> multiTypedFunctionSymbolIndex = ArrayListMultimap.create();
-
-        List<CQIE> workingSet = new LinkedList<>();
-
-
-//        for (CQIE query : queryProgram.getRules())
-//            workingSet.add(QueryAnonymizer.deAnonymize(query));
-
-
-        try {
-            Method getMethod = DatalogUnfolder.class.getDeclaredMethod("computePartialEvaluationWRTMappings", List.class, Multimap.class);
-            getMethod.setAccessible(true);
-            Invokable invokable = Invokable.from(getMethod);
-            invokable.invoke(unfolder, workingSet, multiTypedFunctionSymbolIndex);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        for (OWLClass owlClass : ontology.getClassesInSignature()) {
+            predicatesToDefine.add(DATA_FACTORY.getClassPredicate(owlClass.getIRI().toString()));
         }
 
-        //unfolder.computePartialEvaluationWRTMappings(workingSet, multiTypedFunctionSymbolIndex);
-
-
-        DatalogProgram unfoldedQuery = DATA_FACTORY.getDatalogProgram(workingSet);
-
-        return unfoldedQuery;
-    }
-
-    public static CQIE generateTargetQuery(CQIE rule) {
-
-
-        Function head = DATA_FACTORY.getFunction(CLASS_QUERY_HEAD_PREDICATE, rule.getHead().getTerms());
-
-        return DATA_FACTORY.getCQIE(head, rule.getBody());
-
-        //Function head = rule.getHead();
-        // URITemplates.getUriTemplateString((Function) head.getTerm(0));
-    }
-
-
-    private static void printOBDAMappingAxioms(List<OBDAMappingAxiom> newObdaMappingAxiomsForAPredicate, PrefixManager prefixManager) {
-        for (OBDAMappingAxiom m : newObdaMappingAxiomsForAPredicate) {
-            printOBDAMapping(m, prefixManager);
-            System.out.println();
-        }
-    }
-
-    public static List<Predicate> collectHeadPredicates(List<CQIE> rules) {
-        List<Predicate> headPredicates = Lists.newArrayList();
-        for (CQIE rule : rules) {
-            headPredicates.add(rule.getHead().getFunctionSymbol());
+        for (OWLObjectProperty owlObjectProperty : ontology.getObjectPropertiesInSignature()) {
+            predicatesToDefine.add(DATA_FACTORY.getObjectPropertyPredicate(owlObjectProperty.getIRI().toString()));
         }
 
-        return headPredicates;
+        for (OWLObjectProperty owlDatatypeProperty : ontology.getObjectPropertiesInSignature()) {
+            predicatesToDefine.add(DATA_FACTORY.getDataPropertyPredicate(owlDatatypeProperty.getIRI().toString()));
+        }
+        return predicatesToDefine;
     }
 
-    public static void printOBDAMapping(OBDAMappingAxiom mappingAxiom, PrefixManager prefixManager) {
-        // ModelIOManager modelIOManager = new ModelIOManager();
-        System.out.println("mappingId\t" + mappingAxiom.getId());
-        System.out.println("target\t\t" + TargetQueryRenderer.encode(mappingAxiom.getTargetQuery(), prefixManager));
-        System.out.println("source\t\t" + SourceQueryRenderer.encode(mappingAxiom.getSourceQuery()).replace("\n", " "));
-    }
 
 }
