@@ -74,7 +74,6 @@ public class DatalogToMappingAxiomTranslater {
             }
         }
 
-
         String sourceQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, signature, newVariableMap);
 
         CQIE targetQuery = generateTargetQuery(cqieClone, newHeadTerms);
@@ -153,6 +152,7 @@ public class DatalogToMappingAxiomTranslater {
                 newHeadTerms.add(DATA_FACTORY.getFunction(((Function) term).getFunctionSymbol(), newArgs));
             } else if (term instanceof Variable) {
                 newHeadTerms.add(term);
+                headVariables.add((Variable) term);
             } else if (term instanceof ValueConstant) {
                 Variable newVar = DATA_FACTORY.getVariable("v_" + ((ValueConstant) term).getValue());
                 newVariableMap.put(newVar, (ValueConstant) term);
