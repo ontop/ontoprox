@@ -16,13 +16,9 @@ public class OntopRuleToSWIPrologTranslator {
         StringBuilder programBuilder = new StringBuilder();
 
         for (CQIE cq : cqs){
-
-
-
             programBuilder.append(translate(cq));
-
+            programBuilder.append("\n");
         }
-
 
         return programBuilder.toString();
     }

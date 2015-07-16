@@ -113,9 +113,10 @@ public class CompilationTest {
 
     @Test
     public  void testCompileNPD() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
-        String ontologyFile =  "src/test/resources/npd-v2.owl";
-        String obdaFile = "src/test/resources/npd-v2.obda";
-        String extendedObdaFile = "src/test/resources/extended-npd-v2-ql_a_postgres.obda";
+        String ontologyFile =  "src/test/resources/npd/npd-v2.owl";
+        String obdaFile = "src/test/resources/npd/npd-v2.obda";
+        String extendedObdaFile = "src/test/resources/npd/extended-npd-v2.obda";
+
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
@@ -126,6 +127,7 @@ public class CompilationTest {
         String ontologyFile =  "src/test/resources/npd_ql/npd-v2-ql_a.owl";
         String obdaFile = "src/test/resources/npd_ql/npd-v2-ql_a_postgres.obda";
         String extendedObdaFile = "src/test/resources/npd_ql/extended-npd-v2-ql_a_postgres.obda";
+
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
@@ -136,6 +138,7 @@ public class CompilationTest {
         String ontologyFile = "src/test/resources/uobm/univ-bench-dl.owl";
         String obdaFile =     "src/test/resources/uobm/univ-bench-dl.obda";
         String extendedObdaFile = "src/test/resources/uobm/extended-univ-bench-dl.obda";
+
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
@@ -146,6 +149,7 @@ public class CompilationTest {
         String ontologyFile = "src/test/resources/lubm/univ-benchQL.owl";
         String obdaFile =     "src/test/resources/lubm/univ-benchQL.obda";
         String extendedObdaFile = "src/test/resources/lubm/extended-univ-benchQL.obda";
+
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);

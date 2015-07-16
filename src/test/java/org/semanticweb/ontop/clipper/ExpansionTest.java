@@ -1,4 +1,4 @@
-package it.unibz.krdb.obda.clipper;
+package org.semanticweb.ontop.clipper;
 
 import com.beust.jcommander.internal.Lists;
 import it.unibz.krdb.obda.exception.InvalidMappingException;
@@ -81,22 +81,7 @@ public class ExpansionTest {
 
         sb.append("edb(view(_)).\n");
 
-
-//        for (Predicate predicate : orderedPredicates) {
-//            switch (predicate.getArity()) {
-//                case 1:
-//                    sb.append(String.format("edb(view(%s(_))).\n", normalizeName(predicate.getName())));
-//                    break;
-//                case 2:
-//                    sb.append(String.format("edb(view(%s(_,_))).\n", normalizeName(predicate.getName())));
-//                    break;
-//                default:
-//                    throw new IllegalStateException();
-//            }
-//        }
-
-
-        for (Predicate predicate : orderedPredicates) {
+       for (Predicate predicate : orderedPredicates) {
             switch (predicate.getArity()) {
                 case 1:
                     sb.append(String.format("idb(%s(_)).\n", normalizeName(predicate.getName())));

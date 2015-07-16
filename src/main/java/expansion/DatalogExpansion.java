@@ -1,19 +1,42 @@
 package expansion;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.beust.jcommander.internal.Lists;
+import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
+import com.google.common.io.CharStreams;
+import it.unibz.krdb.obda.exception.InvalidMappingException;
+import it.unibz.krdb.obda.io.ModelIOManager;
 import it.unibz.krdb.obda.model.CQIE;
+import it.unibz.krdb.obda.model.DatalogProgram;
+import it.unibz.krdb.obda.model.Function;
+import it.unibz.krdb.obda.model.OBDADataFactory;
+import it.unibz.krdb.obda.model.OBDADataSource;
+import it.unibz.krdb.obda.model.OBDAMappingAxiom;
+import it.unibz.krdb.obda.model.OBDAModel;
+import it.unibz.krdb.obda.model.Predicate;
+import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import org.jpl7.Compound;
 import org.jpl7.Query;
 import org.jpl7.Term;
-import org.jpl7.Variable;
+import org.semanticweb.ontop.clipper.OntopRuleToSWIPrologTranslator;
 
 
 public class DatalogExpansion {
+    static final OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
 
     public static void main(String argv[]) throws IOException {
 
@@ -31,6 +54,8 @@ public class DatalogExpansion {
         testExpand("'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'", 1, depth);
 
     }
+
+
 
     private static void testExpand(String predicate, int arity, int depth) throws IOException {
         List<CQIE> expansions;
@@ -126,7 +151,126 @@ public class DatalogExpansion {
     }
 
 
+    public DatalogExpansion(DatalogProgram ontopProgram, OBDAModel obdaModel, String prologFile) throws IOException {
+        FileWriter writer = null;
+        writer = new FileWriter(prologFile);
+        InputStream stream = DatalogExpansion.class.getResourceAsStream("/expand.pl");
 
+        String expansionRules = CharStreams.toString(new InputStreamReader(stream, Charsets.UTF_8));
+
+        writer.append(expansionRules);
+
+        writer.append("\n");
+
+        writer.append(getVocabularyRules(ontopProgram, obdaModel));
+
+        writer.append("\n");
+
+        OntopRuleToSWIPrologTranslator ontopRuleToSWIPrologTranslator = new OntopRuleToSWIPrologTranslator();
+
+        String prologRules = OntopRuleToSWIPrologTranslator.translate(ontopProgram.getRules());
+
+        writer.append(prologRules);
+
+        writer.close();
+
+
+        String t1 = String.format("consult('%s')", prologFile);
+
+        Query q1 = new Query(t1);
+
+        System.out.println(t1 + " " + (q1.hasSolution() ? "succeeded" : "failed"));
+    }
+
+
+
+
+    public String getVocabularyRules(DatalogProgram ontopProgram, OBDAModel obdaModel) {
+
+
+        StringBuilder sb = new StringBuilder();
+
+        OBDADataSource dataSource = obdaModel.getSources().iterator().next();
+
+        ArrayList<OBDAMappingAxiom> mappingAxioms = obdaModel.getMappings().get(dataSource.getSourceID());
+
+
+        Set<Predicate> predicates = new HashSet<>();
+
+        for (OBDAMappingAxiom mappingAxiom : mappingAxioms) {
+            CQIE targetQuery = (CQIE) mappingAxiom.getTargetQuery();
+
+            for (Function function : targetQuery.getBody()) {
+
+                Predicate predicate = function.getFunctionSymbol();
+
+                predicates.add(predicate);
+            }
+        }
+
+        List<Predicate> orderedPredicates = Lists.newArrayList(predicates);
+
+        Collections.sort(orderedPredicates, new Comparator<Predicate>() {
+            @Override
+            public int compare(Predicate o1, Predicate o2) {
+                if (o1.getArity() != o2.getArity()) {
+                    return o1.getArity() - o2.getArity();
+                } else {
+                    return o1.getName().compareTo(o2.getName());
+                }
+
+            }
+        });
+
+
+        sb.append("edb(view(_)).\n");
+
+        for (Predicate predicate : orderedPredicates) {
+            switch (predicate.getArity()) {
+                case 1:
+                    sb.append(String.format("idb('%s'(_)).\n", (predicate.getName())));
+                    break;
+                case 2:
+                    sb.append(String.format("idb('%s'(_,_)).\n", (predicate.getName())));
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
+        }
+
+        sb.append("\n");
+
+        for (Predicate predicate : orderedPredicates) {
+            switch (predicate.getArity()) {
+                case 1:
+                    sb.append(String.format("'%1$s'(X) :- view('%1$s'(X)).\n", (predicate.getName())));
+                    break;
+                case 2:
+                    sb.append(String.format("'%1$s'(X, Y) :- view('%1$s'(X, Y)).\n", (predicate.getName())));
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
+        }
+
+        Set<String> freshPredicates = new LinkedHashSet<>();
+
+        for (CQIE cqie : ontopProgram.getRules()) {
+            String predicateName = cqie.getHead().getFunctionSymbol().getName();
+            if (predicateName.startsWith("http://www.example.org/fresh")) {
+                freshPredicates.add(predicateName);
+            }
+        }
+
+        for (String predicate : freshPredicates) {
+            sb.append(String.format("fresh('%s'(_)).\n", predicate));
+        }
+
+        sb.append("\n");
+
+        return sb.toString();
+
+    }
 }
 
 

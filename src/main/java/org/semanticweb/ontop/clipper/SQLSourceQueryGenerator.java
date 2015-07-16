@@ -27,6 +27,7 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import it.unibz.krdb.obda.model.DatatypePredicate;
+import it.unibz.krdb.obda.owlrefplatform.core.basicoperations.EQNormalizer;
 import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.HSQLDBDialectAdapter;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.DataDefinition;
@@ -713,7 +714,7 @@ public class SQLSourceQueryGenerator {
 		// log.debug("Before pulling out equalities: \n{}", cq);
 
 		// we dont need this anymore, done before
-		// DatalogNormalizer.pullOutEqualities(cq);
+		DatalogNormalizer.pullOutEqualities(cq);
 
 		// log.debug("Before pulling out Left Join Conditions: \n{}", cq);
 

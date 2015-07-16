@@ -31,6 +31,7 @@ import it.unibz.krdb.sql.JDBCConnectionManager;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -63,6 +64,10 @@ public class Ontology2MappingCompilation {
     @SuppressWarnings("UnnecessaryLocalVariable")
     public static OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
 
+        int i = ontologyFile.lastIndexOf(".");
+
+        String tempPrologFile = ontologyFile.substring(0, i) + ".pl";
+
         /**
          * load ontology using OWL-API
          */
@@ -77,12 +82,12 @@ public class Ontology2MappingCompilation {
         File obdafile = new File(obdaFile);
         ioManager.load(obdafile);
 
-        OBDAModel newOBDAModel = compileHSHIQOntologyToMappings(ontology, obdaModel);
+        OBDAModel newOBDAModel = compileHSHIQOntologyToMappings(ontology, obdaModel, tempPrologFile);
 
         return newOBDAModel;
     }
 
-    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel) throws SQLException, OBDAException, DuplicateMappingException {
+    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile) throws SQLException, OBDAException, DuplicateMappingException {
 
         long t1 = System.currentTimeMillis();
 
@@ -132,7 +137,12 @@ public class Ontology2MappingCompilation {
 
         int i = 0;
 
-        DatalogExpansion.init();
+        DatalogExpansion datalogExpansion = null;
+        try {
+            datalogExpansion = new DatalogExpansion(ontopProgram, obdaModel, tempPrologFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (Predicate predicate : predicatesToDefine) {
 
@@ -143,7 +153,7 @@ public class Ontology2MappingCompilation {
 
             int depth = 5;
 
-            List<CQIE> cqies = DatalogExpansion.expand("'" + predicate.getName() + "'", predicate.getArity(), depth);
+            List<CQIE> cqies = datalogExpansion.expand("'" + predicate.getName() + "'", predicate.getArity(), depth);
 
             for (CQIE cqie : cqies) {
 
@@ -199,7 +209,7 @@ public class Ontology2MappingCompilation {
             predicatesToDefine.add(DATA_FACTORY.getObjectPropertyPredicate(owlObjectProperty.getIRI().toString()));
         }
 
-        for (OWLObjectProperty owlDatatypeProperty : ontology.getObjectPropertiesInSignature()) {
+        for (OWLDataProperty owlDatatypeProperty : ontology.getDataPropertiesInSignature()) {
             predicatesToDefine.add(DATA_FACTORY.getDataPropertyPredicate(owlDatatypeProperty.getIRI().toString()));
         }
         return predicatesToDefine;
