@@ -38,6 +38,7 @@ $ cd /usr/local/opt/swi-prolog/libexec/lib/swipl-7.2.2/lib
 $ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -Dversion=7.0.1 -Dpackaging=jar
 ```
 
+
  ### Ubuntu Linux   
  
  * install swi-prolog via apt-get:
@@ -56,6 +57,18 @@ $ sudo apt-get install swi-prolog-java
 $ cd /usr/lib/swi-prolog/lib
 $ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -Dversion=7.0.1 -Dpackaging=jar
 ```
+
+
+## VW args
+
+* OS X
+
+`-Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-7.2.2/lib/x86_64-darwin14.4.0`
+
+* Ubuntu
+
+`-Djava.library.path=/usr/lib/swi-prolog/lib/amd64`
+
 
 
 
