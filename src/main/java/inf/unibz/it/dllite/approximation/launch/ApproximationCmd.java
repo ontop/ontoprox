@@ -3,6 +3,7 @@ package inf.unibz.it.dllite.approximation.launch;
 import inf.unibz.it.dllite.aproximation.semantic.DLLiteApproximator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URI;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -25,29 +26,31 @@ public class ApproximationCmd {
 		// args contains the input parameters, they should be
 		// - The URI of the OWL ontology, the first parameter
 		if (args.length == 1){ 
-			URI file_uri_owl_ont = URI.create(args[0]);
+			IRI file_iri_owl_ont = IRI.create(args[0]);
 			
 			try {
 				// Create our ontology manager in the usual way.	
 				OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 				// Load a copy of the ontology passed by parameters.  
-				OWLOntology owl_ont = manager.loadOntologyFromOntologyDocument(new File(file_uri_owl_ont));
+				OWLOntology owl_ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
 		
 	
 				// uris for DL-Lite ontology
-				IRI file_uri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(IRI.create(file_uri_owl_ont), "approx");
-				IRI uri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx");
+				IRI file_iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "approx");
+				IRI iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx");
 				// We need this mapping so that manager can create the DL-Lite ontology
-				manager.addIRIMapper(new SimpleIRIMapper(uri_dllite_ont, file_uri_dllite_ont));
+				// and later save it in a file
+				//manager.addIRIMapper(new SimpleIRIMapper(iri_dllite_ont, file_iri_dllite_ont));
 
 				
 				// Approximate owl_ont
 				DLLiteApproximator dlliteApprox = new DLLiteApproximator();
-				OWLOntology dl_ont = dlliteApprox.approximate(owl_ont, manager, uri_dllite_ont);
+				OWLOntology dl_ont = dlliteApprox.approximate(owl_ont, manager, iri_dllite_ont);
 				
 				
 				// Save the approximated ontology
-				manager.saveOntology(dl_ont);
+				manager.saveOntology(dl_ont, new FileOutputStream(file_iri_dllite_ont.toString()));
+				//manager.saveOntology(dl_ont);
 			}
 			catch (OWLOntologyCreationException e1) {
 				System.out.println("Could not load the ontology: " +

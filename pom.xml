@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>ontop</artifactId>
-        <groupId>it.unibz.inf.ontop</groupId>
-        <version>1.15.0</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>ontop</artifactId>
+		<groupId>it.unibz.inf.ontop</groupId>
+		<version>1.15.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <clipper.version>0.2-SNAPSHOT</clipper.version>
-    </properties>
-    <artifactId>ontop-beyond-ql</artifactId>
+	<properties>
+		<clipper.version>0.2-SNAPSHOT</clipper.version>
+	</properties>
+	<artifactId>ontop-beyond-ql</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.semanticweb.clipper</groupId>
-            <artifactId>clipper-reasoner</artifactId>
-            <version>${clipper.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.semanticweb.clipper</groupId>
-            <artifactId>clipper-cli</artifactId>
-            <version>${clipper.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
+	<dependencies>
+		<dependency>
+			<groupId>org.semanticweb.clipper</groupId>
+			<artifactId>clipper-reasoner</artifactId>
+			<version>${clipper.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.semanticweb.clipper</groupId>
+			<artifactId>clipper-cli</artifactId>
+			<version>${clipper.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.hermit-reasoner</groupId>
+			<artifactId>org.semanticweb.hermit</artifactId>
+			<version>1.3.8.4</version>
+		</dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ontop-obdalib-core</artifactId>

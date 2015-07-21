@@ -6,6 +6,7 @@ import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertySpe
 import java.io.Serializable;
 import java.util.*;
 
+
 import org.semanticweb.owlapi.model.AddAxiom;
 //import org.mindswap.pellet.owlapi.PelletReasonerFactory;
 import org.semanticweb.owlapi.model.IRI;
@@ -69,6 +70,8 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.semanticweb.HermiT.Reasoner.ReasonerFactory;
+
 
 /******************************************************************************
  * This class returns the Dl-Lite ontology obtained by semantically approximating 
@@ -93,22 +96,12 @@ public class DLLiteApproximator{
 	 **************************************************************************/
 	public DLLiteApproximator() {
 		super();
-   		futureNamedComplexConcepts =  new HashSet<OWLClassExpression>(); 
-		toSaveNeg =  new HashSet<OWLClassExpression>();
 		new_classes = new HashMap<OWLClass,OWLClassExpression>();
 		new_NegClasses = new HashMap<OWLClass,OWLClassExpression>();
 		processed_classes = new HashSet<OWLClassExpression> ();
 	}
 
 
-	//This set will contain the Descriptions that are not a named class, 
-	//we will use it to create an equivalent classes axiom for each
-	//of these descriptions.
-	private Set<OWLClassExpression> futureNamedComplexConcepts;
-	//This set will contain the new negations that will we introduce in the 
-	//original ontology for every named class. We will use these negations
-	//later on to get the disjoint classes axioms.
-	private Set<OWLClassExpression> toSaveNeg;
 	//These two sets contain the mapping between the new classes that we introduced
 	//and its original equivalent descriptions. The only difference is that one is
 	//for the new negations introduced, and the other is for the rest of the cases.
@@ -157,29 +150,32 @@ public class DLLiteApproximator{
 
 
 	/**************************************************************************
-	 * For each named class in the input ontology, adds its complement to the
-	 * "toSaveNeg" set.
+	 * Return the set of the complements of the named classes in the input ontology.
 	 * <p> 
-	 * This "toSaveNeg" set will be used to introduce in the working ontology, 
+	 * The result will be used to introduce in the working ontology, 
 	 * for each element in the set, an equivalent classes axiom between the 
-	 * complement and a new named class.   
+	 * complement and a new named class.
+	 *    
 	 * @param ont the original ontology, to extract the referenced classes
 	 * @param factory the OWLDataFactory, to create the corresponding axioms
+	 * 
+	 * @return the set of negated atomic concepts in the ontology 
 	 *************************************************************************/
-	private void addToSaveNegConcepts (OWLOntology ont, 
+	private Set<OWLClassExpression> createAtomicNegations (OWLOntology ont, 
 									   OWLDataFactory factory){
 		log.info("	* Adding Negations for every named class... ");
-		Set<OWLClass> signature =  ont.getClassesInSignature();
+		
 		//for every class add a new concept corresponding to its negation. 
 		//then we will add a new equivalent classes axiom between the negation  
 		//of the class, and a new class
-		for (OWLClass clazz : signature){
-				OWLObjectComplementOf negConcept = factory.getOWLObjectComplementOf(clazz);
-				if (!(toSaveNeg.contains(negConcept))){  
-					toSaveNeg.add(negConcept);
-				}
-		}
+		Set<OWLClass> classes =  ont.getClassesInSignature();
 		
+		Set<OWLClassExpression> atomicNegations=new HashSet<>(classes.size());
+		for (OWLClass clazz : classes){
+			OWLObjectComplementOf negConcept = factory.getOWLObjectComplementOf(clazz);
+			atomicNegations.add(negConcept);
+		}
+		return atomicNegations;
 	}
 
 	/**************************************************************************
@@ -196,32 +192,29 @@ public class DLLiteApproximator{
 	 * 		In this case we should add all the possible combinations. 
 	 * @param ont the original ontology
 	 * @param factory the data factory
+	 * @return 
 	 *************************************************************************/
-	private void addToSaveSomeRestriction (OWLOntology ont, 
+	private Set<OWLClassExpression> constructObjectSomeValuesFrom (OWLOntology ont, 
 										   OWLDataFactory factory){
 		log.info("	* Adding existential restrictions for every object property...");
 
-		IRI classIRI = OWLRDFVocabulary.OWL_THING.getIRI();
-		OWLClass classThing = factory.getOWLClass(classIRI);
-		
+		OWLClass classThing = factory.getOWLClass(OWLRDFVocabulary.OWL_THING.getIRI());
 		Set<OWLObjectProperty> properties = ont.getObjectPropertiesInSignature();
 		Set<OWLClass> classes = ont.getClassesInSignature();
 		
+		Set<OWLClassExpression> qualifiedExistentialRestrictions = new HashSet<>();
 		for (OWLObjectProperty oprop : properties){
 			//add the restriction for Top
 			OWLObjectSomeValuesFrom res = factory.getOWLObjectSomeValuesFrom(oprop, classThing);
-			if (!futureNamedComplexConcepts.contains(res)){
-					futureNamedComplexConcepts.add(res);
-			}
+				qualifiedExistentialRestrictions.add(res);
 				
 			//now add for every atomic concept in the ontology
 			for (OWLClass clazz : classes){
 				res = factory.getOWLObjectSomeValuesFrom(oprop,clazz);
-				if (!(futureNamedComplexConcepts.contains(res))){
-					futureNamedComplexConcepts.add(res);
-				}
+				qualifiedExistentialRestrictions.add(res);
 			}
 		}
+		return qualifiedExistentialRestrictions;
 	}
 	
 	/**************************************************************************
@@ -234,326 +227,340 @@ public class DLLiteApproximator{
 	 * where DataRange are the Datatypes in the ontology. 
 	 * @param ont the original ontology
 	 * @param factory the data factory
+	 * @return 
 	 *************************************************************************/
-	private void addToSaveMinCardinalityRestrictions (OWLOntology ont, 
+	private Set<OWLClassExpression> constructDataMinCardinalityRestrictions (OWLOntology ont, 
 										   OWLDataFactory factory){
 		log.info("	* Adding min cardinality restrictions for every " +
 				"data property ...");
+		
+		Set<OWLClassExpression> dataMinCardinalityRestrictions = new HashSet<>();
 		
 		Set<OWLDataProperty> dproperties = ont.getDataPropertiesInSignature();
 		for (OWLDataProperty dprop :dproperties){
 			//add the restriction without range
 			OWLDataMinCardinality res = factory.getOWLDataMinCardinality(1, dprop);
-			if (!futureNamedComplexConcepts.contains(res)){
-				futureNamedComplexConcepts.add(res);
-			}
+			dataMinCardinalityRestrictions.add(res);
 			//TODO 
 			//now add for every data type, or data range valid in DL LITE
 		}
+		return dataMinCardinalityRestrictions;
 	}
 	
-	/**************************************************************************
-	 * Given an input subclass axiom, if either the subclass or the superclass 
-	 * is not a named class, it is added to the "toSave" list.   
-	 * @param l_ax the input subclass axiom  
-	 *************************************************************************/
-	private void addToSaveSubClassAxioms (OWLSubClassOfAxiom l_ax){
-		//if the subclass is not a named class, not an existential quantification
-		//and not a union of them then we give a name to it
-		//in general we may need to name not only one class but several 
-		//of them due to union
-		if (!DLLiteGrammarChecker.isDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass())){
-			Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass());
-			futureNamedComplexConcepts.addAll(classesToSave);
-		}
-		//if the superclass is not a named class, nor a qualified chain,
-		//nor a conjunction of them we give a name to it
-		//in the case of a chain qualified by a complex class, we give a name
-		//only to this class
-		//in general we may need to name not only one class but several 
-		//of them due to intersection
-		if (!DLLiteGrammarChecker.isDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass())){
-			Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass());
-			futureNamedComplexConcepts.addAll(classesToSave);
-		}
-	}
-	
-	/**************************************************************************
-	 * Given an input Equivalent classes axiom, if it contains a description which
-	 * is not a named class, then it is added to the "toSave" list.  
-	 * @param l_ax the input equivalent classes axiom
-	 *************************************************************************/
-	private void addToSaveEquivalentClassesAxiom 
-											  (OWLEquivalentClassesAxiom l_ax){
-		//if it does not contain any named class, we add it  
-		//to save set
-		Set<OWLClassExpression> des = 
-					((OWLEquivalentClassesAxiom)l_ax).getClassExpressions();
-		for(OWLClassExpression d: des){
-			if (!(d instanceof OWLClass)){
-				futureNamedComplexConcepts.add(d);
-			}
-		}
-	}
-	
-	/**************************************************************************
-	 * Given an input Disjoint classes axiom, if it contains a description which
-	 * is not a named class, then it is added to the "toSave" list.  
-	 * @param l_ax the input disjoint classes axiom
-	 *************************************************************************/
-	private void addToSaveDisjointClassesAxiom(OWLDisjointClassesAxiom l_ax){
-		Set<OWLClassExpression> des = 
-							((OWLDisjointClassesAxiom)l_ax).getClassExpressions();
-		for(OWLClassExpression d: des){
-			if (!(d instanceof OWLClass)){
-					futureNamedComplexConcepts.add(d);						
-			}
-		}
-	}
 
 	/**************************************************************************
-	 * Receives a OWLClassAxiom, and calls the corresponding method to handle 
-	 * the corresponding type of axiom 
-	 * @param l_ax the input class axiom
-	 **************************************************************************/
-	private void addToSaveClassAxioms (OWLClassAxiom l_ax){
-			//subclass axiom
-			if (l_ax instanceof OWLSubClassOfAxiom){
-				addToSaveSubClassAxioms((OWLSubClassOfAxiom)l_ax);
-			}
-			//equivalent classes axiom
-			else if (l_ax instanceof OWLEquivalentClassesAxiom){
-  				addToSaveEquivalentClassesAxiom((OWLEquivalentClassesAxiom)l_ax);
-  			}
-  			//disjoint classes axiom
-  			else if (l_ax instanceof OWLDisjointClassesAxiom){
-				addToSaveDisjointClassesAxiom((OWLDisjointClassesAxiom)l_ax);
-			}
-			else if (l_ax instanceof OWLDisjointUnionAxiom){
-				// TODO
-			}
-
-	}
-
-	/**************************************************************************
-	 *  Receives an Object Property axiom, and if it is an instance of an   
-	 *  axiom type that can contain an OWLClassExpression (i.e. Object Property 
-	 *  Domain or Object Property Range axioms), then if the description is 
-	 *  not a named class, it is added to the "toSave" list.
-	 * @param l_ax the input object property axiom
-	 **************************************************************************/
-	private void addToSaveObjectPropertyAxiom (OWLObjectPropertyAxiom l_ax){
-		//ObjectPropertyDomainAxiom
-		if (l_ax instanceof OWLObjectPropertyDomainAxiom){
-			if (!(((OWLObjectPropertyDomainAxiom)l_ax).getDomain() instanceof 
-					OWLClass)){
-				futureNamedComplexConcepts.add(((OWLObjectPropertyDomainAxiom)l_ax).getDomain());
-			}
-		}
-		else if (l_ax instanceof OWLObjectPropertyRangeAxiom){
-			if (!(((OWLObjectPropertyRangeAxiom)l_ax).getRange() instanceof 
-					OWLClass)){
-				futureNamedComplexConcepts.add(((OWLObjectPropertyRangeAxiom)l_ax).getRange());
-			}
-		}
-		else if (l_ax instanceof OWLSubObjectPropertyOfAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLSubPropertyChainOfAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLEquivalentObjectPropertiesAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLDisjointObjectPropertiesAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLInverseObjectPropertiesAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLFunctionalObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLInverseFunctionalObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLReflexiveObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLIrreflexiveObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLSymmetricObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLAsymmetricObjectPropertyAxiom){
-			// TODO
-		}
-		else if (l_ax instanceof OWLTransitiveObjectPropertyAxiom){
-			// TODO
-		}
-	}
-	
-	/**************************************************************************
-	 *  Receives a Data Property axiom, and if it is an instance of an   
-	 *  axiom type that can contain a OWLClassExpression (i.e. Data Property Domain
-	 *  axiom), then if the description is not a named class, it is added to 
-	 *  the "toSave" list.
-	 * @param l_ax the input data property axiom
-	 **************************************************************************/
-	private void addToSaveDataPropertyDomainAxiom
-											 (OWLDataPropertyDomainAxiom l_ax){
-		if (!(((OWLDataPropertyDomainAxiom)l_ax).getDomain() instanceof 
-				OWLClass)){
-				futureNamedComplexConcepts.add(((OWLDataPropertyDomainAxiom)l_ax).getDomain());
-			}
-	}
-		
-	/**************************************************************************
-	 * Receives an Assertion Axiom, and if it is an instance of an axiom type   
-	 *  that can contain a OWLClassExpression (i.e. Class Assertion Axiom), then  
-	 *  if the description is not a named class, it is added to the "toSave" list.
-	 * @param l_ax the input class assertion axiom
-	 *************************************************************************/
-	private void addToSaveClassAssertionAxiom (OWLClassAssertionAxiom l_ax){
-  		if (!(((OWLClassAssertionAxiom)l_ax).getClassExpression() instanceof 
-  				OWLClass)){
-			futureNamedComplexConcepts.add(((OWLClassAssertionAxiom)l_ax).getClassExpression());
-		}
-	}
-
-	/**************************************************************************
-	 * Returns the original ontology completed with the elements in the "toSave" 
-	 * and "toSaveNeg" lists.
+	 * Returns the TBox of the original ontology completed with the definitions 
+	 * of complex class expressions.
 	 * That is, returns a complete ontology corresponding to the input ontology, 
-	 * plus a new equivalent classes axiom for every not named description; plus 
-	 * a new equivalent class axiom for the negation of each named class
-	 * in the original ontology;  plus a new equivalent classes axiom for the 
-	 * some restriction for every object property in the ontology (and for 
-	 * every named class in the original ontology).
-	 * Also adds a data min cardinality restriction for every data property in 
-	 * the original ontology.
+	 *   -- plus a new equivalent class axiom for every not named class expressions; 
+	 *   -- plus a new equivalent class axiom for the some restriction for 
+	 *   	every object property in the ontology (and for every named class 
+	 *   	in the original ontology);
+	 *   -- plus a data min cardinality restriction for every data property in 
+	 * 		the original ontology;
+	 *   -- plus a new equivalent class axiom for the negation of each named class 
+	 *   	in the original ontology.  
 	 * <p> 
 	 * All these new axioms added will help in the classification, to obtain
 	 * some further inferences.
 	 * <p> 
-	 * This method also remove all individual axioms or "abox assertions" from
-	 * the working ontology, so we don't classify them later.
-	 * @param new_ont the input ontolgy 
+	 * This method does not add the individual axioms or "abox assertions" from
+	 * the owl ontology, so that we don't classify them later.
+	 * 
+	 * @param owl_ont the input ontolgy 
 	 * @param man the ontology Manager
 	 * @return OWLOntology the same input ontology, completed with all 
 	 * the equivalent classes axioms 
-	 * @throws OWLOntologyChangeException, can happen when applying the changes 
-	 * to the input ontology.
-	 * @throws OWLOntologyStorageException, can happen when saving the ontology. 
 	 **************************************************************************/
-	private OWLOntology completeOwlOnt (OWLOntology new_ont, 
-										OWLOntologyManager man) 
-	throws OWLOntologyChangeException,  OWLOntologyStorageException
+	private OWLOntology completeOwlOnt(OWLOntology owl_ont, OWLOntologyManager man) 
 	{
-		List<OWLOntologyChange> changes = new  ArrayList<OWLOntologyChange>();
 
 		log.info("Building the conservative extension... ");
 		OWLDataFactory factory = man.getOWLDataFactory();
-		log.info("	* Adding named classes for every description...");
-		//Start working now with the copy of the original ontology
-		//get the logical axioms, and for each axiom that contains a description,
-		//save the description in a set that we will use later on the create the
-		//equivalent class axiom.
-		Set<OWLLogicalAxiom> l_axioms = new_ont.getLogicalAxioms();
-		for (OWLLogicalAxiom l_ax : l_axioms){
+
+		/**
+		 * Collect all complex class expressions to be named
+		 */
+		//the ones that appear in the ontology
+		Set<OWLClassExpression> complexExpressionsToBeNamed = extractComplexExpressions(owl_ont);
+		//construct all possible concepts of the form `ER.A, ER.T`
+		complexExpressionsToBeNamed.addAll(constructObjectSomeValuesFrom(owl_ont, factory));
+		//construct all possible concepts of the form `min 1 P`
+		complexExpressionsToBeNamed.addAll(constructDataMinCardinalityRestrictions (owl_ont,factory));
+		//construct all possible atomic negations of the form `\NOT A`
+		Set<OWLClassExpression> negatedConcepts = createAtomicNegations(owl_ont, factory);
+
+		
+		
+		log.info("	* Adding Named classes for every complex class expression...");
+		
+		/**
+		 * Now create all the corresponding definitions for the complex class expressions
+		 * and for the atomic negations.
+		 * 
+		 * We need two methods because the names of the new classes 
+		 * are different for the two cases 
+		 */
+		createDefinitionsForComplexExpressions(complexExpressionsToBeNamed, owl_ont, man);
+		createDefinitionsForAtmoicNegations(negatedConcepts, owl_ont, man);
+  		
+		
+		/**
+		 * Remove the individual axioms to optimize classification later
+		 * 
+		 * should be done after #extractComplexExpressions as it removes ClassAssetionAxioms
+		 */
+		removeIndividualAxioms(owl_ont,man);
+		
+		return owl_ont;
+	}//completeOwlOnt 
+
+
+	/**
+	 * Gives a name to each atomic negation by creating a new predicate and 
+	 * adding an equivalent class axiom
+	 * 
+	 * @param negatedConcepts
+	 * @param owl_ont
+	 * @param man
+	 * @return
+	 */
+	private void createDefinitionsForAtmoicNegations(Set<OWLClassExpression> negatedConcepts,
+			OWLOntology owl_ont, OWLOntologyManager man) {
+		
+		OWLDataFactory factory = man.getOWLDataFactory();
+		
+		for (OWLClassExpression negClass: negatedConcepts){
+			//create a new class with a name `Not_A`
+			OWLClass new_class = factory.getOWLClass(
+					IRI.create(owl_ont.getOntologyID().getOntologyIRI() +"#Not_" + 
+					String.valueOf(((OWLObjectComplementOf)negClass).getOperand())));
+			new_NegClasses.put(new_class, negClass);
+			
+			//create a new equivalent class axiom defining the new class
+			OWLEquivalentClassesAxiom new_ax = factory.getOWLEquivalentClassesAxiom(new_class,negClass);
+
+			//add the axiom to the ontology
+			AddAxiom addAxiom = new AddAxiom (owl_ont, new_ax);
+			man.applyChange(addAxiom);
+		}
+	}
+
+
+	/**
+	 * Gives a name to each complex expression by creating a new predicate and 
+	 * adding an equivalent class axiom
+	 *  
+	 * @param complexExpressionsToBeNamed
+	 * @param owl_ont
+	 * @param man
+	 * 
+	 * @return the number of new added names
+	 */
+	private int createDefinitionsForComplexExpressions(
+			Set<OWLClassExpression> complexExpressionsToBeNamed,
+			OWLOntology owl_ont, OWLOntologyManager man) {
+		
+		OWLDataFactory factory = man.getOWLDataFactory();
+		
+		int n=0;
+		for (OWLClassExpression expression: complexExpressionsToBeNamed){
+  			//create a new class with a name `Fresh#`
+			OWLClass new_class = factory.getOWLClass(IRI.create(owl_ont.getOntologyID().getOntologyIRI() + "#Fresh_" + n));
+			new_classes.put(new_class, expression);
+			
+			//create a new equivalent class axiom defining the new class
+			OWLEquivalentClassesAxiom new_ax = factory.getOWLEquivalentClassesAxiom(new_class,expression);
+			
+			//add the axiom to the ontology
+			AddAxiom addAxiom = new AddAxiom(owl_ont, new_ax);
+			man.applyChange(addAxiom);
+			n++;			
+		}
+		return n;
+	}
+
+
+	/**
+	 * Extracts all complex class expressions from the owl ontology and 
+	 * returns them in a set. This set is supposed to be used later to introduce 
+	 * a new named class for each class expression. 
+	 *  
+	 * @param owl_ont
+	 * @return
+	 */
+	private Set<OWLClassExpression> extractComplexExpressions(OWLOntology owl_ont) {
+		Set<OWLClassExpression> complexExpressions = new HashSet<>();
+		
+		for (OWLLogicalAxiom l_ax : owl_ont.getLogicalAxioms()){
 			//class axiom
 			if(l_ax instanceof OWLClassAxiom){
-				addToSaveClassAxioms((OWLClassAxiom)l_ax);
+				complexExpressions.addAll(extractComplexExpressionsFromClassAxiom((OWLClassAxiom)l_ax));
 			}
 			//object property axiom
 			else if(l_ax instanceof OWLObjectPropertyAxiom){
-				addToSaveObjectPropertyAxiom((OWLObjectPropertyAxiom)l_ax);
+				complexExpressions.addAll(extractComplexExpressionsFromObjectPropertyAxiom((OWLObjectPropertyAxiom)l_ax));
 			}
 			//data property axiom
 			else if (l_ax instanceof OWLDataPropertyAxiom){
-				// TODO ontology repository/cmt contains such an axiom
-				if(l_ax instanceof OWLDataPropertyDomainAxiom)
-					addToSaveDataPropertyDomainAxiom((OWLDataPropertyDomainAxiom)l_ax);
-				// none of the following axioms makes any difference
-				else if(l_ax instanceof OWLDataPropertyRangeAxiom)
-					;	
-				else if (l_ax instanceof OWLSubDataPropertyOfAxiom){
-					// TODO
-				}
-				else if (l_ax instanceof OWLEquivalentDataPropertiesAxiom){
-					// TODO
-				}
-				else if (l_ax instanceof OWLDisjointDataPropertiesAxiom){
-					// TODO
-				}
-				else if (l_ax instanceof OWLFunctionalDataPropertyAxiom){
-					// TODO
+				complexExpressions.addAll(extractComplexExpressionsFromDataPropertyAxiom((OWLDataPropertyAxiom)l_ax));
+			}
+			//an ABox assertion with a complex class expression 
+			else if (l_ax instanceof OWLClassAssertionAxiom){
+				if (!(((OWLClassAssertionAxiom)l_ax).getClassExpression() instanceof OWLClass)){
+					complexExpressions.add(((OWLClassAssertionAxiom)l_ax).getClassExpression());
 				}
 			}
-			else if (l_ax instanceof OWLIndividualAxiom){
+		}
+		
+		return complexExpressions;
+	}
+
+
+	private Set<OWLClassExpression> extractComplexExpressionsFromDataPropertyAxiom(
+			OWLDataPropertyAxiom l_ax) {
+		Set<OWLClassExpression> complexExpressions = new HashSet<>();
+		if(l_ax instanceof OWLDataPropertyDomainAxiom){
+			if (!(((OWLDataPropertyDomainAxiom)l_ax).getDomain() instanceof OWLClass)){
+				complexExpressions.add(((OWLDataPropertyDomainAxiom)l_ax).getDomain());
+			}
+		}
+		// none of the following axioms makes any difference
+		else if(l_ax instanceof OWLDataPropertyRangeAxiom){
+		}
+		else if (l_ax instanceof OWLSubDataPropertyOfAxiom){
+		}
+		else if (l_ax instanceof OWLEquivalentDataPropertiesAxiom){
+		}
+		else if (l_ax instanceof OWLDisjointDataPropertiesAxiom){
+		}
+		else if (l_ax instanceof OWLFunctionalDataPropertyAxiom){
+		}
+		return complexExpressions;
+	}
+
+
+	private Set<OWLClassExpression> extractComplexExpressionsFromObjectPropertyAxiom(
+			OWLObjectPropertyAxiom l_ax) {
+		Set<OWLClassExpression> complexExpressions = new HashSet<>();
+		
+		//ObjectPropertyDomainAxiom
+		if (l_ax instanceof OWLObjectPropertyDomainAxiom){
+			if (!(((OWLObjectPropertyDomainAxiom)l_ax).getDomain() instanceof 
+					OWLClass)){
+				complexExpressions.add(((OWLObjectPropertyDomainAxiom)l_ax).getDomain());
+			}
+		}
+		//ObjectPropertyRangeAxiom
+		else if (l_ax instanceof OWLObjectPropertyRangeAxiom){
+			if (!(((OWLObjectPropertyRangeAxiom)l_ax).getRange() instanceof 
+					OWLClass)){
+				complexExpressions.add(((OWLObjectPropertyRangeAxiom)l_ax).getRange());
+			}
+		}
+		else if (l_ax instanceof OWLSubObjectPropertyOfAxiom){
+		}
+		else if (l_ax instanceof OWLSubPropertyChainOfAxiom){
+		}
+		else if (l_ax instanceof OWLEquivalentObjectPropertiesAxiom){
+		}
+		else if (l_ax instanceof OWLDisjointObjectPropertiesAxiom){
+		}
+		else if (l_ax instanceof OWLInverseObjectPropertiesAxiom){
+		}
+		else if (l_ax instanceof OWLFunctionalObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLInverseFunctionalObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLReflexiveObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLIrreflexiveObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLSymmetricObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLAsymmetricObjectPropertyAxiom){
+		}
+		else if (l_ax instanceof OWLTransitiveObjectPropertyAxiom){
+		}
+		return complexExpressions;
+	}
+
+
+	private Set<OWLClassExpression> extractComplexExpressionsFromClassAxiom(
+			OWLClassAxiom l_ax) {
+		Set<OWLClassExpression> complexExpressions = new HashSet<>();
+		
+		//subclass axiom
+		if (l_ax instanceof OWLSubClassOfAxiom){
+			
+			//if the subclass is not a named class, not an existential quantification
+			//and not a union of them then we give a name to it
+			//in general we may need to name not only one class but several 
+			//of them due to union
+			if (!DLLiteGrammarChecker.isDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass())){
+				Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass());
+				return classesToSave;
+			}
+			
+			//if the superclass is not a named class, nor a qualified chain,
+			//nor a conjunction of them we give a name to it
+			//in the case of a chain qualified by a complex class, we give a name
+			//only to this class
+			//in general we may need to name not only one class but several 
+			//of them due to intersection
+			if (!DLLiteGrammarChecker.isDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass())){
+				Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass());
+				return classesToSave;
+			}
+		}
+		//equivalent classes axiom
+		else if (l_ax instanceof OWLEquivalentClassesAxiom){
+			Set<OWLClassExpression> des = ((OWLEquivalentClassesAxiom)l_ax).getClassExpressions();
+			for(OWLClassExpression d: des){
+				if (!(d instanceof OWLClass)){
+					complexExpressions.add(d);
+				}
+			}
+		}
+		//disjoint classes axiom
+		else if (l_ax instanceof OWLDisjointClassesAxiom){
+			Set<OWLClassExpression> des = ((OWLDisjointClassesAxiom)l_ax).getClassExpressions();
+			for(OWLClassExpression d: des){
+				if (!(d instanceof OWLClass)){
+					complexExpressions.add(d);						
+				}
+			}
+		}
+		else if (l_ax instanceof OWLDisjointUnionAxiom){
+			// TODO
+		}
+		return complexExpressions;
+	}
+
+
+	private void removeIndividualAxioms(OWLOntology owl_ont,
+			OWLOntologyManager man) {
+		List<OWLOntologyChange> changes = new  ArrayList<OWLOntologyChange>();
+
+		Set<OWLLogicalAxiom> l_axioms = owl_ont.getLogicalAxioms();
+		for (OWLLogicalAxiom l_ax : l_axioms){
+			if (l_ax instanceof OWLIndividualAxiom){
 				//add the individual axioms (or abox assertions), to a 
 				//changes list, that will contain all the axioms to remove
-				changes.add(new RemoveAxiom(new_ont, l_ax));
-				//class assertion axiom
-				if (l_ax instanceof OWLClassAssertionAxiom){
-					addToSaveClassAssertionAxiom((OWLClassAssertionAxiom)l_ax);
-				}
-	  		}
-
+				changes.add(new RemoveAxiom(owl_ont, l_ax));
+			}
 		}
+		
 		//apply the changes that remove the individual axioms from the ontology
 		man.applyChanges(changes);
-		
-		//Now create:
-		// - the negation of every concept (which will be added in the 
-		//	 toSaveNeg set), and
-		// - the some restriction for every object property (which will be 
-		//	 added in the same set of used for all the other descriptions.
-		this.addToSaveNegConcepts(new_ont, factory);
-		this.addToSaveSomeRestriction(new_ont, factory);
-		this.addToSaveMinCardinalityRestrictions (new_ont,factory);
-		
-		//Now create all the corresponding equivalent classes axioms. 
-		int n= 0;
-  		for (OWLClassExpression obj: futureNamedComplexConcepts){
-  			//save every description that is not a  named class, in a new 
-  			// equivalent classes axiom with a new class
-  			//TODO change string name for the new classes for global constants...
-				OWLClass new_classFather = 
-				  factory.getOWLClass(IRI.create(new_ont.getOntologyID().getOntologyIRI() +"#new"+ n));
-				new_classes.put(new_classFather, obj);
-				OWLEquivalentClassesAxiom new_ax = 
-					factory.getOWLEquivalentClassesAxiom(new_classFather,obj);
-  				AddAxiom addAxiom = new AddAxiom (new_ont, new_ax);
-  				man.applyChange(addAxiom);
-				n= n+1;
-		}
-  		for (OWLClassExpression obj: toSaveNeg){
-				OWLClass new_classFather = 
-				   factory.getOWLClass(IRI.create(new_ont.getOntologyID().getOntologyIRI() +"#Not_" + 
-				   String.valueOf(((OWLObjectComplementOf)obj).getOperand())));
-				new_NegClasses.put(new_classFather, obj);
-				OWLEquivalentClassesAxiom new_ax =
-					factory.getOWLEquivalentClassesAxiom(new_classFather,obj);
-  				AddAxiom addAxiom = new AddAxiom (new_ont, new_ax);
-  				man.applyChange(addAxiom);
-				n= n+1;
-		}
-  		
-  		// commented save
-		//man.saveOntology(new_ont,URI_working_ont);
-  		//log.info("Saving complete working ontology...");
-  		
-		return new_ont;
-	}//completeOwlOnt 
+	}
 
-	
+
 	/**************************************************************************
 	 * Initializes the DL lite ontology. In this phase, only copy all the axioms
 	 * that are not logical axioms. Logical axioms will be added in the DL lite
-	 * ontology after the classification, excepting the individual axioms, which
-	 * will be copied now, and then removed from the working ontology. 
+	 * ontology after the classification, except the individual axioms, which
+	 * will be copied now, and then removed from the owl ontology. 
 	 * This last step involving the individual axioms, is done in order to run
 	 * run a faster classification (in case the ontology contains too many 
 	 * individuals). 
@@ -563,7 +570,7 @@ public class DLLiteApproximator{
 	 * @param man the ontology manager
 	 * @throws OWLOntologyStorageException thrown by the addAxiom method 
 	 * @throws OWLOntologyChangeException thrown by the addAxiom method
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager) 
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager) 
 	 *************************************************************************/
 	private void initializeDlLiteOnt(OWLOntology owl_ont, OWLOntology dllite_ont,
 									 OWLOntologyManager man) 
@@ -582,7 +589,7 @@ public class DLLiteApproximator{
 				OWLAxiom new_ax = ob.duplicateObject(ax);
 				//call a method that check if the axiom is already in the 
 				//dl-lite ontology and if not, adds the axiom
-				addAxiom(new_ax.getNNF(), dllite_ont, man);
+				addAxiomToDLLite(new_ax.getNNF(), dllite_ont, man);
 			}
 			//With the individual axioms, or abox assertions, we copy the
 			//valid ones in the Dl Lite ontology, and then we will delete
@@ -591,7 +598,7 @@ public class DLLiteApproximator{
 				OWLAxiom new_ax = ob.duplicateObject(ax);
 				//call a method that check if the axiom is already in the 
 				//dl-lite ontology and if not, adds the axiom
-				addAxiom(new_ax.getNNF(), dllite_ont, man);
+				addAxiomToDLLite(new_ax.getNNF(), dllite_ont, man);
 			}
 		}
 	}
@@ -608,7 +615,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, when applying changes 
 	 * @throws OWLOntologyStorageException, when saving the ontology
 	 **************************************************************************/
-	private static void addAxiom(OWLAxiom new_axiom, OWLOntology dllite_ont, OWLOntologyManager man) 
+	private static void addAxiomToDLLite(OWLAxiom new_axiom, OWLOntology dllite_ont, OWLOntologyManager man) 
 	throws OWLOntologyChangeException, OWLOntologyStorageException 
 	{
 		boolean isDlLite = DLLiteGrammarChecker.isdlLiteAxiom(new_axiom.getNNF());
@@ -656,7 +663,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyStorageException thrown by the addAxiom method
 	 * @throws OWLOntologyChangeException thrown by the addAxiom method
 	 * @throws  when inferring the inconsistent classes 
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private void addDlLiteInconsistentClassesAxioms (OWLOntology dl_ont, 
 													 OWLOntology owl_ont, 
@@ -709,13 +716,13 @@ public class DLLiteApproximator{
 			OWLClassExpression compInc = factory.getOWLObjectComplementOf(incClass);
 			OWLSubClassOfAxiom sub_inc = 
 									factory.getOWLSubClassOfAxiom(incClass, compInc);
-			addAxiom(sub_inc,dl_ont,man);
+			addAxiomToDLLite(sub_inc,dl_ont,man);
 			
 			//create the equivalent classes axiom between INC and every inconsistent class
 			OWLEquivalentClassesAxiom axiom = 
 							factory.getOWLEquivalentClassesAxiom(set_inc);
 			//add the axiom in the dl lite ontology
-			addAxiom(axiom, dl_ont,man);
+			addAxiomToDLLite(axiom, dl_ont,man);
 
 			
 		}
@@ -742,7 +749,7 @@ public class DLLiteApproximator{
 	 * ancestors 
 	 * @throws OWLOntologyStorageException thrown by the addAxiom method 
 	 * @throws OWLOntologyChangeException thrown by the addAxiom method
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private Set<OWLClassExpression> addDlLiteDisjoints (OWLClassExpression clazz, 
 										Set<OWLClassExpression> negAncestors_set, 
@@ -769,7 +776,7 @@ public class DLLiteApproximator{
 				new_clazz = duplicator.duplicateObject(clazz);
 				OWLDisjointClassesAxiom axiom = 
 						factory.getOWLDisjointClassesAxiom(new_clazz,neg_anc);
-				DLLiteApproximator.addAxiom(axiom, dllite_ont, man);
+				DLLiteApproximator.addAxiomToDLLite(axiom, dllite_ont, man);
 			}
 			//empty the set of ancestors for negated classes
 			negAncestors_set.clear();
@@ -834,7 +841,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException thrown by the addAxiom method
 	 * @throws  thrown by the isNothingEquivalentClass 
 	 * method 
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private Set<OWLClassExpression> addDlLiteSubClasses (OWLClassExpression clazz, 
 											Set<OWLClassExpression> ancestors_set, 
@@ -897,7 +904,7 @@ public class DLLiteApproximator{
 	 * 
 	 * @throws OWLOntologyStorageException thrown by the addAxiom method
 	 * @throws OWLOntologyChangeException thrown by the addAxiom method
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private OWLClassExpression addDlLiteEquivalentClassesAxioms 
 													(boolean firstime,
@@ -988,7 +995,7 @@ public class DLLiteApproximator{
 		if (sub_classes.size()>1){
 			OWLEquivalentClassesAxiom axiom = 
 							factory.getOWLEquivalentClassesAxiom(sub_classes);
-			this.addAxiom(axiom, dllite_ont, man);
+			addAxiomToDLLite(axiom, dllite_ont, man);
 		}
 		sub_classes.clear();
 
@@ -1003,7 +1010,7 @@ public class DLLiteApproximator{
 				if (!sup.equals(selected_class)){
 					OWLSubClassOfAxiom axiom = 
 						factory.getOWLSubClassOfAxiom(new_sub, sup);
-					this.addAxiom(axiom, dllite_ont, man);
+					addAxiomToDLLite(axiom, dllite_ont, man);
 				}
 			}
 		}
@@ -1133,7 +1140,7 @@ public class DLLiteApproximator{
 	 * @throws 
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method 
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addSubObjectPropertyAxioms(OWLObjectProperty prop, 
 											OWLObjectProperty new_prop,
@@ -1153,7 +1160,7 @@ public class DLLiteApproximator{
 			//create equivalent properties axioms with the properties 
 			OWLEquivalentObjectPropertiesAxiom eq_axiom = 
 				factory.getOWLEquivalentObjectPropertiesAxiom(sub_prop_set.getEntities());
-			addAxiom(eq_axiom, dl_ont,man);
+			addAxiomToDLLite(eq_axiom, dl_ont,man);
 			OWLObjectProperty new_sub= null;
 			for (OWLObjectPropertyExpression sub_prop : sub_prop_set){
 				//pick one property from the set
@@ -1164,7 +1171,7 @@ public class DLLiteApproximator{
 				//create subproperties axiom
 				OWLSubObjectPropertyOfAxiom sub_axiom = 
 					factory.getOWLSubObjectPropertyOfAxiom(new_sub, new_prop);
-				addAxiom(sub_axiom, dl_ont,man);
+				addAxiomToDLLite(sub_axiom, dl_ont,man);
 			}
 
 		}
@@ -1189,7 +1196,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private void addObjectPropertyDomainAxiom (OWLObjectProperty prop,
 											   OWLObjectProperty new_prop,
@@ -1242,7 +1249,7 @@ public class DLLiteApproximator{
 				OWLObjectPropertyDomainAxiom axiom = 
 					factory.getOWLObjectPropertyDomainAxiom(new_prop, 
 															aux_dom);
-				addAxiom(axiom,dl_ont,man);
+				addAxiomToDLLite(axiom,dl_ont,man);
 			}
 			selected_dom = null;
 		}
@@ -1266,7 +1273,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addFunctionalObjectPropertyAxioms(OWLObjectProperty prop,
 												   OWLObjectProperty new_prop,
@@ -1291,7 +1298,7 @@ public class DLLiteApproximator{
 					//TODO won't add the axiom in case it is not dl lite... see, 
 					//in case it is necesary to add anyway the axiom, do it without
 					//calling this method...
-					addAxiom(axiom,dl_ont,man);
+					addAxiomToDLLite(axiom,dl_ont,man);
 				}
 			} catch (FunctionalPropertySpecializedException e) {
 				// TODO Auto-generated catch block
@@ -1324,7 +1331,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addInverseObjectPropertiesAxioms (OWLObjectProperty prop,
 												   OWLObjectProperty new_prop,
@@ -1342,7 +1349,7 @@ public class DLLiteApproximator{
 				OWLObjectPropertyExpression new_inv = duplicator.duplicateObject(inv_prop);
 				OWLInverseObjectPropertiesAxiom axiom = 
 					factory.getOWLInverseObjectPropertiesAxiom(new_prop, new_inv);
-				addAxiom(axiom, dl_ont, man);
+				addAxiomToDLLite(axiom, dl_ont, man);
 			//}
 		}
 	}
@@ -1360,7 +1367,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addObjectPropertyRangeAxioms(OWLObjectProperty prop,
 											  OWLObjectProperty new_prop,
@@ -1380,13 +1387,13 @@ public class DLLiteApproximator{
 			} else if (new_NegClasses.containsKey(range)){
 				aux_range = duplicator.duplicateObject(new_NegClasses.get(range));
 			} else {
-				aux_range = duplicator.duplicateObject((OWLObject) range);
+				aux_range = duplicator.duplicateObject((OWLObject) range.getRepresentativeElement().asOWLClass());
 			}
 			if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(aux_range)){
 				OWLObjectPropertyRangeAxiom axiom = 
 						factory.getOWLObjectPropertyRangeAxiom(new_prop, 
 															   aux_range);
-				addAxiom(axiom,dl_ont,man);
+				addAxiomToDLLite(axiom,dl_ont,man);
 			}
 		}
 
@@ -1414,7 +1421,7 @@ public class DLLiteApproximator{
 	 * @throws   
 	 * @throws OWLOntologyStorageException thrown by the invoqued method addAxiom
 	 * @throws OWLOntologyChangeException by the invoqued method addAxiom
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private void addDlLiteObjectProperties (OWLOntology dl_ont, 
 											OWLOntology owl_ont,  
@@ -1450,7 +1457,7 @@ public class DLLiteApproximator{
 				if (prop.isSymmetric(reasoner.getRootOntology())){
 					OWLSymmetricObjectPropertyAxiom axiom = 
 							  factory.getOWLSymmetricObjectPropertyAxiom(new_prop);
-					addAxiom(axiom,dl_ont,man);
+					addAxiomToDLLite(axiom,dl_ont,man);
 				}
 			//}catch( e1)
 			//{
@@ -1483,7 +1490,7 @@ public class DLLiteApproximator{
 	 * @throws 
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method 
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	 
 	private void addSubDataPropertyAxioms (OWLDataProperty prop,
@@ -1502,7 +1509,7 @@ public class DLLiteApproximator{
 			//add the equivalent properties axioms here
 			OWLEquivalentDataPropertiesAxiom eq_axiom = 
 	  		  factory.getOWLEquivalentDataPropertiesAxiom(sub_prop_set.getEntities());
-	  		addAxiom(eq_axiom,dl_ont,man);
+	  		addAxiomToDLLite(eq_axiom,dl_ont,man);
 	  		//now get one property in each set to create the subprop axiom
 	  		OWLDataProperty new_sub = null;
 			for (OWLDataProperty sub_prop : sub_prop_set){
@@ -1510,7 +1517,7 @@ public class DLLiteApproximator{
 				break;
 			}
 			OWLSubDataPropertyOfAxiom axiom = factory.getOWLSubDataPropertyOfAxiom(new_sub,new_prop);
-			addAxiom(axiom,dl_ont,man);
+			addAxiomToDLLite(axiom,dl_ont,man);
 		}
 	}
 
@@ -1532,7 +1539,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addDataPropertyDomainAxioms(OWLDataProperty prop,
 											 OWLDataProperty new_prop,
@@ -1583,7 +1590,7 @@ public class DLLiteApproximator{
 				OWLDataPropertyDomainAxiom axiom = 
 					factory.getOWLDataPropertyDomainAxiom(new_prop, 
 														  aux_dom);
-				addAxiom(axiom,dl_ont,man);
+				addAxiomToDLLite(axiom,dl_ont,man);
 			}
 			selected_dom = null;
 		}
@@ -1608,7 +1615,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addFunctionalDataPropertyAxioms (OWLDataProperty prop,
 												  OWLDataProperty new_prop,
@@ -1638,7 +1645,7 @@ public class DLLiteApproximator{
 			//in case it is necesary to add anyway the axiom, do it without
 			//calling this method...
 
-			addAxiom(axiom,dl_ont,man);
+			addAxiomToDLLite(axiom,dl_ont,man);
 		}
 
 	}
@@ -1658,7 +1665,7 @@ public class DLLiteApproximator{
 	 * @throws OWLOntologyChangeException, thrown by the addAxiom method
 	 * @throws OWLOntologyStorageException, thrown by the addAxiom method
 	 * @throws , when interacting with the reasoner
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 **************************************************************************/
 	private void addDataPropertyRangeAxioms(OWLDataProperty prop,
 											OWLDataProperty new_prop,
@@ -1677,7 +1684,7 @@ public class DLLiteApproximator{
 				OWLDataPropertyRangeAxiom axiom = 
 								factory.getOWLDataPropertyRangeAxiom(new_prop, 
 																	 new_range);
-				addAxiom(axiom,dl_ont,man);
+				addAxiomToDLLite(axiom,dl_ont,man);
 			}
 		}
 
@@ -1703,7 +1710,7 @@ public class DLLiteApproximator{
 	 * @throws  
 	 * @throws OWLOntologyStorageException thrown by the invoqued method addAxiom
 	 * @throws OWLOntologyChangeException by the invoqued method addAxiom
-	 * @see #addAxiom(OWLAxiom,OWLOntology,OWLOntologyManager)
+	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private void addDlLiteDataProperties (OWLOntology dl_ont, 
 										  OWLOntology owl_ont,  
@@ -1849,7 +1856,7 @@ public class DLLiteApproximator{
 					OWLClassExpression new_super= ob.duplicateObject(sup);
 					OWLSubClassOfAxiom axiom = 
 								factory.getOWLSubClassOfAxiom(new_sub,new_super);
-					addAxiom(axiom, dlLiteOnt,man);
+					addAxiomToDLLite(axiom, dlLiteOnt,man);
 					
 				}
 			}
@@ -1995,11 +2002,20 @@ public class DLLiteApproximator{
 	**************************************************************************/
 	public OWLOntology approximate(OWLOntology owl_ont, 
 							OWLOntologyManager manager, 
-							IRI uri_dllite_ont)
-	throws OWLOntologyChangeException, 
-		   OWLOntologyStorageException, 
-		   OWLOntologyCreationException, InstantiationException, IllegalAccessException, ClassNotFoundException
+							IRI uri_dllite_ont) 
+	throws OWLOntologyCreationException, OWLOntologyChangeException, 
+	OWLOntologyStorageException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
+		
+		/**
+		 * Create and Inizialize the dl lite ontology 
+		 * with non-logical and individual axioms
+		 */
+		OWLOntology dllite_ont = manager.createOntology(uri_dllite_ont);
+		log.info("Created dl ontology : " + dllite_ont.getOntologyID().getOntologyIRI());
+		//Initialize the DL-Lite Ontology
+		initializeDlLiteOnt(owl_ont, dllite_ont, manager);
+
 		
 		/**
 		 * Complete the owl ontology with new names
@@ -2007,13 +2023,6 @@ public class DLLiteApproximator{
 		 */
 		OWLOntology complete_owl_ont = completeOwlOnt(owl_ont, manager);
 
-		/**
-		 * Create and Inizialize the dl lite ontology
-		 */
-		OWLOntology dllite_ont = manager.createOntology(uri_dllite_ont);
-		log.info("Created dl ontology : " + dllite_ont.getOntologyID().getOntologyIRI());
-		//Initialize the DL-Lite Ontology
-		initializeDlLiteOnt(owl_ont, dllite_ont, manager);
 		
 
 
@@ -2023,7 +2032,9 @@ public class DLLiteApproximator{
 		 */
 		
 		// Create a reasoner factory.  In this case, we will use pellet.
-		OWLReasonerFactory reasonerFactory = (OWLReasonerFactory)Class.forName("org.mindswap.pellet.owlapi.PelletReasonerFactory").newInstance();
+		//OWLReasonerFactory reasonerFactory = (OWLReasonerFactory)Class.forName("org.semanticweb.HermiT.Reasoner.ReasonerFactory").newInstance();
+		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
+		
 		// Load the workng ontology into the reasoner.  
 		OWLReasoner reasoner = reasonerFactory.createReasoner(complete_owl_ont);
 		//Asks the reasoner to classify the ontology.  
