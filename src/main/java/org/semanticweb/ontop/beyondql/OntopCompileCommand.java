@@ -17,6 +17,8 @@ public class OntopCompileCommand {
 
     public static void main(String[] args) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException {
 
+        long t1 = System.currentTimeMillis();
+
         if(args.length != 3){
             System.err.println("Usage: OntopCompileCommand ontology.owl mapping.obda newMapping.obda");
             System.exit(-1);
@@ -30,5 +32,10 @@ public class OntopCompileCommand {
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
+
+        long t2 = System.currentTimeMillis();
+
+        System.err.println("new mappings saved in: " + extendedObdaFile);
+        System.err.println("total time: " + (t2 - t1) + "ms");
     }
 }

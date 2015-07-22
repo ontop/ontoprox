@@ -70,6 +70,35 @@ $ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -
 `-Djava.library.path=/usr/lib/swi-prolog/lib/amd64`
 
 
+## Generating all-in-one jar for testing:
+
+```
+$ mvn clean compile package -DskipTests
+```
+
+Then you can find the generated jar file in the target directory
+
+
+### OS X
+
+```
+$ java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-7.2.2/lib/x86_64-darwin14.4.0 \
+ -Djava.ext.dirs=/Users/xiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar \
+  ../src/test/resources/uobm/univ-bench-dl.owl ../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
+```
+
+### Linux
+
+```
+$ java -Djava.library.path=/usr/lib/swi-prolog/lib/amd64 \
+ -Djava.ext.dirs=/home/gxiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar \
+  ../src/test/resources/uobm/univ-bench-dl.owl ../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
+```
+
+
+
+
+
 
 
 
