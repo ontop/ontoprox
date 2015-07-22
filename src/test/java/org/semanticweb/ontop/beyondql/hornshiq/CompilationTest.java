@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.clipper;
+package org.semanticweb.ontop.beyondql.hornshiq;
 
 
 import com.google.common.collect.ImmutableSet;
@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.compileHSHIQtoMappings;
+import static org.semanticweb.ontop.beyondql.hornshiq.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
 
 public class CompilationTest {

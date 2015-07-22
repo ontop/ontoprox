@@ -1,6 +1,5 @@
-package expansion;
+package org.semanticweb.ontop.beyondql.datalogexpansion;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +17,6 @@ import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.io.CharStreams;
-import it.unibz.krdb.obda.exception.InvalidMappingException;
-import it.unibz.krdb.obda.io.ModelIOManager;
 import it.unibz.krdb.obda.model.CQIE;
 import it.unibz.krdb.obda.model.DatalogProgram;
 import it.unibz.krdb.obda.model.Function;
@@ -32,7 +29,7 @@ import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import org.jpl7.Compound;
 import org.jpl7.Query;
 import org.jpl7.Term;
-import org.semanticweb.ontop.clipper.OntopRuleToSWIPrologTranslator;
+import org.semanticweb.ontop.beyondql.hornshiq.OntopRuleToSWIPrologTranslator;
 
 
 public class DatalogExpansion {

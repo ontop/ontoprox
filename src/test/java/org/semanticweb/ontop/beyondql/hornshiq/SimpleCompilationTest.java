@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.clipper;
+package org.semanticweb.ontop.beyondql.hornshiq;
 
 /*
  * #%L
@@ -47,7 +47,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.semanticweb.ontop.clipper.Ontology2MappingCompilation.compileHSHIQtoMappings;
+import static org.semanticweb.ontop.beyondql.hornshiq.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
 
 /***

@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.clipper;
+package org.semanticweb.ontop.beyondql.hornshiq;
 
 
 import com.google.common.base.Joiner;
@@ -51,8 +51,6 @@ public class OntopRuleToSWIPrologTranslator {
     public static String translate(Function f){
         return translate(f.getFunctionSymbol()) + "(" + Joiner.on(",").join(f.getTerms()) + ")";
     }
-
-
 
     public static String translate(Predicate predicate){
         String predicateName = predicate.getName();

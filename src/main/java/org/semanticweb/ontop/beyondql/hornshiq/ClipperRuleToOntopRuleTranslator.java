@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.clipper;
+package org.semanticweb.ontop.beyondql.hornshiq;
 
 import com.beust.jcommander.internal.Lists;
 

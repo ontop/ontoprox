@@ -1,4 +1,4 @@
-package expansion;
+package org.semanticweb.ontop.beyondql.datalogexpansion;
 
 import com.beust.jcommander.internal.Lists;
 import com.google.common.base.Joiner;
