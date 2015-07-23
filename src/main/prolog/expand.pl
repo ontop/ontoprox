@@ -79,8 +79,14 @@ print([]) :- nl.
 %  clause(A, B), not(B = (_,_)), not(edb(B)).
 %  asserta(table_subsumptions(A,B)).                   
 
+
+rdfs_subsumes(A, B) :-
+	rdfs_subsumes_trivial(A, B).
+
 rdfs_subsumes(A, B) :-
 	t_rdfs_subsumes(A, B, [A]).                   
+
+rdfs_subsumes_trivial(A, B) :- A==B.
 
 rdfs_subsumes_0(A,B) :-
 	clause(A, B), not(B = (_,_)), not(edb(B)).
@@ -113,10 +119,11 @@ remove_subsumers(L,Out) :-
 
 
 subsumes_from_list(_, []) :- fail.
-subsumes_from_list(Elem, [H|_]) :- Elem = view(Sup), H = view(Sub), rdfs_subsumes(Sup, Sub), !.  
-subsumes_from_list(Elem, [H|_]) :- rdfs_subsumes(Elem, H), !.  
+subsumes_from_list(Elem, [H|_]) :- extract_idb_predicate(Elem, Sup), extract_idb_predicate(H, Sub), rdfs_subsumes(Sup, Sub), !.  
 subsumes_from_list(Elem, [_|T]) :- subsumes_from_list(Elem, T).  
 
+extract_idb_predicate(view(X), X) :- !.% :- X==Y, !.
+extract_idb_predicate(X, X).% :- X==Y.
 
 
 %%%%%%%%%% Computation of Datalog Expasions %%%%%%%%%%
@@ -185,12 +192,9 @@ subsumption_optimized_expand(OriginalGoal, [Goal1|Goal2], Expansions, Depth) :-
 expand_fresh(_, [], []) :- !.
 
 expand_fresh(OriginalGoal, [Goal1|Goal2], Expansion) :- 
-	fresh(Goal1), expand_0(OriginalGoal, Goal1, Body1), 
-	expand_fresh(OriginalGoal, Goal2, Expansion2), 
-	append(Body1, Expansion2, Expansion), !.    
-
-expand_fresh(OriginalGoal, [Goal1|Goal2], [Goal1|Expansion2]) :- 
-	expand_fresh(OriginalGoal, Goal2, Expansion2).    
+	fresh(Goal1) -> 
+	( expand_0(OriginalGoal, Goal1, Body1), expand_fresh(OriginalGoal, Goal2, Expansion2), append(Body1, Expansion2, Expansion) ); 
+	( expand_fresh(OriginalGoal, Goal2, Expansion2), append([Goal1], Expansion2, Expansion) ).    
 
 
 %% the basic expand
@@ -204,6 +208,7 @@ expand_0(OriginalGoal, Goal, Expansion) :-
 
 
 %%%%%%%%%%%%% breadth first expand %%%%%%%%%%%%%
+%%%% does not work properly still
 %% slower than the normal one
 
 optimized_bf_expand(_, Goal, Goal, _) :-
