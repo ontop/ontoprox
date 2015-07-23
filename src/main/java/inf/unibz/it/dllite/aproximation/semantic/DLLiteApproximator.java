@@ -6,7 +6,6 @@ import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertySpe
 import java.io.Serializable;
 import java.util.*;
 
-
 import org.semanticweb.owlapi.model.AddAxiom;
 //import org.mindswap.pellet.owlapi.PelletReasonerFactory;
 import org.semanticweb.owlapi.model.IRI;
@@ -69,7 +68,6 @@ import org.semanticweb.owlapi.util.ProgressMonitor;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.semanticweb.HermiT.Reasoner.ReasonerFactory;
 
 
@@ -98,7 +96,6 @@ public class DLLiteApproximator{
 		super();
 		new_classes = new HashMap<OWLClass,OWLClassExpression>();
 		new_NegClasses = new HashMap<OWLClass,OWLClassExpression>();
-		processed_classes = new HashSet<OWLClassExpression> ();
 	}
 
 
@@ -117,7 +114,6 @@ public class DLLiteApproximator{
 	private BitMatrix2D matrix_Porders; 
 
 	
-	private Set<ProgressMonitor> progressMonitors = new HashSet<ProgressMonitor>();
 	
 	
 	/**************************************************************************
@@ -138,16 +134,6 @@ public class DLLiteApproximator{
 	}
 
 	
-	/**************************************************************************
-	 * Adds a progress monitor to the list of progress monitors.
-	 * Can be used for displaying progress bar
-	 * @param progressMonitor the monitor to add
-	 *************************************************************************/
-	public void addProgressMonitor(ProgressMonitor progressMonitor)
-	{
-		progressMonitors.add(progressMonitor);
-	}
-
 
 	/**************************************************************************
 	 * Return the set of the complements of the named classes in the input ontology.
@@ -206,7 +192,7 @@ public class DLLiteApproximator{
 		for (OWLObjectProperty oprop : properties){
 			//add the restriction for Top
 			OWLObjectSomeValuesFrom res = factory.getOWLObjectSomeValuesFrom(oprop, classThing);
-				qualifiedExistentialRestrictions.add(res);
+			qualifiedExistentialRestrictions.add(res);
 				
 			//now add for every atomic concept in the ontology
 			for (OWLClass clazz : classes){
@@ -611,12 +597,8 @@ public class DLLiteApproximator{
 	 * @param new_axiom the new axiom to added in the Dl Lite ontology
 	 * @param dllite_ont the Dl Lite ontology
 	 * @param man the ontology Manager
-	 * 
-	 * @throws OWLOntologyChangeException, when applying changes 
-	 * @throws OWLOntologyStorageException, when saving the ontology
 	 **************************************************************************/
 	private static void addAxiomToDLLite(OWLAxiom new_axiom, OWLOntology dllite_ont, OWLOntologyManager man) 
-	throws OWLOntologyChangeException, OWLOntologyStorageException 
 	{
 		boolean isDlLite = DLLiteGrammarChecker.isdlLiteAxiom(new_axiom.getNNF());
 		boolean NoExists = (!dllite_ont.containsAxiom(new_axiom.getNNF())); 
@@ -714,15 +696,13 @@ public class DLLiteApproximator{
 		if (addedINC){
 			//create the axiom that will make INC inconsistent
 			OWLClassExpression compInc = factory.getOWLObjectComplementOf(incClass);
-			OWLSubClassOfAxiom sub_inc = 
-									factory.getOWLSubClassOfAxiom(incClass, compInc);
-			addAxiomToDLLite(sub_inc,dl_ont,man);
+			OWLSubClassOfAxiom sub_inc = factory.getOWLSubClassOfAxiom(incClass, compInc);
+			DLLiteApproximator.addAxiomToDLLite(sub_inc,dl_ont, man);
 			
 			//create the equivalent classes axiom between INC and every inconsistent class
-			OWLEquivalentClassesAxiom axiom = 
-							factory.getOWLEquivalentClassesAxiom(set_inc);
+			OWLEquivalentClassesAxiom axiom = factory.getOWLEquivalentClassesAxiom(set_inc);
 			//add the axiom in the dl lite ontology
-			addAxiomToDLLite(axiom, dl_ont,man);
+			DLLiteApproximator.addAxiomToDLLite(axiom, dl_ont, man);
 
 			
 		}
@@ -770,8 +750,9 @@ public class DLLiteApproximator{
 			negAncestors_set.clear(); //see given it is a list of ancestors which will be used as disjoints, only use the last one... to test
 			negAncestors_set.add(new_clazz);
 		}
-		else if (!negAncestors_set.isEmpty()){
+		else {
 			//create the disjoint classes axiom
+			//if negAncestors_set is empty, then does nothing
 			for (OWLClassExpression neg_anc : negAncestors_set){
 				new_clazz = duplicator.duplicateObject(clazz);
 				OWLDisjointClassesAxiom axiom = 
@@ -796,7 +777,7 @@ public class DLLiteApproximator{
 	 * to nothing, and false in the oppossite case.
 	 * @throws , when interacting with the reasoner. 
 	 *************************************************************************/
-	private boolean isNothingEquivalentClass (OWLClassExpression clazz, OWLReasoner reasoner) 
+	private static boolean isNothingEquivalentClass (OWLClassExpression clazz, OWLReasoner reasoner) 
 	{
 		boolean isNothingEq = false;
 		if (clazz.isOWLNothing()){
@@ -815,7 +796,7 @@ public class DLLiteApproximator{
 	
 	
 	/**************************************************************************
-	 * Recives as input a class ("clazz") and a set of ancestors, and for each
+	 * Receives as input a class ("clazz") and a set of ancestors, and for each
 	 * ancestor, it adds to the bit matrix (containing the class hierarchy): 
 	 * <ul><li>"true" in the position corresponding to the pair 
 	 * (clazz,ancestor), only if clazz is a valid sublcass expression
@@ -827,36 +808,27 @@ public class DLLiteApproximator{
 	 * between clazz and its subclasses.
 	 * <p>
 	 * Returns the updated set of ancestors. 
+	 * 
 	 * @param clazz the class being visited it is an instance of OWLClassExpression 
 	 * @param ancestors_set the set of ancesotors of
 	 * the current clazz
-	 * @param dlLiteOnt the Dl Lite ontology
-	 * @param factory an instance of OwLDataFactory
 	 * @param reasoner an instance of OWLReasoner, used to get the equivalent  
 	 * classes of the current clazz when calling to the method 
 	 * isNothingEquivalentClass
-	 * @param man the ontology manager
+	 * 
 	 * @return Set<OWLClassExpression>. The set of ancestors, updated.
-	 * @throws OWLOntologyStorageException thrown by the addAxiom method
-	 * @throws OWLOntologyChangeException thrown by the addAxiom method
-	 * @throws  thrown by the isNothingEquivalentClass 
-	 * method 
+	 *
 	 * @see #addAxiomToDLLite(OWLAxiom,OWLOntology,OWLOntologyManager)
 	 *************************************************************************/
 	private Set<OWLClassExpression> addDlLiteSubClasses (OWLClassExpression clazz, 
 											Set<OWLClassExpression> ancestors_set, 
-											OWLOntology dlLiteOnt, 
-											OWLDataFactory factory,
-											OWLReasoner reasoner,
-											OWLOntologyManager man) 
-	throws OWLOntologyChangeException, OWLOntologyStorageException  
-	 {
+											OWLReasoner reasoner) 
+	{
 		//don't add subclass axioms for Nothing or for classes equivalent to nothing
-		if (!this.isNothingEquivalentClass(clazz, reasoner)){
+		if (!DLLiteApproximator.isNothingEquivalentClass(clazz, reasoner)){
 			//if the  description received is a valid sub-class expression 
 			//in dl-lite, then we add a sub class axiom for every ancestor
-			if(DLLiteGrammarChecker.isDlLiteSubClassExpression(clazz) &&
-				!ancestors_set.isEmpty()){
+			if(DLLiteGrammarChecker.isDlLiteSubClassExpression(clazz) && !ancestors_set.isEmpty()){
 				for (OWLClassExpression sup: ancestors_set){
 					if (!sup.equals(clazz)){
 						//Instead of adding the axiom, we will add a "true" in the bit matrix
@@ -874,7 +846,7 @@ public class DLLiteApproximator{
 				ancestors_set.add(clazz);
 			}
 			
-		}else {
+		} else {
 			ancestors_set.clear();
 		}
 		return ancestors_set;
@@ -993,9 +965,8 @@ public class DLLiteApproximator{
 		}
 		//create the equivalent classes axioms with all subclass expressions
 		if (sub_classes.size()>1){
-			OWLEquivalentClassesAxiom axiom = 
-							factory.getOWLEquivalentClassesAxiom(sub_classes);
-			addAxiomToDLLite(axiom, dllite_ont, man);
+			OWLEquivalentClassesAxiom axiom = factory.getOWLEquivalentClassesAxiom(sub_classes);
+			DLLiteApproximator.addAxiomToDLLite(axiom, dllite_ont, man);
 		}
 		sub_classes.clear();
 
@@ -1019,9 +990,9 @@ public class DLLiteApproximator{
 	
 	
 	/**************************************************************************
-	 * Goes through the owl ontology hierarchy inferred by the reasoner, and 
-	 * adds the subclass, equivalent classes and disjoint classes axioms, in 
-	 * the Dl Lite ontology.
+	 * A recursive function that goes through the owl ontology hierarchy 
+	 * inferred by the reasoner, and adds the subclass, equivalent classes and 
+	 * disjoint classes axioms to the Dl Lite ontology.
 	 * <p>
 	 * When retreiving the sublcass of the clazz, it returns a set of sets,
 	 * where each subset contains equivalent classes. So, we use only one class
@@ -1059,38 +1030,39 @@ public class DLLiteApproximator{
 	throws OWLOntologyChangeException, 
 		   OWLOntologyStorageException		    
 	{
-		//in case there are in the ontology descriptions equivalents to thing
+		//Add equivalent class axioms for Thing
 		if (clazz.isOWLThing()){
-			
-			Node<OWLClass> sete= reasoner.getEquivalentClasses(clazz);
+			Node<OWLClass> sete = reasoner.getEquivalentClasses(clazz);
 			this.addDlLiteEquivalentClassesAxioms
-											(true,sete.getEntities(),clazz, 
+											(true, sete.getEntities(), clazz, 
 											dllite_ont, man, factory, duplicator);
 		}
 		
 
 		//creates the disjoints, and get the ancestors for disjoints.
-		if (!this.isNothingEquivalentClass(clazz, reasoner)){
+		if (!DLLiteApproximator.isNothingEquivalentClass(clazz, reasoner)){
 			negAncestors_set = this.addDlLiteDisjoints(clazz, negAncestors_set, 
 					   dllite_ont, duplicator, 
 					   factory, man);
 		}
+		
 		//Create the subclass axioms, and get the ancestors set.
 		if (!new_NegClasses.containsKey(clazz)){ //To Test: add subclasses axioms only when the class is not a New Negated Class
 												// see is this doesn't work change the conversion from neg-class to its equivalent class upwards
-			ancestors_set = this.addDlLiteSubClasses(clazz, ancestors_set, 
-					 dllite_ont,  
-					 factory, 
-					 reasoner,man);
+			ancestors_set = this.addDlLiteSubClasses(clazz, ancestors_set, reasoner);
 		}
-
-		//if the clazz is an new negated class introduced in the owl ontology, 
-		//work with its corresponding description.
-		if (new_NegClasses.containsKey(clazz)){
+		else {
+			//if the clazz is an new negated class introduced in the owl ontology, 
+			//work with its corresponding description.
 			clazz = new_NegClasses.get(clazz);
 		}
 
-		//If clazz is already processed, then don't go on with the hierarchy
+		
+		/**
+		 * The recursive part: for each subclass of clazz we build the hierarchy
+		 * 
+		 * We do it only the clazz has not been yet processed
+		 */
 		if (!processed_classes.contains(clazz)){
 			processed_classes.add(clazz);
 
@@ -1103,14 +1075,12 @@ public class DLLiteApproximator{
 				//equivalent classes, use the result of the getSubClasses method
 				//log.debug("llama equ. con " + set_classes + "  y " + clazz);
 				OWLClassExpression selected_class = this.addDlLiteEquivalentClassesAxioms
-															(false, set_classes.getEntities(),clazz, 
+															(false, set_classes.getEntities(), clazz, 
 															 dllite_ont, man, factory, duplicator);
 				// Call recursively
 				if (selected_class != null){
-					Set<OWLClassExpression> new_ancestors = 
-						(Set<OWLClassExpression>)((HashSet<OWLClassExpression>)ancestors_set).clone();
-					Set<OWLClassExpression> new_negAncestors = 
-						(Set<OWLClassExpression>)((HashSet<OWLClassExpression>)negAncestors_set).clone();
+					Set<OWLClassExpression> new_ancestors = new HashSet<>(ancestors_set);
+					Set<OWLClassExpression> new_negAncestors = new HashSet<>(negAncestors_set);
 					this.addDlLiteHierarchy(selected_class, new_ancestors,
 												new_negAncestors, dllite_ont, 
 												reasoner, man, 
@@ -2031,7 +2001,7 @@ public class DLLiteApproximator{
 		 * The actual reasoning
 		 */
 		
-		// Create a reasoner factory.  In this case, we will use pellet.
+		// Create a reasoner factory.  In this case, we will use Hermit.
 		//OWLReasonerFactory reasonerFactory = (OWLReasonerFactory)Class.forName("org.semanticweb.HermiT.Reasoner.ReasonerFactory").newInstance();
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
 		
@@ -2064,6 +2034,8 @@ public class DLLiteApproximator{
 		addDlLiteHierarchy(classThing, ancestors_set,negAncestors_set,
 								dllite_ont,  reasoner, manager, 
 								owlDataFactory,duplicator);
+		
+		computeDLLiteHierarchy(reasoner);
 				
 		addSubClassAxiomsFromMatrix(dllite_ont, manager, owlDataFactory, duplicator);
 		
@@ -2090,6 +2062,14 @@ public class DLLiteApproximator{
 }
 	
 	
+
+	private void computeDLLiteHierarchy(OWLReasoner reasoner) {
+		Set<OWLClass> classNames = reasoner.getRootOntology().getClassesInSignature();
+		Set<OWLObjectProperty> roleNames = reasoner.getRootOntology().getObjectPropertiesInSignature();
+		Set<OWLDataProperty> attributeNames = reasoner.getRootOntology().getDataPropertiesInSignature();
+	
+}
+
 
 	/***************************************************************************
 	 * The class BitMatrix2D will represent a two dimensions bit matrix, which
