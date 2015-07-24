@@ -38,19 +38,18 @@ public class ApproximationCmd {
 				// uris for DL-Lite ontology
 				IRI file_iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "approx");
 				IRI iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx");
-				// We need this mapping so that manager can create the DL-Lite ontology
-				// and later save it in a file
-				//manager.addIRIMapper(new SimpleIRIMapper(iri_dllite_ont, file_iri_dllite_ont));
-
+				
 				
 				// Approximate owl_ont
-				DLLiteApproximator dlliteApprox = new DLLiteApproximator();
-				OWLOntology dl_ont = dlliteApprox.approximate(owl_ont, manager, iri_dllite_ont);
+				DLLiteApproximator dlliteApprox = new DLLiteApproximator(manager);
+	//			OWLOntology dl_ont = dlliteApprox.approximate(owl_ont, iri_dllite_ont);
 				
+				
+				IRI iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx2");
+				OWLOntology dl_ont2 = dlliteApprox.computeDLLiteRClosure(owl_ont, iri_dllite_ont2);
 				
 				// Save the approximated ontology
-				manager.saveOntology(dl_ont, new FileOutputStream(file_iri_dllite_ont.toString()));
-				//manager.saveOntology(dl_ont);
+				manager.saveOntology(dl_ont2, new FileOutputStream(file_iri_dllite_ont.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {
 				System.out.println("Could not load the ontology: " +
