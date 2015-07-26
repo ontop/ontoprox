@@ -1,10 +1,10 @@
 package inf.unibz.it.dllite.approximation.launch;
 
 import inf.unibz.it.dllite.aproximation.semantic.DLLiteApproximator;
+import inf.unibz.it.dllite.aproximation.semantic.Rewriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.URI;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
@@ -13,9 +13,6 @@ import org.semanticweb.owlapi.model.OWLOntologyChangeException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.util.SimpleIRIMapper;
 
 public class ApproximationCmd {
 
@@ -36,20 +33,20 @@ public class ApproximationCmd {
 		
 	
 				// uris for DL-Lite ontology
-				IRI file_iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "approx");
-				IRI iri_dllite_ont = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx");
+				IRI file_iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step2");
+				IRI iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step2");
+				IRI file_iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step4");
+				IRI iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step4");
 				
 				
 				// Approximate owl_ont
-				DLLiteApproximator dlliteApprox = new DLLiteApproximator(manager);
-	//			OWLOntology dl_ont = dlliteApprox.approximate(owl_ont, iri_dllite_ont);
-				
-				
-				IRI iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "approx2");
-				OWLOntology dl_ont2 = dlliteApprox.computeDLLiteRClosure(owl_ont, iri_dllite_ont2);
+				Rewriter dlliterRewriter = new Rewriter(manager);
+				OWLOntology ont2 = dlliterRewriter.computeDLLiteRClosure(owl_ont, iri_dllite_ont2);
+				OWLOntology ont4 = dlliterRewriter.normalizeQualifiedExistentialRestrictions(ont2, iri_dllite_ont4);
 				
 				// Save the approximated ontology
-				manager.saveOntology(dl_ont2, new FileOutputStream(file_iri_dllite_ont.toString()));
+				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {
 				System.out.println("Could not load the ontology: " +
@@ -66,18 +63,13 @@ public class ApproximationCmd {
 			catch (Exception e) {
 			  e.printStackTrace();
 			}
-			
-			
+						
 
 		}else{
 			System.err.println("Invalid input parameters. \n" +
-					"Usage DLLiteApproximator " +
+					"Usage ApproximationCmd " +
 						"<URI of the OWL ontology> ");
 		}
-		//URI uri_owl_ont = URI.create("file:///home/alejandra/EclipseWorkspace/ProjectBolzano/inf.unibz.it.dllite.aproximation.semantic/resources/examples/ontologies/proofInc.owl");
-	   	//URI uri_owl_ont = URI.create("file:///home/alejandra/EclipseWorkspace/ProjectBolzano/inf.unibz.it.dllite.aproximation.semantic/resources/examples/ontologies/pizzaWorking.owl");
-	   	//URI uri_dl_ont = URI.create("file:///home/alejandra/EclipseWorkspace/ProjectBolzano/inf.unibz.it.dllite.aproximation.semantic/resources/examples/ontologies/proof-project-DLLIte.owl");
-		//URI uri_working_ont = URI.create("file:///tmp/workingont.owl");
 
 	}
 }

@@ -6,9 +6,7 @@ import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertySpe
 import java.io.Serializable;
 import java.util.*;
 
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AddAxiom;
-import org.semanticweb.owlapi.model.AxiomType;
 //import org.mindswap.pellet.owlapi.PelletReasonerFactory;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
@@ -66,11 +64,9 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.util.OWLObjectDuplicator;
-import org.semanticweb.owlapi.util.ProgressMonitor;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.semanticweb.HermiT.Reasoner.ReasonerFactory;
 
 
 /******************************************************************************
@@ -1117,7 +1113,7 @@ public class DLLiteApproximator{
 		   OWLOntologyStorageException
 	{
 		// We get all subproperties, not only the direct ones
-		NodeSet<OWLObjectPropertyExpression> sub_props = reasoner.getSubObjectProperties(prop, false);//SubProperties(prop);
+		NodeSet<OWLObjectPropertyExpression> sub_props = reasoner.getSubObjectProperties(prop, true);//SubProperties(prop);
 		for (Node<OWLObjectPropertyExpression> sub_prop_set : sub_props){
 			//each element in the set is an equivalent property, so
 			//will use this to add equivalent property axioms
@@ -1767,89 +1763,6 @@ public class DLLiteApproximator{
 		}
 	}
 
-	
-	/***************************************************************************
-	 * The class ChainInclusion is a very simple class for storing
-	 * components of chain inclusions, namely the left-hand side named class,
-	 * the sequence of roles participating in the chain and
-	 * the filler class (a named class)
-	 ***************************************************************************/
-	public class ChainInclusion extends Object implements Comparable<ChainInclusion>{
-		OWLClassExpression left, right;
-		LinkedList<OWLObjectPropertyExpression> roles;
-		//int hashCode;
-		
-		ChainInclusion(OWLClassExpression left, LinkedList<OWLObjectPropertyExpression> reversedRoles, OWLClassExpression right)
-		{
-			this.left = left;
-			this.roles = reversedRoles;
-			this.right = right;
-		//	hashCode = this.toString().hashCode();
-		}
-
-		public OWLClassExpression getRight() {
-			return right;
-		}
-		
-		public OWLClassExpression getLeft() {
-			return left;
-		}
-		
-		public LinkedList<OWLObjectPropertyExpression> getRoles() {
-			return roles;
-		}
-
-//		public boolean equals(Object obj)
-//		{
-//			ChainInclusion chain = (ChainInclusion)obj;
-//			
-//			if(roles.size() != chain.getRoles().size())
-//				return false;
-//			
-//			boolean equalRoles = true;
-//			for(int i=0; i<roles.size(); i++)
-//			{
-//				OWLObjectProperty prop1 = roles.get(i);
-//				OWLObjectProperty prop2 = chain.getRoles().get(i);
-//				if(!prop1.toString().equals(prop2.toString())) {
-//						equalRoles = false;
-//						break;
-//				}
-//			}
-//			return left.toString().equals(chain.getLeft().toString()) && right.toString().equals(chain.getRight().toString()) && equalRoles;
-//		}
-		
-//		public int hashCode() {
-//			return this.toString().hashCode();//hashCode;//
-//		}
-		
-//		public String toString()
-//		{
-//			return left.toString() + " " + roles.toString() + " " + right.toString();
-//		}
-
-		public int compareTo(ChainInclusion chain) {
-			int res = left.toString().compareTo(chain.getLeft().toString());
-			if(res == 0)
-			{
-				res = roles.size() - chain.getRoles().size();
-				if(res == 0)
-				{
-					for(int i=0; i<roles.size(); i++)
-					{
-						OWLObjectPropertyExpression prop1 = roles.get(i);
-						OWLObjectPropertyExpression prop2 = chain.getRoles().get(i);
-						res = prop1.toString().compareTo(prop2.toString());
-						if(res != 0) {
-							return res;
-						}
-					}
-					res = right.toString().compareTo(chain.getRight().toString());
-				}
-			}
-			return res;
-		}
-	}
 		
    /***************************************************************************
 	*  This method returns a DL-Lite ontology, which is an approximation of the
@@ -1992,242 +1905,6 @@ public class DLLiteApproximator{
 		return dllite_ont;
 }
 	
-	/**
-	 * Computes the DL-LiteR closure of an input TBox.
-	 * Uses the existing concept names (does not extend the alphabeth).
-	 * 
-	 * @param owl_ont an OWL 2 TBox
-	 * @param uri_dllite_ont the URI of the new DL-Lite ontology
-	 * 
-	 * @return the DL-Lite closure of owl_ont
-	 * 
-	 * @throws OWLOntologyCreationException
-	 */
-	public OWLOntology computeDLLiteRClosure(OWLOntology owl_ont, IRI uri_dllite_ont) throws OWLOntologyCreationException {
-
-		new_classes = new HashMap<>();
-		OWLOntology complete_owl_ont = giveNamesToBasicConcepts(owl_ont);
-
-		
-		/**
-		 * Create and Inizialize the dl lite ontology 
-		 * with non-logical and individual axioms
-		 */
-		OWLOntology dllite_ont = ontologyManager.createOntology(uri_dllite_ont);
-		log.info("Created dl ontology : " + dllite_ont.getOntologyID().getOntologyIRI());
-
-		
-		// Create a reasoner factory.  In this case, we will use Hermit.
-		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
-		
-		// Load the workng ontology into the reasoner.  
-		OWLReasoner reasoner = reasonerFactory.createReasoner(complete_owl_ont);
-		//Asks the reasoner to classify the ontology.  
-		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY, InferenceType.OBJECT_PROPERTY_HIERARCHY, InferenceType.DATA_PROPERTY_HIERARCHY);
-
-		
-		Set<OWLAxiom> addAxioms = computeEntailedDLLiteAxioms(reasoner);
-		ontologyManager.addAxioms(dllite_ont, addAxioms);
-		//owl_ont.getAxioms(AxiomType.)
-		
-		new_classes.clear();
-		return dllite_ont;
-	}
-
-	
-	/**************************************************************************
-	 * Returns the TBox of the original ontology completed with the definitions 
-	 * for existential restrictions.
-	 * That is, returns a complete ontology corresponding to the input ontology, 
-	 *   -- plus a new equivalent class axiom for the domain and range of 
-	 *   	every object property in the ontology;
-	 *   -- plus a new equivalent class axiom for the domain of 
-	 *   	every data property in the ontology.
-	 * <p> 
-	 * All these new axioms added will help in the classification, to obtain
-	 * some further inferences.
-	 * <p> 
-	 * This method does not add the individual axioms or "abox assertions" from
-	 * the owl ontology, so that we don't classify them later.
-	 * 
-	 * @param owl_ont the input ontolgy 
-	 * @return OWLOntology the same input ontology, completed with all 
-	 * the equivalent classes axioms 
-	 **************************************************************************/
-	private OWLOntology giveNamesToBasicConcepts(
-			OWLOntology owl_ont) {
-		log.info("Building the conservative extension... ");
-		
-		/**
-		 * Collect all existential restrictions to be named
-		 */
-		//construct all domains and ranges of object properties (concepts of the form `ER.T`)
-		Set<OWLClassExpression> existentialRestrictionsToBeNamed = constructObjectSomeValuesFrom(owl_ont, false);
-		//construct all domains of data properties (concepts of the form `min 1 P`)
-		existentialRestrictionsToBeNamed.addAll(constructDataMinCardinalityRestrictions (owl_ont));
-		
-		
-		
-		log.info("	* Adding Named classes for every complex class expression...");
-		
-		/**
-		 * Now create all the corresponding definitions for the existential restrictions
-		 */
-		Set<OWLAxiom> axioms = createDefinitionsForComplexExpressions(existentialRestrictionsToBeNamed, owl_ont);
-		ontologyManager.addAxioms(owl_ont, axioms);
-		
-		return owl_ont;
-	} 
-
-
-
-
-	private Set<OWLAxiom> computeEntailedDLLiteAxioms(OWLReasoner reasoner) {
-
-		/**
-		 * we adopt a top-down approach, so we start from TOP = thing
-		 * and then recursively handle all classes
-		 *  
-		 */
-		IRI classThingIRI = OWLRDFVocabulary.OWL_THING.getIRI();
-		OWLClass classThing = ontologyManager.getOWLDataFactory().getOWLClass(classThingIRI);
-		//Add equivalent class axioms for Thing
-
-		Node<OWLClass> equiv_classes = reasoner.getEquivalentClasses(classThing);
-		Set<OWLAxiom> axioms = computeEntailedDLLiteAxioms(equiv_classes, null, reasoner);
-		
-		return axioms;
-	}
-	
-	/**
-	 * We assume that equiv_classes is non-empty
-	 * 
-	 * @param equiv_classes
-	 * @param superClass
-	 * @param reasoner
-	 * @return
-	 */
-	private Set<OWLAxiom> computeEntailedDLLiteAxioms(Node<OWLClass> equiv_classes, 
-			OWLClassExpression superClass, OWLReasoner reasoner){
-
-		// The set of DL-Lite axioms to be returned 
-		Set<OWLAxiom> axioms = new HashSet<>();
-		
-		/**
-		 * Create the equivalent classes axioms for all class expressions in equiv_classes
-		 */
-		axioms.addAll(constructDLLiteEquivalentClassesAxioms(equiv_classes));
-
-		/**
-		 * Select one representative class among the equivent classes.
-		 * Should be an original named class
-		 */
-		OWLClassExpression representativeClass = selectRepresentativeClass(equiv_classes);
-
-		/**
-		 * Create the subclass axiom between the representative class and the super class
-		 * 
-		 * superClass is null when equiv_classes are the classes equivalent to Thing
-		 * 
-		 * We do not create trivial axioms of the form "\bot \ISA A" or "A \ISA \top"
-		 */
-		if(superClass != null && !superClass.isOWLThing() && !representativeClass.isOWLNothing()) {
-			axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
-		}
-
-		/**
-		 * Create the disjoint class axioms
-		 */
-		NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(representativeClass);
-		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
-		
-		
-
-		/**
-		 * The recursive part of the method.
-		 * 
-		 * For each equivalence class of subclasses call the method recursively.
-		 * The representative class will be the superClass for each set of subclasses.
-		 */
-		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(representativeClass, true); //only direct sublasses
-		for (Node<OWLClass> equiv_sub_classes: sub_classes){
-			Set<OWLAxiom> naxioms = computeEntailedDLLiteAxioms(equiv_sub_classes, representativeClass, reasoner);
-			axioms.addAll(naxioms);				
-		}
-
-		return axioms;
-	}
-
-
-	
-	private Set<OWLAxiom> constructDLLiteDisjointClassesAxioms(
-			OWLClassExpression mainClass, NodeSet<OWLClass> disjointClasses) {
-		
-		Set<OWLAxiom> axioms = new HashSet<>();
-		// For each equivalence class choose a representative and
-		// if the representative is not OWL Nothing, add a disjoint classes axioms between
-		// the main class and the representative
-		for( Node<OWLClass> equiv_classes: disjointClasses ) {
-			OWLClassExpression representative_class = selectRepresentativeClass(equiv_classes);
-			if ( !representative_class.isOWLNothing() ) {
-				axioms.add(ontologyManager.getOWLDataFactory().getOWLDisjointClassesAxiom(mainClass,representative_class));
-			}
-		}
-
-		return axioms;
-	}
-
-
-
-	private OWLClassExpression selectRepresentativeClass(Node<OWLClass> equiv_classes) {
-		OWLClassExpression selected_class = null;
-		
-		// First try to select an original named class
-		for( OWLClass clazz: equiv_classes ) {
-			if( !new_classes.containsKey(clazz) ) {
-				selected_class = clazz;
-				break;
-			}
-		}
-		
-		// Otherwise get the definition of the first class 
-		if(selected_class == null) {
-			for( OWLClass clazz: equiv_classes ) {
-				if( new_classes.containsKey(clazz) ) {
-					selected_class = new_classes.get(clazz);
-					break;
-				}
-			}	
-		}
-		
-		return selected_class;
-	}
-
-
-	private Set<OWLAxiom> constructDLLiteEquivalentClassesAxioms(
-			Node<OWLClass> equiv_classes) {
-		
-		Set<OWLClassExpression> equiv_class_in_orig_signature = new HashSet<>(equiv_classes.getSize());
-		
-		// First, substitute fresh names by their definitions
-		for( OWLClass clazz: equiv_classes ) {
-			if(new_classes.containsKey(clazz)) {
-				OWLClassExpression existentialRestriction = new_classes.get(clazz);
-				equiv_class_in_orig_signature.add(existentialRestriction);
-			} else {
-				equiv_class_in_orig_signature.add(clazz);
-			}
-		}
-
-		// Second, create the equivalent classes axiom
-		Set<OWLAxiom> axioms = new HashSet<>();
-		if( equiv_class_in_orig_signature.size() > 1) {
-			OWLEquivalentClassesAxiom axiom = ontologyManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(equiv_class_in_orig_signature);
-			axioms.add(axiom);
-		}
-		
-		return axioms;
-	}
 
 
 	/***************************************************************************
