@@ -1,7 +1,12 @@
 package org.semanticweb.ontop.beyondql.hornshiq;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import it.unibz.krdb.obda.model.Function;
+import it.unibz.krdb.obda.model.Variable;
 import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
@@ -34,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +53,8 @@ public class Ontology2MappingCompilation {
     private static final String QUERY_HEAD_PREDICATE_NAME = "q";
 
     private static final Predicate CLASS_QUERY_HEAD_PREDICATE = DATA_FACTORY.getClassPredicate(QUERY_HEAD_PREDICATE_NAME);
+
+    private static Variable X = DATA_FACTORY.getVariable("X");
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     public static OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
@@ -74,7 +82,17 @@ public class Ontology2MappingCompilation {
         return newOBDAModel;
     }
 
-    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile) throws SQLException, OBDAException, DuplicateMappingException {
+    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel,
+                                                            String tempPrologFile)
+            throws DuplicateMappingException, OBDAException, SQLException {
+        return compileHSHIQOntologyToMappings(ontology, obdaModel, tempPrologFile, HashMultimap.<OWLClass, OWLClass>create());
+    }
+
+
+    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel,
+                                                            String tempPrologFile,
+                                                            Multimap<OWLClass, OWLClass> newConceptsForConjunctions)
+            throws SQLException, OBDAException, DuplicateMappingException {
 
         long t1 = System.currentTimeMillis();
 
@@ -90,6 +108,10 @@ public class Ontology2MappingCompilation {
         /** convert the datalog program to Ontop Native API */
         DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
 
+        List<CQIE> rulesForNewConceptsForConjunctions = getRulesForNewConceptsForConjunctions(newConceptsForConjunctions);
+
+        ontopProgram.appendRule(rulesForNewConceptsForConjunctions);
+
         long t2 = System.currentTimeMillis();
 
         System.err.println("Datalog generation time: " + (t2 - t1) + "ms");
@@ -102,6 +124,7 @@ public class Ontology2MappingCompilation {
          *
          */
         List<Predicate> predicatesToDefine = getDeclaredPredicates(ontology);
+        predicatesToDefine.addAll(getDeclaredPredicates(newConceptsForConjunctions));
 
         /**
          * We assume we are in Virtual mode and therefore we only have one data source.
@@ -125,6 +148,7 @@ public class Ontology2MappingCompilation {
         int i = 0;
 
         DatalogExpansion datalogExpansion = null;
+
         try {
             datalogExpansion = new DatalogExpansion(ontopProgram, obdaModel, tempPrologFile);
         } catch (IOException e) {
@@ -136,11 +160,9 @@ public class Ontology2MappingCompilation {
             log.debug("compute mapping for {} ({}/{})", new Object[]{predicate, i, predicatesToDefine.size()});
             i++;
 
-            // FIXME: DatalogExpansion only works for UOBM now!!
-
             int depth = 5;
 
-            List<CQIE> cqies = datalogExpansion.expand("'" + predicate.getName() + "'", predicate.getArity(), depth);
+            List<CQIE> cqies = datalogExpansion.expand("'%s'".format(predicate.getName()), predicate.getArity(), depth);
 
             for (CQIE cqie : cqies) {
 
@@ -163,6 +185,7 @@ public class Ontology2MappingCompilation {
 
         }
 
+
         /**
          * Unfolded query can already be translated tso OBDA Mapping
          */
@@ -178,11 +201,36 @@ public class Ontology2MappingCompilation {
 
         t2 = System.currentTimeMillis();
 
-        System.err.println("#  new mappings " + newMappingRules.size());
+        System.err.println("# new mappings " + newMappingRules.size());
         System.err.println("Mapping generation time: " + (t2 - t1) + "ms");
 
 
         return extendedObdaModel;
+    }
+
+    private static List<CQIE> getRulesForNewConceptsForConjunctions(Multimap<OWLClass, OWLClass> newConceptsForConjunctions) {
+
+        List<CQIE> rules = Lists.newArrayList();
+
+        for (OWLClass entry : newConceptsForConjunctions.keys()) {
+
+            Predicate predicate = DATA_FACTORY.getClassPredicate(entry.getIRI().toString());
+
+            Collection<OWLClass> owlClasses = newConceptsForConjunctions.get(entry);
+
+            Function head = DATA_FACTORY.getFunction(predicate, X);
+
+            List<Function> body = Lists.newArrayList();
+
+            for (OWLClass owlClass : owlClasses) {
+                Predicate bodyPredicate = DATA_FACTORY.getClassPredicate(owlClass.getIRI().toString());
+                body.add(DATA_FACTORY.getFunction(bodyPredicate, X));
+            }
+
+            rules.add(DATA_FACTORY.getCQIE(head, body));
+        }
+
+        return rules;
     }
 
     private static List<Predicate> getDeclaredPredicates(OWLOntology ontology) {
@@ -202,5 +250,16 @@ public class Ontology2MappingCompilation {
         return predicatesToDefine;
     }
 
+    private static List<Predicate> getDeclaredPredicates(Multimap<OWLClass, OWLClass> newConceptsForConjunctions) {
+
+        List<Predicate> predicates = Lists.newArrayList();
+
+        for (OWLClass entry : newConceptsForConjunctions.keys()) {
+            Predicate predicate = DATA_FACTORY.getClassPredicate(entry.getIRI().toString());
+            predicates.add(predicate);
+        }
+
+        return predicates;
+    }
 
 }
