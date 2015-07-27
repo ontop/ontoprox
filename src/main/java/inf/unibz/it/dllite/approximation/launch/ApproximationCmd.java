@@ -1,6 +1,8 @@
 package inf.unibz.it.dllite.approximation.launch;
 
 import inf.unibz.it.dllite.aproximation.semantic.DLLiteApproximator;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteRNormalizer;
+import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
 import inf.unibz.it.dllite.aproximation.semantic.Rewriter;
 
 import java.io.File;
@@ -29,23 +31,25 @@ public class ApproximationCmd {
 				// Create our ontology manager in the usual way.	
 				OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 				// Load a copy of the ontology passed by parameters.  
-				OWLOntology owl_ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
+				OWLOntology ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
 		
 	
 				// uris for DL-Lite ontology
-				IRI file_iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step2");
-				IRI iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step2");
-				IRI file_iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step4");
-				IRI iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step4");
+				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
+				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+				IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
+				IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
 				
 				
 				// Approximate owl_ont
 				Rewriter dlliterRewriter = new Rewriter(manager);
-				OWLOntology ont2 = dlliterRewriter.computeDLLiteRClosure(owl_ont, iri_dllite_ont2);
-				OWLOntology ont4 = dlliterRewriter.normalizeQualifiedExistentialRestrictions(ont2, iri_dllite_ont4);
+			//	OWLOntology ont2 = dlliterRewriter.computeDLLiteRClosure(ont, iri_dllite_ont2);
+			
+				DLLiteRNormalizer dlliterNormalizer = new DLLiteRNormalizer(manager);
+				OWLOntology ont4 = dlliterNormalizer.normalizeQualifiedExistentialRestrictions(ont, iri_dllite_ont4);
 				
 				// Save the approximated ontology
-				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+			//	manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {

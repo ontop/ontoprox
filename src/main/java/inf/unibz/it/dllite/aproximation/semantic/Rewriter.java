@@ -51,7 +51,7 @@ import com.google.common.base.Joiner;
  * @author Elena Botoeva
  *
  *****************************************************************************/
-public class Rewriter {
+public class Rewriter extends OntologyTransformations {
 
 	/**
 	 * @param manager
@@ -73,26 +73,6 @@ public class Rewriter {
 	private Logger log = LoggerFactory.getLogger(Rewriter.class);
 
 	private OWLOntologyManager ontologyManager;
-
-	/**************************************************************************
-	 * Adds a suffix to the original IRI
-	 * 
-	 * @param iri
-	 *            the original IRI
-	 * @param suffix
-	 *            the suffix to add
-	 *************************************************************************/
-	static public IRI createIRIWithSuffix(IRI iri, String suffix) {
-		String uriStr = iri.toString();
-		if (uriStr.endsWith(".owl"))
-			uriStr = uriStr.substring(0, uriStr.length() - ".owl".length())
-					+ "_" + suffix + ".owl";
-		else
-			uriStr = uriStr + "_" + suffix + ".owl";
-		IRI new_iri = IRI.create(uriStr);
-
-		return new_iri;
-	}
 
 	/**
 	 * Computes the DL-LiteR closure of an input TBox. To do so uses
@@ -117,12 +97,12 @@ public class Rewriter {
 		 * Give names to all basic concepts in order to be able to go through the
 		 * class hierarchy
 		 */
-		OWLOntology complete_owl_ont = giveNamesToBasicConcepts(owl_ont);
+		OWLOntology extended_owl_ont = giveNamesToBasicConcepts(owl_ont);
 
 		// Create a reasoner factory. In this case, we will use Hermit.
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
 		// Load the workng ontology into the reasoner.
-		OWLReasoner reasoner = reasonerFactory.createReasoner(complete_owl_ont);
+		OWLReasoner reasoner = reasonerFactory.createReasoner(extended_owl_ont);
 		// Asks the reasoner to classify the ontology.
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY,
 				InferenceType.OBJECT_PROPERTY_HIERARCHY,
@@ -132,6 +112,7 @@ public class Rewriter {
 		 * Collect all entailed DL-LiteR axioms, that is, concept and role
 		 * axioms.
 		 */
+		
 		Set<OWLAxiom> dlliterAxioms = computeEntailedDLLiteRConceptAxioms(reasoner);
 		dlliterAxioms.addAll(computeEntailedDLLiteRRoleAxioms(reasoner));
 
@@ -831,199 +812,6 @@ public class Rewriter {
 		}
 
 		return axioms;
-	}
-
-	/**
-	 * The normalization that gets rid of qualifiend existential restrictions on
-	 * the right-hand side of concept inclusions by introducing fresh role names
-	 * for each concept of the from ER.(A1 \AND ... \AND An).
-	 * 
-	 * We assume that ontology is in Horn-ALCHIG normal form. Therefore, it is
-	 * enough to consider only SubClassOf axioms (no EquivalentClasses, no
-	 * Domain, nor Range axioms).
-	 * 
-	 * @param ontology
-	 *            in Horn-ALCHIQ normal form
-	 * @param outputIRI
-	 *            the IRI of the new ontology
-	 * 
-	 * @return a version of ontology without qualified existentials on the RHS
-	 * 
-	 * @throws OWLOntologyCreationException
-	 */
-	public OWLOntology normalizeQualifiedExistentialRestrictions(
-			OWLOntology ontology, IRI outputIRI)
-			throws OWLOntologyCreationException {
-
-		/**
-		 * Create the output ontology
-		 */
-		OWLOntology output_ont = ontologyManager.createOntology(outputIRI);
-		log.info("Created output ontology : "
-				+ output_ont.getOntologyID().getOntologyIRI());
-
-		/**
-		 * Go through the set of axioms in ontology, and either substitute the
-		 * axiom with the new axioms without qualified existential on the RHS,
-		 * or keep the original axiom.
-		 */
-		Set<OWLAxiom> addAxioms = new HashSet<>();
-		for (OWLAxiom axiom : ontology.getAxioms()) {
-			if (requiresSubstitutionOfQualifiedExistentialRestrictionOnRHS(axiom)) {
-				addAxioms
-						.addAll(substituteQualifiedExistentialRestrictionOnRHS((OWLSubClassOfAxiom) axiom));
-			} else {
-				addAxioms.add(axiom);
-			}
-		}
-
-		// add the processed axioms to the output ontology
-		log.info("Adding the axioms to the output ontology... ");
-		ontologyManager.addAxioms(output_ont, addAxioms);
-
-		return output_ont;
-	}
-
-	/**
-	 * We do a substitution only if axiom is an #OWLSubClassOfAxiom and the
-	 * super class is a qualified restriction where the property is a direct or
-	 * inverse property, an the filler is a conjunction of atomic concepts
-	 * 
-	 * @param axiom
-	 * @return
-	 */
-	private boolean requiresSubstitutionOfQualifiedExistentialRestrictionOnRHS(
-			OWLAxiom axiom) {
-		boolean requires = false;
-
-		if (axiom instanceof OWLSubClassOfAxiom) {
-			OWLClassExpression superClass = ((OWLSubClassOfAxiom) axiom)
-					.getSuperClass();
-
-			if (superClass instanceof OWLObjectSomeValuesFrom) {
-				OWLObjectPropertyExpression prop = ((OWLObjectSomeValuesFrom) superClass)
-						.getProperty();
-				OWLClassExpression filler = ((OWLObjectSomeValuesFrom) superClass)
-						.getFiller();
-
-				// Property must be a direct role or an inverse
-				if (prop instanceof OWLObjectProperty
-						|| prop instanceof OWLObjectInverseOf) {
-					requires = true;
-				}
-
-				// Filler must be a concept name or
-				if (filler instanceof OWLClass) {
-					requires = requires && true;
-				}
-				// a conjunciton of concept names
-				else if (filler instanceof OWLObjectIntersectionOf) {
-					for (OWLClassExpression clazz : ((OWLObjectIntersectionOf) filler)
-							.getOperands()) {
-						if (!(clazz instanceof OWLClass)) {
-							requires = false;
-						}
-					}
-				}
-			}
-		}
-
-		return requires;
-
-	}
-
-	/**
-	 * It is assumed that the axiom was checked and it requires substitution.
-	 * Therefore, we assume that axiom is of the form
-	 * 
-	 * C \ISA ER.(A1 \AND ... \AND An)
-	 * 
-	 * We introduce a fresh role name P and return the axioms:
-	 * 
-	 * C \ISA EP.Top P \ISA R EP^- \ISA A1 ... EP^- \ISA An
-	 * 
-	 * @param axiom
-	 * @return
-	 */
-	private Set<OWLAxiom> substituteQualifiedExistentialRestrictionOnRHS(
-			OWLSubClassOfAxiom axiom) {
-		Set<OWLAxiom> axioms = new HashSet<>();
-
-		OWLClassExpression superClass = ((OWLSubClassOfAxiom) axiom)
-				.getSuperClass();
-		OWLClassExpression subClass = ((OWLSubClassOfAxiom) axiom)
-				.getSubClass();
-
-		OWLObjectPropertyExpression prop = ((OWLObjectSomeValuesFrom) superClass)
-				.getProperty();
-		OWLClassExpression filler = ((OWLObjectSomeValuesFrom) superClass)
-				.getFiller();
-
-		// Create a fresh role name
-		IRI new_role_iri = IRI.create(extractPrefix(prop.toString()) + "#"
-				+ extractPredicateName(prop.toString()) + "."
-				+ extractConceptNames(filler));
-		OWLObjectProperty new_role = ontologyManager.getOWLDataFactory()
-				.getOWLObjectProperty(new_role_iri);
-
-		// add the axiom C \ISA EP.Top
-		axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(
-				subClass,
-				ontologyManager.getOWLDataFactory().getOWLObjectSomeValuesFrom(
-						new_role,
-						ontologyManager.getOWLDataFactory().getOWLThing())));
-
-		// add the axiom P \ISA R
-		axioms.add(ontologyManager.getOWLDataFactory()
-				.getOWLSubObjectPropertyOfAxiom(new_role, prop));
-
-		// add the axioms EP^- \ISA Ai
-		if (filler instanceof OWLClass) {
-			axioms.add(ontologyManager.getOWLDataFactory()
-					.getOWLObjectPropertyRangeAxiom(new_role, filler));
-		} else {
-			for (OWLClassExpression clazz : ((OWLObjectIntersectionOf) filler)
-					.getOperands()) {
-				OWLObjectPropertyRangeAxiom rangeAxiom = ontologyManager
-						.getOWLDataFactory().getOWLObjectPropertyRangeAxiom(
-								new_role, clazz);
-				axioms.add(rangeAxiom);
-			}
-		}
-
-		return axioms;
-	}
-
-	private String extractConceptNames(OWLClassExpression filler) {
-		String conceptNames = "";
-		if (filler instanceof OWLClass) {
-			conceptNames = extractPredicateName(filler.toString());
-		} else {
-			// OWLObjectIntersectionOf
-			Set<OWLClassExpression> operands = ((OWLObjectIntersectionOf) filler)
-					.getOperands();
-
-			// we sort the names of the operands so that the name of the fresh
-			// role
-			// is the same for the same concept
-			SortedSet<String> operandNames = new TreeSet<>();
-			for (OWLClassExpression op : operands) {
-				operandNames.add(extractPredicateName(op.toString()));
-			}
-			conceptNames = Joiner.on(',').join(operandNames);
-		}
-		return conceptNames;
-	}
-
-	private String extractPredicateName(String string) {
-		String predicateName = string.substring(string.indexOf('#') + 1,
-				string.length() - 1);
-		return predicateName;
-	}
-
-	private String extractPrefix(String string) {
-		String prefix = string.substring(1, string.indexOf('#'));
-		return prefix;
 	}
 
 }

@@ -73,10 +73,10 @@ import org.slf4j.LoggerFactory;
  * This class returns the Dl-Lite ontology obtained by semantically approximating 
  * an original OWL ontology. This semantic approximation is done by the public 
  * method "approximate". 
- * In order to do this approximation, we must indicate three URIs:
+ * In order to do this approximation, we must provide:
  * <ul>
- * <li> The IRI of the original OWL ontology
- * <li> the IRI that we want for the Dl-Lite approximation, and 
+ * <li> The original OWL ontology
+ * <li> the IRI of the Dl-Lite approximation, and 
  * <li> an extra IRI, to save the "working ontology". The "working
  * ontology" is the original ontology plus some further axioms added in order
  * to get the approximation.
@@ -85,7 +85,7 @@ import org.slf4j.LoggerFactory;
  * @author Alejandra Lorenzo, Elena Botoeva
  *
  *****************************************************************************/
-public class DLLiteApproximator{
+public class DLLiteApproximator extends OntologyTransformations {
 	
 	/**
 	 * @param manager ************************************************************************
@@ -119,25 +119,7 @@ public class DLLiteApproximator{
 	private OWLOntologyManager ontologyManager;
 	
 	
-	
-	/**************************************************************************
-	 * Adds a suffix to the original IRI 
-	 * @param iri the original IRI
-	 * @param suffix the suffix to add
-	 *************************************************************************/
-	static public IRI createIRIWithSuffix(IRI iri, String suffix)
-	{
-		String uriStr =  iri.toString();
-		if(uriStr.endsWith(".owl"))
-			uriStr = uriStr.substring(0, uriStr.length() - ".owl".length()) + "_" + suffix + ".owl";
-		else
-			uriStr = uriStr + "_" + suffix + ".owl";
-		IRI new_iri = IRI.create(uriStr);
 
-		return new_iri;
-	}
-
-	
 
 	/**************************************************************************
 	 * Return the set of the complements of the named classes in the input ontology.
@@ -1853,7 +1835,7 @@ public class DLLiteApproximator{
 		
 		// Load the workng ontology into the reasoner.  
 		OWLReasoner reasoner = reasonerFactory.createReasoner(complete_owl_ont);
-		//Asks the reasoner to classify the ontology.  
+		// Asks the reasoner to classify the ontology.  
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY, InferenceType.OBJECT_PROPERTY_HIERARCHY, InferenceType.DATA_PROPERTY_HIERARCHY);
 		
 
