@@ -31,8 +31,7 @@ public class DeHorner extends OntologyTransformations {
 		newAxioms = null;
 	}
 	
-	public void removeConjunctionOnLHS(
-			OWLOntology ontology, IRI outputIRI){
+	public void processConjunctionOnLHS(OWLOntology ontology){
 
 		if( newAxioms != null && newConceptsForConjunctions != null )
 			return;
