@@ -80,7 +80,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 	public OWLOntology transform(OWLOntology owl_ont, IRI iri_dlliter_ont) 
 			throws OWLOntologyCreationException 
 	{
-
+		log.info("Computing the DL-LiteR closure of the ontology " + owl_ont.getOntologyID().getOntologyIRI());
+				
 		// we use this set to keep track of the freshly introduced names
 		new_classes = new HashMap<>();
 		
@@ -154,8 +155,6 @@ public class DLLiteRClosure extends OntologyTransformations {
 		// P`)
 		existentialRestrictionsToBeNamed
 				.addAll(constructDataMinCardinalityRestrictions(owl_ont));
-
-		log.info("	* Adding Named classes for every complex class expression...");
 
 		/**
 		 * Now create all the corresponding definitions for the existential
@@ -274,6 +273,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 	private Set<OWLAxiom> createDefinitionsForComplexExpressions(
 			Set<OWLClassExpression> complexExpressionsToBeNamed,
 			OWLOntology owl_ont) {
+
+		log.info("	* Adding Named classes for every complex class expression...");
 
 		OWLDataFactory factory = ontologyManager.getOWLDataFactory();
 

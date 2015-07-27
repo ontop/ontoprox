@@ -54,6 +54,8 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 //			return null;
 		}
 		
+		log.info("Constructing new axioms for the conjunctions of atomic concepts on the LHS of concept inclusions.");
+				
 		newConceptsForConjunctions = ArrayListMultimap.create();
 		
 		/**

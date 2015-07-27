@@ -70,6 +70,7 @@ public class QualifiedExistentialNormalizer extends OntologyTransformations {
 	public OWLOntology transform(
 			OWLOntology ontology, IRI outputIRI)
 			throws OWLOntologyCreationException {
+		log.info("Normalizing qualified existential restrictions on the RHS of concept inclusions");
 
 
 		/**

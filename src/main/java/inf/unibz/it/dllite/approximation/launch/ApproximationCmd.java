@@ -35,7 +35,7 @@ public class ApproximationCmd {
 				OWLOntology ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
 		
 	
-				// uris for DL-Lite ontology
+				// iris for the intermediate ontologies
 				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
 				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
 				IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
@@ -47,20 +47,16 @@ public class ApproximationCmd {
 				// step 2
 				QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
 				OWLOntology ont2 = dlliterNormalizer.transform(ont, iri_dllite_ont2);
-
+				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+				
 				// step 3
-				ConjunctionNormalizer deHorner = new ConjunctionNormalizer(manager);
-				OWLOntology ont3 = deHorner.transform(ont2, iri_dllite_ont3);
+				ConjunctionNormalizer conjNormalizer = new ConjunctionNormalizer(manager);
+				OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
+				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 				
 				// step 4
-				DLLiteRClosure dlliterRewriter = new DLLiteRClosure(manager);
-				OWLOntology ont4 = dlliterRewriter.transform(ont3, iri_dllite_ont4);
-			
-	
-				
-				// Save the intermediate ontologies
-				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
-				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
+				DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
+				OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {
