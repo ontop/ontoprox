@@ -35,24 +35,19 @@ import org.slf4j.LoggerFactory;
  * @author Elena Botoeva
  *
  *****************************************************************************/
-public class DLLiteRNormalizer extends OntologyTransformations {
+public class QualifiedExistentialNormalizer extends OntologyTransformations {
 
 	/**
-	 * @param manager
-	 *            **************************************************************
-	 *            **********
 	 * 
-	 **************************************************************************/
-	public DLLiteRNormalizer(OWLOntologyManager manager) {
-		super();
-	
-		ontologyManager = manager;
+	 * @param manager
+	 */
+	public QualifiedExistentialNormalizer(OWLOntologyManager manager) {
+		super(manager);
 	}
 
 	// For the logging
-	private Logger log = LoggerFactory.getLogger(DLLiteRNormalizer.class);
+	private Logger log = LoggerFactory.getLogger(QualifiedExistentialNormalizer.class);
 
-	private OWLOntologyManager ontologyManager;
 
 	/**
 	 * The normalization that gets rid of qualifiend existential restrictions on
@@ -72,7 +67,7 @@ public class DLLiteRNormalizer extends OntologyTransformations {
 	 * 
 	 * @throws OWLOntologyCreationException
 	 */
-	public OWLOntology normalizeQualifiedExistentialRestrictions(
+	public OWLOntology transform(
 			OWLOntology ontology, IRI outputIRI)
 			throws OWLOntologyCreationException {
 

@@ -70,34 +70,29 @@ import org.slf4j.LoggerFactory;
 
 
 /******************************************************************************
- * This class returns the Dl-Lite ontology obtained by semantically approximating 
+ * This class returns the Dl-LiteA ontology obtained by semantically approximating 
  * an original OWL ontology. This semantic approximation is done by the public 
- * method "approximate". 
+ * method "transform". 
  * In order to do this approximation, we must provide:
  * <ul>
  * <li> The original OWL ontology
- * <li> the IRI of the Dl-Lite approximation, and 
- * <li> an extra IRI, to save the "working ontology". The "working
- * ontology" is the original ontology plus some further axioms added in order
- * to get the approximation.
+ * <li> the IRI of the Dl-Lite approximation.
  * </ul>
- * These three URIs must be indicated in the constructor of the class.
+ *
  * @author Alejandra Lorenzo, Elena Botoeva
  *
  *****************************************************************************/
-public class DLLiteApproximator extends OntologyTransformations {
+public class DLLiteAApproximator extends OntologyTransformations {
 	
 	/**
 	 * @param manager ************************************************************************
 	 * 
 	 **************************************************************************/
-	public DLLiteApproximator(OWLOntologyManager manager) {
-		super();
+	public DLLiteAApproximator(OWLOntologyManager manager) {
+		super(manager);
 		new_classes = new HashMap<OWLClass,OWLClassExpression>();
 		new_NegClasses = new HashMap<OWLClass,OWLClassExpression>();
 		processed_classes = new HashSet<OWLClassExpression> ();
-		
-		ontologyManager = manager;
 	}
 
 
@@ -110,14 +105,12 @@ public class DLLiteApproximator extends OntologyTransformations {
 	//processed classes.
 	private Set<OWLClassExpression> processed_classes ;
 	//For the logging
-	private Logger log = LoggerFactory.getLogger(DLLiteApproximator.class);
+	private Logger log = LoggerFactory.getLogger(DLLiteAApproximator.class);
 	//This matrix will store in each element [i,j] a "1" when the we try to add a
 	// subclass axiom between the classes in position i and j in matrix_classes.
 	private BitMatrix2D matrix_Porders; 
 
-	
-	private OWLOntologyManager ontologyManager;
-	
+		
 	
 
 
@@ -480,8 +473,8 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//and not a union of them then we give a name to it
 			//in general we may need to name not only one class but several 
 			//of them due to union
-			if (!DLLiteGrammarChecker.isDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass())){
-				Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass());
+			if (!DLLiteAGrammarChecker.isDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass())){
+				Set<OWLClassExpression> classesToSave = DLLiteAGrammarChecker.getNotDlLiteSubClassExpression(((OWLSubClassOfAxiom) l_ax).getSubClass());
 				return classesToSave;
 			}
 			
@@ -491,8 +484,8 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//only to this class
 			//in general we may need to name not only one class but several 
 			//of them due to intersection
-			if (!DLLiteGrammarChecker.isDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass())){
-				Set<OWLClassExpression> classesToSave = DLLiteGrammarChecker.getNotDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass());
+			if (!DLLiteAGrammarChecker.isDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass())){
+				Set<OWLClassExpression> classesToSave = DLLiteAGrammarChecker.getNotDlLiteSuperClassExpression(((OWLSubClassOfAxiom) l_ax).getSuperClass());
 				return classesToSave;
 			}
 		}
@@ -594,7 +587,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 	 **************************************************************************/
 	private static void addAxiomToDLLite(OWLAxiom new_axiom, OWLOntology dllite_ont, OWLOntologyManager man) 
 	{
-		boolean isDlLite = DLLiteGrammarChecker.isdlLiteAxiom(new_axiom.getNNF());
+		boolean isDlLite = DLLiteAGrammarChecker.isdlLiteAxiom(new_axiom.getNNF());
 		boolean NoExists = (!dllite_ont.containsAxiom(new_axiom.getNNF())); 
 		if (NoExists && isDlLite){
 				//log.debug("Adding the axiom: " + new_axiom );
@@ -675,7 +668,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 				aux_desc = in;
 			}
 			//create the EquivalentClasses axiom for the description aux_desc and INC
-			if (DLLiteGrammarChecker.isDlLiteSubClassExpression(aux_desc)){
+			if (DLLiteAGrammarChecker.isDlLiteSubClassExpression(aux_desc)){
 				OWLClassExpression  new_in = ob.duplicateObject(aux_desc);
 				// instead of creating the axiom we add the inconsistent class in a set 
 				//to create the equivalent classes axiom with INC
@@ -689,12 +682,12 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//create the axiom that will make INC inconsistent
 			OWLClassExpression compInc = factory.getOWLObjectComplementOf(incClass);
 			OWLSubClassOfAxiom sub_inc = factory.getOWLSubClassOfAxiom(incClass, compInc);
-			DLLiteApproximator.addAxiomToDLLite(sub_inc,dl_ont, ontologyManager);
+			DLLiteAApproximator.addAxiomToDLLite(sub_inc,dl_ont, ontologyManager);
 			
 			//create the equivalent classes axiom between INC and every inconsistent class
 			OWLEquivalentClassesAxiom axiom = factory.getOWLEquivalentClassesAxiom(set_inc);
 			//add the axiom in the dl lite ontology
-			DLLiteApproximator.addAxiomToDLLite(axiom, dl_ont, ontologyManager);
+			DLLiteAApproximator.addAxiomToDLLite(axiom, dl_ont, ontologyManager);
 
 			
 		}
@@ -744,7 +737,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			for (OWLClassExpression neg_anc : negAncestors_set){
 				new_clazz = duplicator.duplicateObject(clazz);
 				OWLDisjointClassesAxiom axiom = ontologyManager.getOWLDataFactory().getOWLDisjointClassesAxiom(new_clazz,neg_anc);
-				DLLiteApproximator.addAxiomToDLLite(axiom, dllite_ont, ontologyManager);
+				DLLiteAApproximator.addAxiomToDLLite(axiom, dllite_ont, ontologyManager);
 			}
 			//empty the set of ancestors for negated classes
 			negAncestors_set.clear();
@@ -812,10 +805,10 @@ public class DLLiteApproximator extends OntologyTransformations {
 											OWLReasoner reasoner) 
 	{
 		//don't add subclass axioms for Nothing or for classes equivalent to nothing
-		if (!DLLiteApproximator.isNothingEquivalentClass(clazz, reasoner)){
+		if (!DLLiteAApproximator.isNothingEquivalentClass(clazz, reasoner)){
 			//if the  description received is a valid sub-class expression 
 			//in dl-lite, then we add a sub class axiom for every ancestor
-			if(DLLiteGrammarChecker.isDlLiteSubClassExpression(clazz) && !ancestors_set.isEmpty()){
+			if(DLLiteAGrammarChecker.isDlLiteSubClassExpression(clazz) && !ancestors_set.isEmpty()){
 				for (OWLClassExpression sup: ancestors_set){
 					if (!sup.equals(clazz)){
 						//Instead of adding the axiom, we will add a "true" in the bit matrix
@@ -829,7 +822,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//if it is a valid super-class expression in dl-lite,
 			//add it to the ancestors list, so it will be added later on in 
 			//a subclass axiom,but as father 
-			if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(clazz)){
+			if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(clazz)){
 				ancestors_set.add(clazz);
 			}
 			
@@ -917,20 +910,20 @@ public class DLLiteApproximator extends OntologyTransformations {
 				if (new_classes.containsKey(sub_class)){
 					// if it is a new (auxiliary) class (not a negated one), then 
 					//add its equivalent description in the corresponding set
-					if (DLLiteGrammarChecker.isDlLiteSubClassExpression
+					if (DLLiteAGrammarChecker.isDlLiteSubClassExpression
 												 (new_classes.get(sub_class))){
 					  new_eq = duplicator.duplicateObject(new_classes.get(sub_class));
 					  sub_classes.add(new_eq);
 					  //if the chosen class so far, is not a valid subclass expression
 					  //in dl-lite, replace it with the subclass expression
-					  if (!DLLiteGrammarChecker.isDlLiteSubClassExpression
+					  if (!DLLiteAGrammarChecker.isDlLiteSubClassExpression
 							  								(selected_class)){
 							selected_class = new_classes.get(sub_class);
 					  }
 						
 					}// if it is not a subclass expression, check for 
 					//superclass expression
-					else if (DLLiteGrammarChecker.isDlLiteSuperClassExpression
+					else if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression
 												 (new_classes.get(sub_class))){
 						new_eq = duplicator.duplicateObject(new_classes.get(sub_class));
 						super_classes.add(new_eq);
@@ -949,7 +942,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 		//create the equivalent classes axioms with all subclass expressions
 		if (sub_classes.size()>1){
 			OWLEquivalentClassesAxiom axiom = ontologyManager.getOWLDataFactory().getOWLEquivalentClassesAxiom(sub_classes);
-			DLLiteApproximator.addAxiomToDLLite(axiom, dllite_ont, ontologyManager);
+			DLLiteAApproximator.addAxiomToDLLite(axiom, dllite_ont, ontologyManager);
 		}
 		sub_classes.clear();
 
@@ -1018,7 +1011,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 		
 
 		//creates the disjoints, and get the ancestors for disjoints.
-		if (!DLLiteApproximator.isNothingEquivalentClass(clazz, reasoner)){
+		if (!DLLiteAApproximator.isNothingEquivalentClass(clazz, reasoner)){
 			negAncestors_set = this.addDlLiteDisjoints(clazz, negAncestors_set, 
 					   dllite_ont, duplicator);
 		}
@@ -1158,16 +1151,16 @@ public class DLLiteApproximator extends OntologyTransformations {
 						selected_dom = dom;
 				}
 				if (new_classes.containsKey(dom)){
-					if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(new_classes.get(dom))){
+					if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(new_classes.get(dom))){
 						selected_dom = new_classes.get(dom);
 					}
 				}
 				else if (new_NegClasses.containsKey(dom)){
-					if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(new_NegClasses.get(dom))){
+					if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(new_NegClasses.get(dom))){
 						selected_dom = new_NegClasses.get(dom);
 					}
 				}
-				else if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(dom)){
+				else if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(dom)){
 					selected_dom = dom;
 				}
 			}
@@ -1181,7 +1174,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 				aux_dom = ob.duplicateObject(selected_dom);
 			}
 			
-			if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(selected_dom)){
+			if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(selected_dom)){
 				OWLObjectPropertyDomainAxiom axiom = ontologyManager.getOWLDataFactory().getOWLObjectPropertyDomainAxiom(new_prop, 
 															aux_dom);
 				addAxiomToDLLite(axiom,dl_ont, ontologyManager);
@@ -1223,7 +1216,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//and if it is not, just add a log saying for which properties 
 			//either the functionality or some rule can't be added.
 			try {
-				if(DLLiteGrammarChecker.isDlLiteFunctionalObjectPropertyAxiom(axiom,
+				if(DLLiteAGrammarChecker.isDlLiteFunctionalObjectPropertyAxiom(axiom,
 																   dl_ont)){
 					//TODO won't add the axiom in case it is not dl lite... see, 
 					//in case it is necesary to add anyway the axiom, do it without
@@ -1310,7 +1303,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			} else {
 				aux_range = duplicator.duplicateObject((OWLObject) range.getRepresentativeElement().asOWLClass());
 			}
-			if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(aux_range)){
+			if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(aux_range)){
 				OWLObjectPropertyRangeAxiom axiom = ontologyManager.getOWLDataFactory().getOWLObjectPropertyRangeAxiom(new_prop, 
 															   aux_range);
 				addAxiomToDLLite(axiom,dl_ont, ontologyManager);
@@ -1468,16 +1461,16 @@ public class DLLiteApproximator extends OntologyTransformations {
 						selected_dom = dom;
 				}
 				if (new_classes.containsKey(dom)){
-					if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(new_classes.get(dom))){
+					if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(new_classes.get(dom))){
 						selected_dom = new_classes.get(dom);
 					}
 				}
 				else if (new_NegClasses.containsKey(dom)){
-					if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(new_NegClasses.get(dom))){
+					if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(new_NegClasses.get(dom))){
 						selected_dom = new_NegClasses.get(dom);
 					}
 				}
-				else if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(dom)){
+				else if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(dom)){
 					selected_dom = dom;
 				}
 			}
@@ -1490,7 +1483,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			else {
 				aux_dom = ob.duplicateObject(selected_dom);
 			}
-			if (DLLiteGrammarChecker.isDlLiteSuperClassExpression(aux_dom)){
+			if (DLLiteAGrammarChecker.isDlLiteSuperClassExpression(aux_dom)){
 				OWLDataPropertyDomainAxiom axiom = ontologyManager.getOWLDataFactory().getOWLDataPropertyDomainAxiom(new_prop, 
 														  aux_dom);
 				addAxiomToDLLite(axiom,dl_ont, ontologyManager);
@@ -1532,7 +1525,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 			//We will check if property fuarg0nctionality is valid in Dl Lite
 			//and if it is not, just add a log saying for which properties 
 			//either the functionality or some rule can't be added.
-			if (!DLLiteGrammarChecker.isDlLiteFunctionalDataPropertyAxiom(axiom, 
+			if (!DLLiteAGrammarChecker.isDlLiteFunctionalDataPropertyAxiom(axiom, 
 																 dl_ont)){
 				log.warn("The property " + String.valueOf(new_prop)+ " is " +
 						"Functional but, its functionality won't be added " +
@@ -1573,7 +1566,7 @@ public class DLLiteApproximator extends OntologyTransformations {
 	{
 		Set<OWLDataRange> ranges = prop.getRanges(reasoner.getRootOntology());
 		for (OWLDataRange range : ranges){
-			if (DLLiteGrammarChecker.isDlLiteDataRange(range)){
+			if (DLLiteAGrammarChecker.isDlLiteDataRange(range)){
 				OWLDataRange new_range = ob.duplicateObject(range);
 				OWLDataPropertyRangeAxiom axiom = ontologyManager.getOWLDataFactory().getOWLDataPropertyRangeAxiom(new_prop, 
 																	 new_range);
@@ -1776,33 +1769,27 @@ public class DLLiteApproximator extends OntologyTransformations {
 	* 
 	* @throws 
 	* @throws OWLOntologyChangeException
-	* @throws OWLOntologyStorageException
 	* @throws OWLOntologyCreationException
-	* @throws ClassNotFoundException 
-	* @throws IllegalAccessException 
-	* @throws InstantiationException 
-	* 
 	* @see #initializeDlLiteOnt(OWLOntology, OWLOntology, OWLOntologyManager)
 	* @see #duplicateOntology(OWLOntology, OWLOntologyManager, OWLDataFactory,
 	*  OWLObjectDuplicator)
 	* @see #completeOwlOnt(OWLOntology, OWLOntologyManager)
 	* @see #addDlLiteHierarchy(OWLClassExpression, Set, Set, OWLOntology, 
 	* OWLReasoner, OWLOntologyManager, OWLDataFactory, OWLObjectDuplicator, 
-	* DLLiteGrammarChecker)
+	* DLLiteAGrammarChecker)
 	* @see #addDlLiteInconsistentClassesAxioms(OWLOntology, OWLOntology, 
 	* OWLReasoner, OWLOntologyManager, OWLDataFactory, OWLObjectDuplicator,
-	*  DLLiteGrammarChecker)
+	*  DLLiteAGrammarChecker)
 	* @see #addDlLiteObjectProperties(OWLOntology, OWLOntology, OWLReasoner, 
 	* OWLOntologyManager, OWLDataFactory, OWLObjectDuplicator, 
-	* DLLiteGrammarChecker)
+	* DLLiteAGrammarChecker)
 	* @see #addDlLiteDataProperties(OWLOntology, OWLOntology, OWLReasoner, 
 	* OWLOntologyManager, OWLDataFactory, OWLObjectDuplicator, 
-	* DLLiteGrammarChecker)  
+	* DLLiteAGrammarChecker)  
 	**************************************************************************/
-	public OWLOntology approximate(OWLOntology owl_ont, 
+	public OWLOntology transform(OWLOntology owl_ont, 
 							IRI uri_dllite_ont) 
-	throws OWLOntologyCreationException, OWLOntologyChangeException, 
-	OWLOntologyStorageException, InstantiationException, IllegalAccessException, ClassNotFoundException
+	throws OWLOntologyCreationException
 	{
 		
 		/**
@@ -1811,8 +1798,10 @@ public class DLLiteApproximator extends OntologyTransformations {
 		 */
 		OWLOntology dllite_ont = ontologyManager.createOntology(uri_dllite_ont);
 		log.info("Created dl ontology : " + dllite_ont.getOntologyID().getOntologyIRI());
+
+		try {
 		//Initialize the DL-Lite Ontology
-		initializeDlLiteOnt(owl_ont, dllite_ont);
+			initializeDlLiteOnt(owl_ont, dllite_ont);
 
 		
 		/**
@@ -1884,8 +1873,12 @@ public class DLLiteApproximator extends OntologyTransformations {
 		log.info("Classes count "+dllite_ont.getClassesInSignature().size());
 		log.info("Object properties count "+dllite_ont.getObjectPropertiesInSignature().size());
 
+		} catch (OWLOntologyChangeException | OWLOntologyStorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return dllite_ont;
-}
+	}
 	
 
 

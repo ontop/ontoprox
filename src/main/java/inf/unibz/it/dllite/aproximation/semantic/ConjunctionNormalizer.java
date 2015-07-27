@@ -10,33 +10,50 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-public class DeHorner extends OntologyTransformations {
+public class ConjunctionNormalizer extends OntologyTransformations {
 	
-	private Set<OWLAxiom> newAxioms;
 	private Multimap<OWLClass,OWLClass> newConceptsForConjunctions;
-	private OWLOntologyManager ontologyManager;
 	
-	
-	public DeHorner(OWLOntologyManager manager) {
-		super();
+	// For the logging
+	private Logger log = LoggerFactory.getLogger(ConjunctionNormalizer.class);
 
-		ontologyManager = manager;
+	/**
+	 * 
+	 * @param manager
+	 */
+	public ConjunctionNormalizer(OWLOntologyManager manager) {
+		super(manager);
+
 		newConceptsForConjunctions = null;
-		newAxioms = null;
 	}
 	
-	public void processConjunctionOnLHS(OWLOntology ontology){
-
-		if( newAxioms != null && newConceptsForConjunctions != null )
-			return;
+	
+	/**
+	 * For each instance of this class, this method can be called only once.
+	 * A side effect of this method is the map newConceptsForConjunctions that contains 
+	 * the names of all fresh concepts introduced for conjunctions on the LHS and 
+	 * the corresponding concepts participating in the conjunction.
+	 */
+	@Override
+	public OWLOntology transform(OWLOntology ontology, IRI outputIRI)
+	throws OWLOntologyCreationException
+	{
+		if( newConceptsForConjunctions != null )
+		{
+			throw new RuntimeException("The method DeHorner.transform() can only be used once. Create a new instance of DeHorner!");
+//			System.err.println("This method can only be used once. Create a new object DeHorner!");
+//			return null;
+		}
 		
-		newAxioms = new HashSet<>();
 		newConceptsForConjunctions = ArrayListMultimap.create();
 		
 		/**
@@ -45,14 +62,37 @@ public class DeHorner extends OntologyTransformations {
 		 * newAxioms, and the map between the fresh atomic concept and the
 		 * concepts in the conjunction in newConceptsForConjunctions.
 		 */
+		Set<OWLAxiom> newAxioms = new HashSet<>();
 		for (OWLAxiom axiom : ontology.getAxioms()) {
 			if (hasConjunctionOnLHS(axiom)) {
-				constructNewAxiomsForConjunctionOnLHS((OWLSubClassOfAxiom) axiom);
+				newAxioms.addAll(constructNewAxiomsForConjunctionOnLHS((OWLSubClassOfAxiom) axiom));
 			} 
 		}
 
+		// copy all axioms
+		newAxioms.addAll(ontology.getAxioms());
+		
+		/**
+		 * Create the output ontology from the set of axioms
+		 */
+		OWLOntology output_ont = ontologyManager.createOntology(newAxioms, outputIRI);
+		log.info("Created output ontology : "
+				+ output_ont.getOntologyID().getOntologyIRI() + " with " +
+				output_ont.getAxiomCount() + " axioms");
+
+		return output_ont;
 	}
 
+	/**
+	 * Checks that axiom is a SubClassOfAxiom of the form
+	 * <pre>
+	 * 		A1 \AND ... \AND An \ISA C
+	 * </pre>
+	 * where Ai are concept names and n>0.
+	 * 
+	 * @param axiom
+	 * @return
+	 */
 	private boolean hasConjunctionOnLHS(OWLAxiom axiom) {
 		boolean hasConjunction = false;
 
@@ -99,7 +139,7 @@ public class DeHorner extends OntologyTransformations {
 	 * @param axiom
 	 * @return
 	 */
-	private void constructNewAxiomsForConjunctionOnLHS(
+	private Set<OWLAxiom> constructNewAxiomsForConjunctionOnLHS(
 			OWLSubClassOfAxiom axiom) {
 		OWLObjectIntersectionOf conjunction = (OWLObjectIntersectionOf)((OWLSubClassOfAxiom) axiom)
 				.getSubClass();
@@ -117,6 +157,7 @@ public class DeHorner extends OntologyTransformations {
 		OWLClass freshClass = factory.getOWLClass(IRI.create(prefix + newName));
 
 		
+		Set<OWLAxiom> newAxioms = new HashSet<>();
 		// Add axiom A1,A2,..,An \ISA C
 		newAxioms.add(factory.getOWLSubClassOfAxiom(freshClass, superClass));
 		// Add axioms A1,A2,..,An \ISA Ai
@@ -128,15 +169,19 @@ public class DeHorner extends OntologyTransformations {
 		for(OWLClassExpression classInConjunction : classes) {
 			newConceptsForConjunctions.put(freshClass, classInConjunction.asOWLClass());
 		}
-	}
-	
-	public Set<OWLAxiom> getNewAxioms() {
+		
 		return newAxioms;
 	}
 	
+	/**
+	 * Getter for newConceptsForConjunctions. To be used to
+	 * extend the mapping
+	 * @return
+	 */
 	public Multimap<OWLClass,OWLClass> getNewConceptsForConjunctions() {
 		return newConceptsForConjunctions;
 	}
+
 
 
 

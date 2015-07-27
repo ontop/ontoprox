@@ -32,17 +32,11 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Joiner;
 
 /******************************************************************************
- * This class implements the steps 2, 3 and 4 of the Compile and Rewrite
+ * This class implements the step 4 of the Compile and Rewrite
  * procedure.
  * <ul>
- * <li>Step 2 is the additional normalization step that takes as inout a
- * normalized Horn-ALCHIQ TBox and substitutes qualified existentials on the
- * right-hand side of concept inclusions with appropriate Dl-LiteR axioms. This
- * step is implemented by method "normalizeQualifiedExistentialRestrictions"
- * <li>Step 3
  * <li>Step 4 gets as input an owl ontology and returns its DL-LiteR closure,
- * i.e., the set of DL-LiteR axioms entailed by the owl ontology. This step is
- * implemented by method "computeDLLiteRClosure".
+ * i.e., the set of DL-LiteR axioms entailed by the owl ontology. 
  * </ul>
  * 
  * The constructor for this class requires an OWLOntologyManager to create and
@@ -51,29 +45,24 @@ import com.google.common.base.Joiner;
  * @author Elena Botoeva
  *
  *****************************************************************************/
-public class Rewriter extends OntologyTransformations {
+public class DLLiteRClosure extends OntologyTransformations {
 
 	/**
 	 * @param manager
-	 *            **************************************************************
-	 *            **********
 	 * 
-	 **************************************************************************/
-	public Rewriter(OWLOntologyManager manager) {
-		super();
+	 */
+	public DLLiteRClosure(OWLOntologyManager manager) {
+		super(manager);
 		new_classes = new HashMap<OWLClass, OWLClassExpression>();
-
-		ontologyManager = manager;
 	}
 
 	// This set contains the mapping between the new classes that we
 	// introduced and its original equivalent descriptions. 
 	private HashMap<OWLClass, OWLClassExpression> new_classes;
 	// For the logging
-	private Logger log = LoggerFactory.getLogger(Rewriter.class);
+	private Logger log = LoggerFactory.getLogger(DLLiteRClosure.class);
 
-	private OWLOntologyManager ontologyManager;
-
+	
 	/**
 	 * Computes the DL-LiteR closure of an input TBox. To do so uses
 	 * intermediate fresh names. The output TBox does not use fresh names.
@@ -87,8 +76,10 @@ public class Rewriter extends OntologyTransformations {
 	 * 
 	 * @throws OWLOntologyCreationException
 	 */
-	public OWLOntology computeDLLiteRClosure(OWLOntology owl_ont,
-			IRI iri_dlliter_ont) throws OWLOntologyCreationException {
+	@Override
+	public OWLOntology transform(OWLOntology owl_ont, IRI iri_dlliter_ont) 
+			throws OWLOntologyCreationException 
+	{
 
 		// we use this set to keep track of the freshly introduced names
 		new_classes = new HashMap<>();
@@ -813,5 +804,6 @@ public class Rewriter extends OntologyTransformations {
 
 		return axioms;
 	}
+
 
 }

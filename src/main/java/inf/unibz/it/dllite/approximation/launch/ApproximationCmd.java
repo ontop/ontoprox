@@ -1,18 +1,16 @@
 package inf.unibz.it.dllite.approximation.launch;
 
-import inf.unibz.it.dllite.aproximation.semantic.DLLiteApproximator;
-import inf.unibz.it.dllite.aproximation.semantic.DLLiteRNormalizer;
-import inf.unibz.it.dllite.aproximation.semantic.DeHorner;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteAApproximator;
+import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
+import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
 import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
-import inf.unibz.it.dllite.aproximation.semantic.Rewriter;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChangeException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -40,28 +38,29 @@ public class ApproximationCmd {
 				// uris for DL-Lite ontology
 				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
 				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+				IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
+				IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
 				IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
 				IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
 				
 				
 				// step 2
-				DLLiteRNormalizer dlliterNormalizer = new DLLiteRNormalizer(manager);
-				OWLOntology ont2 = dlliterNormalizer.normalizeQualifiedExistentialRestrictions(ont, iri_dllite_ont2);
+				QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
+				OWLOntology ont2 = dlliterNormalizer.transform(ont, iri_dllite_ont2);
 
-				DeHorner deHorner = new DeHorner(manager);
-				deHorner.processConjunctionOnLHS(ont2);
-				Set<OWLAxiom> axioms = deHorner.getNewAxioms();
-
-				manager.addAxioms(ont2, axioms);
+				// step 3
+				ConjunctionNormalizer deHorner = new ConjunctionNormalizer(manager);
+				OWLOntology ont3 = deHorner.transform(ont2, iri_dllite_ont3);
 				
-				// Approximate owl_ont
-				Rewriter dlliterRewriter = new Rewriter(manager);
-				OWLOntology ont4 = dlliterRewriter.computeDLLiteRClosure(ont2, iri_dllite_ont4);
+				// step 4
+				DLLiteRClosure dlliterRewriter = new DLLiteRClosure(manager);
+				OWLOntology ont4 = dlliterRewriter.transform(ont3, iri_dllite_ont4);
 			
 	
 				
-				// Save the approximated ontology
-			//	manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+				// Save the intermediate ontologies
+				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {

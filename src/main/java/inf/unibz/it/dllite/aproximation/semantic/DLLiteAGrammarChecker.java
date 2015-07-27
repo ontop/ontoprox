@@ -71,7 +71,7 @@ import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
  *  @author Alejandra Lorenzo
  *****************************************************************************/
 
-public class DLLiteGrammarChecker {
+public class DLLiteAGrammarChecker {
 
 	
 /****************************   PRIVATE METHODS    ***************************/

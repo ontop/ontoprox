@@ -9,10 +9,28 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import com.google.common.base.Joiner;
 
-public class OntologyTransformations {
+public abstract class OntologyTransformations {
+
+	protected final OWLOntologyManager ontologyManager;
+
+	/**
+	 * @param manager
+	 * 
+	 **************************************************************************/
+	public OntologyTransformations(OWLOntologyManager manager) {
+		ontologyManager = manager;
+	}
+	
+	
+	public abstract OWLOntology transform(OWLOntology ontology,
+			IRI outputIRI) throws OWLOntologyCreationException;
+	
 
 	/**************************************************************************
 	 * Adds a suffix to the original IRI
