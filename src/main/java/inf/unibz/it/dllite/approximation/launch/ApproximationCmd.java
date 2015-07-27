@@ -1,7 +1,10 @@
 package inf.unibz.it.dllite.approximation.launch;
 
-import inf.unibz.it.dllite.aproximation.semantic.DLLiteApproximator;
-import inf.unibz.it.dllite.aproximation.semantic.Rewriter;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteAApproximator;
+import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
+import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
+import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,23 +32,31 @@ public class ApproximationCmd {
 				// Create our ontology manager in the usual way.	
 				OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 				// Load a copy of the ontology passed by parameters.  
-				OWLOntology owl_ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
+				OWLOntology ont = manager.loadOntologyFromOntologyDocument(new File(args[0]));
 		
 	
-				// uris for DL-Lite ontology
-				IRI file_iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step2");
-				IRI iri_dllite_ont2 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step2");
-				IRI file_iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(file_iri_owl_ont, "step4");
-				IRI iri_dllite_ont4 = DLLiteApproximator.createIRIWithSuffix(owl_ont.getOntologyID().getOntologyIRI(), "step4");
+				// iris for the intermediate ontologies
+				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
+				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+				IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
+				IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
+				IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
+				IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
 				
 				
-				// Approximate owl_ont
-				Rewriter dlliterRewriter = new Rewriter(manager);
-				OWLOntology ont2 = dlliterRewriter.computeDLLiteRClosure(owl_ont, iri_dllite_ont2);
-				OWLOntology ont4 = dlliterRewriter.normalizeQualifiedExistentialRestrictions(ont2, iri_dllite_ont4);
-				
-				// Save the approximated ontology
+				// step 2
+				QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
+				OWLOntology ont2 = dlliterNormalizer.transform(ont, iri_dllite_ont2);
 				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+				
+				// step 3
+				ConjunctionNormalizer conjNormalizer = new ConjunctionNormalizer(manager);
+				OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
+				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
+				
+				// step 4
+				DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
+				OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			}
 			catch (OWLOntologyCreationException e1) {
