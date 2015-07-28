@@ -17,6 +17,7 @@ import com.google.common.base.Joiner;
 
 public abstract class OntologyTransformations {
 
+	private static final char conceptSeparator = '_';
 	protected final OWLOntologyManager ontologyManager;
 
 	/**
@@ -80,7 +81,7 @@ public abstract class OntologyTransformations {
 		for (OWLClassExpression op : operands) {
 			operandNames.add(extractPredicateName(op.asOWLClass()));
 		}
-		String conceptNames = Joiner.on(',').join(operandNames);
+		String conceptNames = Joiner.on(conceptSeparator).join(operandNames);
 		
 		return conceptNames;	
 	}

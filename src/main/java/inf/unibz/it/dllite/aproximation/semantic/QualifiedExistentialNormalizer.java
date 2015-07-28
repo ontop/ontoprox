@@ -47,6 +47,7 @@ public class QualifiedExistentialNormalizer extends OntologyTransformations {
 
 	// For the logging
 	private Logger log = LoggerFactory.getLogger(QualifiedExistentialNormalizer.class);
+	private final String roleFillerSeparator = "__";
 
 
 	/**
@@ -177,7 +178,7 @@ public class QualifiedExistentialNormalizer extends OntologyTransformations {
 		
 		// Create a fresh role name
 		IRI new_role_iri = IRI.create(extractPrefix(prop)  
-				+ extractPredicateName(prop) + "."
+				+ extractPredicateName(prop) + roleFillerSeparator 
 				+ extractConceptNames(filler));
 		OWLObjectProperty new_role = ontologyManager.getOWLDataFactory()
 				.getOWLObjectProperty(new_role_iri);

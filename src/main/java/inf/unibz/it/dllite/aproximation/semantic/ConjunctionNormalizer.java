@@ -47,13 +47,6 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 	public OWLOntology transform(OWLOntology ontology, IRI outputIRI)
 	throws OWLOntologyCreationException
 	{
-		if( newConceptsForConjunctions != null )
-		{
-			throw new RuntimeException("The method DeHorner.transform() can only be used once. Create a new instance of DeHorner!");
-//			System.err.println("This method can only be used once. Create a new object DeHorner!");
-//			return null;
-		}
-		
 		log.info("Constructing new axioms for the conjunctions of atomic concepts on the LHS of concept inclusions.");
 				
 		newConceptsForConjunctions = ArrayListMultimap.create();

@@ -98,7 +98,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 		// Asks the reasoner to classify the ontology.
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY,
 				InferenceType.OBJECT_PROPERTY_HIERARCHY,
-				InferenceType.DATA_PROPERTY_HIERARCHY);
+				InferenceType.DATA_PROPERTY_HIERARCHY,
+				InferenceType.DISJOINT_CLASSES);
 
 		/**
 		 * Collect all entailed DL-LiteR axioms, that is, concept and role
@@ -424,10 +425,11 @@ public class DLLiteRClosure extends OntologyTransformations {
 		axioms.addAll(constructDLLiteEquivalentClassesAxioms(equiv_classes));
 
 		/**
-		 * Select one representative class among the equivent classes. Should be
-		 * an original named class
+		 * Select one representative class among the equivalent classes. Should be
+		 * a class expression in the original signature
 		 */
 		OWLClassExpression representativeClass = selectRepresentativeClass(equiv_classes);
+		OWLClass namedClass = selectNamedClass(equiv_classes);
 
 		/**
 		 * Create the subclass axiom between the representative class and the
@@ -437,17 +439,17 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * \top"
 		 */
 		if (!superClass.isOWLThing() && !representativeClass.isOWLNothing()) {
-			axioms.add(ontologyManager.getOWLDataFactory()
-					.getOWLSubClassOfAxiom(representativeClass, superClass));
+			axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
 		}
 
 		/**
 		 * Create the disjoint class axioms
+		 * 
+		 * We use namedClass to get the disjoint classes for
+		 * performance reasons
 		 */
-		NodeSet<OWLClass> disjointClasses = reasoner
-				.getDisjointClasses(representativeClass);
-		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass,
-				disjointClasses));
+		NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(namedClass);
+		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
 
 		/**
 		 * The recursive part of the method.
@@ -455,12 +457,13 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * For each equivalence class of subclasses call the method recursively.
 		 * The representative class will be the superClass for each set of
 		 * subclasses.
+		 * 
+		 *	We use namedClass to get the disjoint classes for
+		 * performance reasons
 		 */
-		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(
-				representativeClass, true); // only direct sublasses
+		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(namedClass, true); // only direct sublasses
 		for (Node<OWLClass> equiv_sub_classes : sub_classes) {
-			Set<OWLAxiom> naxioms = computeEntailedDLLiteRConceptAxioms(
-					equiv_sub_classes, representativeClass, reasoner);
+			Set<OWLAxiom> naxioms = computeEntailedDLLiteRConceptAxioms(equiv_sub_classes, representativeClass, reasoner);
 			axioms.addAll(naxioms);
 		}
 
@@ -524,10 +527,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 		/**
 		 * Create the disjoint properties axioms
 		 */
-		NodeSet<OWLObjectPropertyExpression> disjointProperties = reasoner
-				.getDisjointObjectProperties(representativeRole);
-		axioms.addAll(constructDLLiteDisjointPropertiesAxioms(
-				representativeRole, disjointProperties));
+		//NodeSet<OWLObjectPropertyExpression> disjointProperties = reasoner.getDisjointObjectProperties(representativeRole);
+		//axioms.addAll(constructDLLiteDisjointPropertiesAxioms(representativeRole, disjointProperties));
 
 		/**
 		 * The recursive part of the method.
@@ -724,6 +725,35 @@ public class DLLiteRClosure extends OntologyTransformations {
 		}
 
 		return selected_property;
+	}
+
+	
+	/**
+	 * Selects a named class. Preference is given to original
+	 * named classes.
+	 * 
+	 * @param equiv_classes
+	 * @return
+	 */
+	private OWLClass selectNamedClass(Node<OWLClass> equiv_classes) {
+		OWLClass named_class = null;
+
+		// First try to select an original named class
+		for (OWLClass clazz : equiv_classes) {
+			if (!new_classes.containsKey(clazz)) {
+				named_class = clazz;
+				break;
+			}
+		}
+		
+		if(named_class == null) {
+			for (OWLClass clazz : equiv_classes) {
+				named_class = clazz;
+				break;
+			}	
+		}
+		
+		return named_class;
 	}
 
 	/**

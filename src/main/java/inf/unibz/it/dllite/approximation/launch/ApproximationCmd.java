@@ -17,6 +17,8 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
+
 public class ApproximationCmd {
 
 	/**
@@ -52,12 +54,18 @@ public class ApproximationCmd {
 				// step 3
 				ConjunctionNormalizer conjNormalizer = new ConjunctionNormalizer(manager);
 				OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
+				conjNormalizer.getNewConceptsForConjunctions();
 				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 				
 				// step 4
 				DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
 				OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
+
+				
+		        DLSyntaxObjectRenderer renderer = new DLSyntaxObjectRenderer();
+		        System.out.println(renderer.render(ont4));
+
 			}
 			catch (OWLOntologyCreationException e1) {
 				System.out.println("Could not load the ontology: " +
