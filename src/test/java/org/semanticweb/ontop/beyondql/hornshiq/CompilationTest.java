@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.semanticweb.ontop.beyondql.hornshiq.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
 
 public class CompilationTest {
@@ -120,6 +119,14 @@ public class CompilationTest {
         OBDAModel newModel = compileHSHIQtoMappings(ontologyFile, obdaFile);
         ModelIOManager modelIOManager = new ModelIOManager(newModel);
         modelIOManager.save(extendedObdaFile);
+    }
+
+    private OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException {
+        HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile);
+        rewriter.rewrite();
+        OBDAModel newModel = rewriter.getRewrittenOBDAModel();
+        return newModel;
+
     }
 
     @Test

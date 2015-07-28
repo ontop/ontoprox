@@ -4,7 +4,10 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
+import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
+import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
+import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
+import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
 import it.unibz.krdb.obda.model.Function;
 import it.unibz.krdb.obda.model.Variable;
 import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
@@ -26,16 +29,20 @@ import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.JDBCConnectionManager;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,55 +51,88 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Ontology2MappingCompilation {
+public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private static OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
 
-    private static Logger log = LoggerFactory.getLogger(Ontology2MappingCompilation.class);
+    private static Logger log = LoggerFactory.getLogger(HSHIQOBDAToDLLiteROBDARewriter.class);
 
     private static final String QUERY_HEAD_PREDICATE_NAME = "q";
 
     private static final Predicate CLASS_QUERY_HEAD_PREDICATE = DATA_FACTORY.getClassPredicate(QUERY_HEAD_PREDICATE_NAME);
 
     private static Variable X = DATA_FACTORY.getVariable("X");
+    private final String tempPrologFile;
+    private OWLOntologyManager manager;
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
-    public static OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    private OWLOntology ontology;
+    private final OBDAModel obdaModel;
 
+    private OWLOntology rewrittenOntology;
+
+    private OBDAModel rewrittenOBDAModel;
+
+    private Multimap<OWLClass, OWLClass> newConceptsForConjunctions;
+
+    public OBDAModel getRewrittenOBDAModel() {
+        return rewrittenOBDAModel;
+    }
+
+    public OWLOntology getRewrittenOntology() {
+        return rewrittenOntology;
+    }
+
+
+    public HSHIQOBDAToDLLiteROBDARewriter(String ontologyFile, String obdaFile){
         int i = ontologyFile.lastIndexOf(".");
 
-        String tempPrologFile = ontologyFile.substring(0, i) + ".pl";
+        this.tempPrologFile = ontologyFile.substring(0, i) + ".pl";
 
-        /**
-         * load ontology using OWL-API
-         */
-        OWLOntology ontology = OWLManager.createOWLOntologyManager()
-                .loadOntologyFromOntologyDocument(new File(ontologyFile));
+        try {
+            this.manager = OWLManager.createOWLOntologyManager();
+            this.ontology = manager.loadOntologyFromOntologyDocument(new File(ontologyFile));
+        } catch (OWLOntologyCreationException e) {
+            e.printStackTrace();
+        }
 
         /**
          * load the mappings using Ontop API
          */
-        OBDAModel obdaModel = DATA_FACTORY.getOBDAModel();
+        this.obdaModel = DATA_FACTORY.getOBDAModel();
         ModelIOManager ioManager = new ModelIOManager(obdaModel);
         File obdafile = new File(obdaFile);
-        ioManager.load(obdafile);
+        try {
+            ioManager.load(obdafile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidMappingException e) {
+            e.printStackTrace();
+        }
 
-        OBDAModel newOBDAModel = compileHSHIQOntologyToMappings(ontology, obdaModel, tempPrologFile);
-
-        return newOBDAModel;
-    }
-
-    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel,
-                                                            String tempPrologFile)
-            throws DuplicateMappingException, OBDAException, SQLException {
-        return compileHSHIQOntologyToMappings(ontology, obdaModel, tempPrologFile, HashMultimap.<OWLClass, OWLClass>create());
     }
 
 
-    private static OBDAModel compileHSHIQOntologyToMappings(OWLOntology ontology, OBDAModel obdaModel,
-                                                            String tempPrologFile,
-                                                            Multimap<OWLClass, OWLClass> newConceptsForConjunctions)
-            throws SQLException, OBDAException, DuplicateMappingException {
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    public void rewrite() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+        OBDAModel newOBDAModel = rewrite(ontology, obdaModel, tempPrologFile);
+
+    }
+
+    public HSHIQOBDAToDLLiteROBDARewriter(String tempPrologFile, OBDAModel obdaModel) {
+        this.tempPrologFile = tempPrologFile;
+        this.obdaModel = obdaModel;
+    }
+
+//    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel,
+//                                     String tempPrologFile)
+//            throws DuplicateMappingException, OBDAException, SQLException, OWLOntologyCreationException, FileNotFoundException {
+//        return rewrite(ontology, obdaModel, tempPrologFile, HashMultimap.<OWLClass, OWLClass>create());
+//    }
+
+
+    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel,
+                                     String tempPrologFile)
+            throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, FileNotFoundException {
 
         long t1 = System.currentTimeMillis();
 
@@ -105,7 +145,16 @@ public class Ontology2MappingCompilation {
         /** rewrite the ontology to a datalog program represented in Clipper Native API */
         List<CQ> program = qaHornSHIQ.rewriteOntology();
 
-        /** convert the datalog program to Ontop Native API */
+        String originalIRI = ontology.getOntologyID().getOntologyIRI().toString();
+
+        OWLOntology owlOntology_step1 = qaHornSHIQ.exportNormalizedAxiomsAndSaturatedEnforceRelations(originalIRI + "_step1");
+
+
+        this.rewrittenOntology = rewriteOntology(owlOntology_step1);
+
+        //this.rewrittenOntology = owlOntology_step1;
+
+        /** convert the datalog program to Ontop representation using Ontop API*/
         DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
 
         List<CQIE> rulesForNewConceptsForConjunctions = getRulesForNewConceptsForConjunctions(newConceptsForConjunctions);
@@ -118,7 +167,17 @@ public class Ontology2MappingCompilation {
 
         //log.debug("translate program from Clipper {}", ontopProgram);
 
-        t1 = System.currentTimeMillis();
+        OBDAModel extendedObdaModel = rewriteMappings(ontology, obdaModel, tempPrologFile, newConceptsForConjunctions, ontopProgram);
+
+        this.rewrittenOBDAModel = extendedObdaModel;
+
+        return extendedObdaModel;
+    }
+
+    private static OBDAModel rewriteMappings(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile,
+                                             Multimap<OWLClass, OWLClass> newConceptsForConjunctions, DatalogProgram ontopProgram)
+            throws SQLException, OBDAException, DuplicateMappingException {
+        long t3 = System.currentTimeMillis();
 
         /**
          *
@@ -162,7 +221,7 @@ public class Ontology2MappingCompilation {
 
             int depth = 5;
 
-            List<CQIE> cqies = datalogExpansion.expand("'%s'".format(predicate.getName()), predicate.getArity(), depth);
+            List<CQIE> cqies = datalogExpansion.expand(String.format("'%s'", predicate.getName()), predicate.getArity(), depth);
 
             for (CQIE cqie : cqies) {
 
@@ -187,7 +246,7 @@ public class Ontology2MappingCompilation {
 
 
         /**
-         * Unfolded query can already be translated tso OBDA Mapping
+         * Unfolded query can already be translated to OBDA Mapping
          */
         DatalogToMappingAxiomTranslater datalogToMappingAxiomTranslater = new DatalogToMappingAxiomTranslater(dbMetadata, obdaDataSource);
         List<OBDAMappingAxiom> newObdaMappingAxioms = datalogToMappingAxiomTranslater.translate(newMappingRules);
@@ -199,12 +258,10 @@ public class Ontology2MappingCompilation {
         extendedObdaModel.addMappings(obdaDataSource.getSourceID(), newObdaMappingAxioms);
         extendedObdaModel.setPrefixManager(obdaModel.getPrefixManager());
 
-        t2 = System.currentTimeMillis();
+        long t4 = System.currentTimeMillis();
 
         System.err.println("# new mappings " + newMappingRules.size());
-        System.err.println("Mapping generation time: " + (t2 - t1) + "ms");
-
-
+        System.err.println("Mapping generation time: " + (t4 - t3) + "ms");
         return extendedObdaModel;
     }
 
@@ -261,5 +318,35 @@ public class Ontology2MappingCompilation {
 
         return predicates;
     }
+
+    private OWLOntology rewriteOntology(OWLOntology ont) throws OWLOntologyCreationException, FileNotFoundException {
+        IRI file_iri_owl_ont = ontology.getOntologyID().getOntologyIRI();
+        IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
+        IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+        IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
+        IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
+        IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
+        IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
+
+
+        // step 2
+        QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
+        OWLOntology ont2 = dlliterNormalizer.transform(ont, iri_dllite_ont2);
+        //manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
+
+        // step 3
+        ConjunctionNormalizer conjNormalizer = new ConjunctionNormalizer(manager);
+        OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
+
+        this.newConceptsForConjunctions = conjNormalizer.getNewConceptsForConjunctions();
+
+        //manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
+
+        // step 4
+        DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
+        OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
+        return ont4;
+    }
+
 
 }

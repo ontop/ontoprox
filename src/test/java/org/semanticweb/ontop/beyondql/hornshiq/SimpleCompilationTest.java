@@ -47,7 +47,6 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.semanticweb.ontop.beyondql.hornshiq.Ontology2MappingCompilation.compileHSHIQtoMappings;
 
 
 /***
@@ -137,24 +136,26 @@ public class SimpleCompilationTest {
 		conn.commit();
 	}
 
-	private void runTests(Properties p) throws Exception {
-		OBDAModel newModel = compileHSHIQtoMappings(owlfile, obdafile);
-        ModelIOManager modelIOManager = new ModelIOManager(newModel);
-        modelIOManager.save(newobdafile);
-	}
+//	private void runTests(Properties p) throws Exception {
+//
+//
+//		OBDAModel newModel = compileHSHIQtoMappings(owlfile, obdafile);
+//        ModelIOManager modelIOManager = new ModelIOManager(newModel);
+//        modelIOManager.save(newobdafile);
+//	}
 
 
 
-	@Test
-	public void test() throws Exception {
-
-		QuestPreferences p = new QuestPreferences();
-		p.setCurrentValueOf(QuestPreferences.ABOX_MODE, QuestConstants.VIRTUAL);
-		p.setCurrentValueOf(QuestPreferences.OPTIMIZE_EQUIVALENCES, "true");
-		p.setCurrentValueOf(QuestPreferences.OPTIMIZE_TBOX_SIGMA, "true");
-
-		runTests(p);
-	}
+//	@Test
+//	public void test() throws Exception {
+//
+//		QuestPreferences p = new QuestPreferences();
+//		p.setCurrentValueOf(QuestPreferences.ABOX_MODE, QuestConstants.VIRTUAL);
+//		p.setCurrentValueOf(QuestPreferences.OPTIMIZE_EQUIVALENCES, "true");
+//		p.setCurrentValueOf(QuestPreferences.OPTIMIZE_TBOX_SIGMA, "true");
+//
+//		runTests(p);
+//	}
 
 
 }

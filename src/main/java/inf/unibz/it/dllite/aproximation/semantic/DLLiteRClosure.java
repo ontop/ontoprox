@@ -457,8 +457,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * We use namedClass to get the disjoint classes for
 		 * performance reasons
 		 */
-		NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(namedClass);
-		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
+//		NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(namedClass);
+//		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
 
 		/**
 		 * The recursive part of the method.
