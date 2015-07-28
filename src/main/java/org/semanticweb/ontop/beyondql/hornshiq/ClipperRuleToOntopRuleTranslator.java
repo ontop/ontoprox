@@ -22,7 +22,9 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"UnnecessaryLocalVariable"})
+/**
+ * A converter form Clipper Rule(s) to Ontop Rule(s)
+ */
 public class ClipperRuleToOntopRuleTranslator {
 
     static OBDADataFactory dataFactory = OBDADataFactoryImpl.getInstance();
@@ -47,7 +49,6 @@ public class ClipperRuleToOntopRuleTranslator {
     }
 
     private static Function translate(Atom atom) {
-        Function function;
         Predicate predicate = atom.getPredicate();
         it.unibz.krdb.obda.model.Predicate ontopPredicate = translate(predicate);
         List<it.unibz.krdb.obda.model.Term> ontopTerms = new ArrayList<>();
@@ -57,7 +58,6 @@ public class ClipperRuleToOntopRuleTranslator {
         }
 
         return dataFactory.getFunction(ontopPredicate, ontopTerms);
-
     }
 
     private static it.unibz.krdb.obda.model.Term translate(Term term) {

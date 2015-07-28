@@ -28,6 +28,7 @@ import it.unibz.krdb.sql.JDBCConnectionManager;
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
 import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
+import org.semanticweb.ontop.beyondql.mapgen.DatalogToMappingAxiomTranslater;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
