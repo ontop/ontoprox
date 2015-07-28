@@ -18,14 +18,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class OntopOBDAAproxmimationCommand {
+public class OntopOBDAApproximationCommand {
 
     public static void main(String[] args) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException, OWLOntologyStorageException {
 
         long t1 = System.currentTimeMillis();
 
         if(args.length != 4){
-            System.err.println("Usage: OntopOBDAAproxmimationCommand ontology.owl mapping.obda " +
+            System.err.println("Usage: OntopOBDAApproximationCommand ontology.owl mapping.obda " +
                     "newOntology.owl newMapping.obda");
             System.exit(-1);
         }
