@@ -2,6 +2,7 @@ package inf.unibz.it.dllite.aproximation.semantic;
 
 import java.util.*;
 
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -9,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
 import org.semanticweb.owlapi.model.OWLObjectInverseOf;
@@ -105,10 +107,17 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * Collect all entailed DL-LiteR axioms, that is, concept and role
 		 * axioms.
 		 */
-		
 		Set<OWLAxiom> dlliterAxioms = computeEntailedDLLiteRConceptAxioms(reasoner);
 		dlliterAxioms.addAll(computeEntailedDLLiteRRoleAxioms(reasoner));
+		
+		
+		/**
+		 * Copy over all declaration axioms
+		 */
+		Set<OWLDeclarationAxiom> declarationAxioms = owl_ont.getAxioms(AxiomType.DECLARATION);
+		dlliterAxioms.addAll(declarationAxioms);
 
+		
 		/**
 		 * Create the dl lite ontology and add the axioms
 		 */
