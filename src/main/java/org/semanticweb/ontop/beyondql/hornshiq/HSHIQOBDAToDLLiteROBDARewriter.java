@@ -57,11 +57,8 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private static Logger log = LoggerFactory.getLogger(HSHIQOBDAToDLLiteROBDARewriter.class);
 
-    private static final String QUERY_HEAD_PREDICATE_NAME = "q";
-
-    private static final Predicate CLASS_QUERY_HEAD_PREDICATE = DATA_FACTORY.getClassPredicate(QUERY_HEAD_PREDICATE_NAME);
-
     private static Variable X = DATA_FACTORY.getVariable("X");
+
     private final String tempPrologFile;
     private OWLOntologyManager manager;
 
@@ -103,9 +100,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         File obdafile = new File(obdaFile);
         try {
             ioManager.load(obdafile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidMappingException e) {
+        } catch (IOException | InvalidMappingException e) {
             e.printStackTrace();
         }
 
@@ -148,7 +143,6 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         String originalIRI = ontology.getOntologyID().getOntologyIRI().toString();
 
         OWLOntology owlOntology_step1 = qaHornSHIQ.exportNormalizedAxiomsAndSaturatedEnforceRelations(originalIRI + "_step1");
-
 
         this.rewrittenOntology = rewriteOntology(owlOntology_step1);
 
@@ -320,13 +314,14 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
     }
 
     private OWLOntology rewriteOntology(OWLOntology ont) throws OWLOntologyCreationException, FileNotFoundException {
-        IRI file_iri_owl_ont = ontology.getOntologyID().getOntologyIRI();
+
+        IRI file_iri_owl_ont = this.ontology.getOntologyID().getOntologyIRI();
         IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
         IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
         IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
         IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
         IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
-        IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
+        IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(this.ontology.getOntologyID().getOntologyIRI(), "step4");
 
 
         // step 2
