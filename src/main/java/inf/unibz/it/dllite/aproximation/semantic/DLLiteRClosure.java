@@ -451,10 +451,11 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * We do not create trivial axioms of the form "\bot \ISA A" or "A \ISA
 		 * \top"
 		 */
-		if (!superClass.isOWLThing() && !representativeClass.isOWLNothing()) {
+		if (!superClass.isOWLThing() && reasoner.isSatisfiable(representativeClass) ) {
 			axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
 		}
 
+		
 		/**
 		 * Create the disjoint class axioms
 		 * 

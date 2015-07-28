@@ -13,6 +13,7 @@ import java.util.List;
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChangeException;
@@ -91,15 +92,22 @@ public class ApproximationCmd {
 				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
 				IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
 				IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
+				IRI file_iri_dllite_ont1 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step1");
+				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
+				IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
 				IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
+
+				manager.saveOntology(ont1, new RDFXMLOntologyFormat(), new FileOutputStream(file_iri_dllite_ont1.toString()));
 				
 		    	// step 2
 				QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
 				OWLOntology ont2 = dlliterNormalizer.transform(ont1, iri_dllite_ont2);
+				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
 				
 				// step 3
 				ConjunctionNormalizer conjNormalizer = new ConjunctionNormalizer(manager);
 				OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
+				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 				
 				// step 4
 				DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
