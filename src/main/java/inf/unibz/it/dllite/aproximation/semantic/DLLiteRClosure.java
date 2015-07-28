@@ -428,17 +428,21 @@ public class DLLiteRClosure extends OntologyTransformations {
 		Set<OWLAxiom> axioms = new HashSet<>();
 
 		/**
-		 * Create the equivalent classes axioms for all class expressions in
-		 * equiv_classes
-		 */
-		axioms.addAll(constructDLLiteEquivalentClassesAxioms(equiv_classes));
-
-		/**
 		 * Select one representative class among the equivalent classes. Should be
 		 * a class expression in the original signature
 		 */
 		OWLClassExpression representativeClass = selectRepresentativeClass(equiv_classes);
 		OWLClass namedClass = selectNamedClass(equiv_classes);
+
+		/**
+		 * Create the equivalent classes axioms for all class expressions in
+		 * equiv_classes
+		 * 
+		 * At the moment we add equivalent classes axioms only for satisfiable classes
+		 */
+		if (reasoner.isSatisfiable(namedClass)) {
+			axioms.addAll(constructDLLiteEquivalentClassesAxioms(equiv_classes));
+		}
 
 		/**
 		 * Create the subclass axiom between the representative class and the
