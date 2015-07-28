@@ -39,7 +39,9 @@ public class DatalogExpansion {
 
         init();
 
-        int depth = 5;
+//        new DatalogExpansion();
+
+//        int depth = 5;
 //        testExpand("reach", 2, depth);
 //        testExpand("start", 1, depth);
 //        testExpand("end", 1, depth);
@@ -48,13 +50,13 @@ public class DatalogExpansion {
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Student", 1, depth);
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_subOrganizationOf", 2, depth);
 //        testExpand("http___uob_iodt_ibm_com_univ_bench_dl_owl_Employee", 1, depth);
-        testExpand("'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'", 1, depth);
+//        testExpand("'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'", 1, depth);
 
     }
 
 
 
-    private static void testExpand(String predicate, int arity, int depth) throws IOException {
+    private  void testExpand(String predicate, int arity, int depth) throws IOException {
         List<CQIE> expansions;
 
         System.out.println("------------------------------------------");
@@ -72,7 +74,7 @@ public class DatalogExpansion {
 
     }
 
-    public static List<CQIE> expand(String predicate, int arity, int depth) {
+    public List<CQIE> expand(String predicate, int arity, int depth) {
         String termTemplate;
         if(arity == 1){
             termTemplate = String.format("%s(_)", predicate);

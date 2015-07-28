@@ -1,6 +1,5 @@
 package org.semanticweb.ontop.beyondql.hornshiq;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -8,26 +7,27 @@ import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
 import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
 import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
 import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
-import it.unibz.krdb.obda.model.Function;
-import it.unibz.krdb.obda.model.Variable;
-import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
-import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
-import org.semanticweb.clipper.hornshiq.rule.CQ;
 import it.unibz.krdb.obda.exception.DuplicateMappingException;
 import it.unibz.krdb.obda.exception.InvalidMappingException;
 import it.unibz.krdb.obda.io.ModelIOManager;
 import it.unibz.krdb.obda.model.CQIE;
 import it.unibz.krdb.obda.model.DatalogProgram;
+import it.unibz.krdb.obda.model.Function;
 import it.unibz.krdb.obda.model.OBDADataFactory;
 import it.unibz.krdb.obda.model.OBDADataSource;
 import it.unibz.krdb.obda.model.OBDAException;
 import it.unibz.krdb.obda.model.OBDAMappingAxiom;
 import it.unibz.krdb.obda.model.OBDAModel;
 import it.unibz.krdb.obda.model.Predicate;
+import it.unibz.krdb.obda.model.Variable;
 import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
+import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
+import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.JDBCConnectionManager;
-import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
+import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
+import org.semanticweb.clipper.hornshiq.rule.CQ;
+import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -35,14 +35,12 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -113,21 +111,8 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     }
 
-    public HSHIQOBDAToDLLiteROBDARewriter(String tempPrologFile, OBDAModel obdaModel) {
-        this.tempPrologFile = tempPrologFile;
-        this.obdaModel = obdaModel;
-    }
-
-//    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel,
-//                                     String tempPrologFile)
-//            throws DuplicateMappingException, OBDAException, SQLException, OWLOntologyCreationException, FileNotFoundException {
-//        return rewrite(ontology, obdaModel, tempPrologFile, HashMultimap.<OWLClass, OWLClass>create());
-//    }
-
-
-    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel,
-                                     String tempPrologFile)
-            throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, FileNotFoundException {
+    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile)
+            throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, IOException {
 
         long t1 = System.currentTimeMillis();
 
@@ -145,8 +130,6 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         OWLOntology owlOntology_step1 = qaHornSHIQ.exportNormalizedAxiomsAndSaturatedEnforceRelations(originalIRI + "_step1");
 
         this.rewrittenOntology = rewriteOntology(owlOntology_step1);
-
-        //this.rewrittenOntology = owlOntology_step1;
 
         /** convert the datalog program to Ontop representation using Ontop API*/
         DatalogProgram ontopProgram = ClipperRuleToOntopRuleTranslator.translate(program);
@@ -170,7 +153,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private static OBDAModel rewriteMappings(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile,
                                              Multimap<OWLClass, OWLClass> newConceptsForConjunctions, DatalogProgram ontopProgram)
-            throws SQLException, OBDAException, DuplicateMappingException {
+            throws SQLException, OBDAException, DuplicateMappingException, IOException {
         long t3 = System.currentTimeMillis();
 
         /**
@@ -186,12 +169,13 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         ArrayList<OBDAMappingAxiom> mappingAxioms = obdaModel.getMappings(obdaDataSource.getSourceID());
 
         DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource);
-        Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter();
+
+        //Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter();
 
         /**
          * convert the mappings into a set of rules
          */
-        List<CQIE> mappingProgram = mapping2DatalogConverter.constructDatalogProgram(mappingAxioms, dbMetadata);
+        List<CQIE> mappingProgram = Mapping2DatalogConverter.constructDatalogProgram(mappingAxioms, dbMetadata);
 
 
         List<CQIE> newMappingRules = Lists.newArrayList();
@@ -200,13 +184,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
         int i = 0;
 
-        DatalogExpansion datalogExpansion = null;
-
-        try {
-            datalogExpansion = new DatalogExpansion(ontopProgram, obdaModel, tempPrologFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DatalogExpansion datalogExpansion = new DatalogExpansion(ontopProgram, obdaModel, tempPrologFile);
 
         for (Predicate predicate : predicatesToDefine) {
 
