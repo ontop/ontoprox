@@ -15,7 +15,7 @@ password	fish
 driverClass	com.mysql.jdbc.Driver
 
 [MappingDeclaration] @collection [[
-mappingId	MAPID-2509a3da37ab4c2bbabb239116ec42ed
+mappingId	MAPID-ced831f5a3e04914a699164df2c7c594
 target		<http://www.Department{t2_1}.University{t3_1}.edu/{v_FullProfessor}{t1_1}> a :FullProfessor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_1`, 
@@ -27,7 +27,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-9ea306be18ce414a9c1a468cc88eda87
+mappingId	MAPID-ad26457db7754a2187a64f1da278c6e1
 target		<http://www.College{t2_2}.University{t1_2}.edu> a :College . 
 source		SELECT 
 			   `QCollegesTMP0`.`collegeID` AS `t2_2`, 
@@ -35,7 +35,7 @@ source		SELECT
 			 FROM 
 			Colleges `QCollegesTMP0`
 
-mappingId	MAPID-f4353e8f43aa42d9a51560a1c45534ee
+mappingId	MAPID-b86ce892fbe54be18e04ec511725e759
 target		<http://www.Department{t2_3}.University{t3_3}.edu/{v_Chair}{t1_3}> a :Chair . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_3`, 
@@ -45,7 +45,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-aec9911c855f43b4964238e2820d49fb
+mappingId	MAPID-dc39ae71b6f14d5d9a8400ad54a0e945
 target		<http://www.Department{t2_7}.University{t3_7}.edu/{v_AssistantProfessor}{t1_7}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_7`, 
@@ -61,7 +61,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QProfessorsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-6663f35b684f449fb60bca82f1c1e80b
+mappingId	MAPID-bd73aec59f3b448dbb6880116180654f
 target		<http://www.Department{t2_6}.University{t3_6}.edu/{v_AssociateProfessor}{t1_6}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_6`, 
@@ -77,7 +77,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QProfessorsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-060ed69d0b45449b87f20f6052d5c128
+mappingId	MAPID-7758a912104c4ebb86a4a47521eb520f
 target		<http://www.Department{t2_5}.University{t3_5}.edu/{v_FullProfessor}{t1_5}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_5`, 
@@ -93,7 +93,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QProfessorsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-af395b45d4114ee887c440d4c741d8eb
+mappingId	MAPID-09dfec6d8dc8441a8e473c59e185d080
 target		<http://www.Department{t2_4}.University{t3_4}.edu/{v_Chair}{t1_4}> a :Chair . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_4`, 
@@ -107,7 +107,7 @@ source		SELECT
 			(`QChairsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QChairsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-28b7015a6b6947f9ba47a15c8f011b0c
+mappingId	MAPID-241e457910c94102a00dc0d64c89a06b
 target		<http://www.Department{t2_15}.University{t3_15}.edu/{v_AssistantProfessor}{t1_15}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_15`, 
@@ -123,7 +123,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QUnderGradStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QUnderGradStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-77bc12a1bd634f22b8ff35ce4d7780b7
+mappingId	MAPID-0adedfac587c45d4a17d1220eefb74a8
 target		<http://www.Department{t2_15}.University{t3_15}.edu/{v_AssistantProfessor}{t1_15}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_15`, 
@@ -139,7 +139,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-20b008f5f50b4f59ab1590e91e69f521
+mappingId	MAPID-661d57584cdf4fe993bd5a01d3d95f52
 target		<http://www.Department{t2_14}.University{t3_14}.edu/{v_AssociateProfessor}{t1_14}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_14`, 
@@ -155,7 +155,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QUnderGradStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QUnderGradStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-87c5400332fc463393ac999060321243
+mappingId	MAPID-0fbb7ae6c0c04734b4522e4d85dbdedf
 target		<http://www.Department{t2_14}.University{t3_14}.edu/{v_AssociateProfessor}{t1_14}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_14`, 
@@ -171,7 +171,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-100b7363d2834510a89ab41b8b9a2172
+mappingId	MAPID-31a30247f667461b9e7ae601c13d3a21
 target		<http://www.Department{t2_13}.University{t3_13}.edu/{v_FullProfessor}{t1_13}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_13`, 
@@ -187,7 +187,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QUnderGradStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QUnderGradStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-96fa6a9319a445e997c13938d9ca1eab
+mappingId	MAPID-a738ba8651ec4ed9b1b47aaefaab1b80
 target		<http://www.Department{t2_13}.University{t3_13}.edu/{v_FullProfessor}{t1_13}> a :Chair . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_13`, 
@@ -203,7 +203,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`uniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QProfessorsTMP0`.`deptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-618a73b96b224c99a37a63bb087373ff
+mappingId	MAPID-27be94df94bc448791a22c6f88f187c0
 target		<http://www.Department{t2_12}.University{t3_12}.edu/{v_Chair}{t1_12}> a :Chair . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_12`, 
@@ -217,7 +217,7 @@ source		SELECT
 			(`QChairsTMP0`.`uniID` = `QUnderGradStudentsTMP1`.`uniID`) AND
 			(`QChairsTMP0`.`deptID` = `QUnderGradStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-0d896d739755410b9307eaa355eca7fc
+mappingId	MAPID-93ccfd48c4804562b8ed6ba2cd511729
 target		<http://www.Department{t2_12}.University{t3_12}.edu/{v_Chair}{t1_12}> a :Chair . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_12`, 
@@ -231,7 +231,7 @@ source		SELECT
 			(`QChairsTMP0`.`uniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QChairsTMP0`.`deptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-65528b047845487eaf4ba140a0799650
+mappingId	MAPID-8704b6867404485da666f2bdb7807ada
 target		<http://www.Department{t2_24}.University{t3_24}.edu/{v_ClericalStaff}{t1_24}> a :ClericalStaff . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_24`, 
@@ -243,7 +243,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-9afa324be7f2472181cdef06660787bc
+mappingId	MAPID-7bbed76da63542f4ac67b953da13a8f2
 target		<http://www.Department{t2_25}.University{t3_25}.edu/{t4_25}{t1_25}> a :Man . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_25`, 
@@ -255,7 +255,7 @@ source		SELECT
 			WHERE 
 			(`QPeopleTMP0`.`gender` = 'M')
 
-mappingId	MAPID-49c4a85da57d47e6957ba87f0c869fac
+mappingId	MAPID-a93ba67cc04e4de291b6f55133b086d0
 target		<http://www.Department{t3_26}.University{t2_26}.edu/{v_GraduateStudent}{t1_26}> a :TeachingAssistant . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_26`, 
@@ -265,7 +265,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-9820562c42564f2fb5c0a946c19a8a03
+mappingId	MAPID-96e2b985ce324cd39521fc50784f1add
 target		<http://www.Department{t3_27}.University{t2_27}.edu/{v_GraduateStudent}{t1_27}> a :TeachingAssistant . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_27`, 
@@ -275,7 +275,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-9d3ca99480a940b082a6b33602dc159f
+mappingId	MAPID-86314edf1d5441eaac944360f4b7c33f
 target		<http://www.Department{t2_28}.University{t3_28}.edu/{t4_28}{t1_28}> a :Person . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_28`, 
@@ -285,7 +285,7 @@ source		SELECT
 			 FROM 
 			People `QPeopleTMP0`
 
-mappingId	MAPID-96969efb037e4f219be8d6ec41efea7c
+mappingId	MAPID-dea7c7f9e23941b2aaf6d63545d538c8
 target		<http://www.Department{t2_29}.University{t3_29}.edu/{v_Lecturer}{t1_29}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_29`, 
@@ -295,7 +295,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-af47782fe1cc4b7b9f58c0262efc5fe3
+mappingId	MAPID-f9cb5f17a3c34a27be541b2d0630f094
 target		<http://www.Department{t2_30}.University{t3_30}.edu/{v_AssociateProfessor}{t1_30}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_30`, 
@@ -307,7 +307,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-27c51fd6760b4fc4b99359c92c74c17a
+mappingId	MAPID-bd0e34f34f2b4f058b9a7388ec564769
 target		<http://www.Department{t2_31}.University{t3_31}.edu/{v_FullProfessor}{t1_31}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_31`, 
@@ -319,7 +319,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-e6c5b18dc46e4757bdded57489db6dcb
+mappingId	MAPID-74a4cc5aea904208967ec9d8fdcfaed1
 target		<http://www.Department{t2_32}.University{t3_32}.edu/{v_AssistantProfessor}{t1_32}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_32`, 
@@ -331,7 +331,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-cb59dab1cf7f45e18b2c43245be423c7
+mappingId	MAPID-3bff2a5ff60643d4aac631cd3cfbb817
 target		<http://www.Department{t3_36}.University{t2_36}.edu/{v_Lecturer}{t4_36}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_36`, 
@@ -343,7 +343,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-e19635c2d53c4a8292ea3a20252d81b2
+mappingId	MAPID-af6849d888274a65996d98ca0b1e0456
 target		<http://www.Department{t3_35}.University{t2_35}.edu/{v_AssistantProfessor}{t4_35}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_35`, 
@@ -355,7 +355,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-5773ff6637834574867dd034f6c43a0f
+mappingId	MAPID-193b8f9aebcd4b43bc3864e60409b76f
 target		<http://www.Department{t3_34}.University{t2_34}.edu/{v_FullProfessor}{t4_34}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_34`, 
@@ -367,7 +367,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-e80335ce55994af68e1c2a0d37dc02da
+mappingId	MAPID-4d7f72c8a554485aa5b8f7080a3aa169
 target		<http://www.Department{t3_33}.University{t2_33}.edu/{v_FullProfessor}{t4_33}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_33`, 
@@ -379,7 +379,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-e3a875b9d7fc41f690a91c2edd98b147
+mappingId	MAPID-665992f3f3ba401d89bde714ad60f11a
 target		<http://www.Department{t6_44}.University{t5_44}.edu/{v_Lecturer}{t3_44}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_44`, 
@@ -392,7 +392,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-ee386136bfe84f188817f1e743fd7009
+mappingId	MAPID-0b28ea0af54945b7be3526e94453d34d
 target		<http://www.Department{t6_43}.University{t5_43}.edu/{v_Lecturer}{t3_43}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_43`, 
@@ -405,7 +405,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-8b0e647c76ff488aa15aeadd9b6f5e5d
+mappingId	MAPID-a7e532bc2b584e5a84e6c774e3ab5652
 target		<http://www.Department{t6_42}.University{t5_42}.edu/{v_AssistantProfessor}{t3_42}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_42`, 
@@ -418,7 +418,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-da1d8698be674ac3b882d037a443e46f
+mappingId	MAPID-9f9f04124c8c4809a705913d9d1a7d2b
 target		<http://www.Department{t6_41}.University{t5_41}.edu/{v_AssistantProfessor}{t3_41}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_41`, 
@@ -431,7 +431,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-4047636c99e04b2185486ba970567049
+mappingId	MAPID-c88650eb69364bcda45532824e64ba69
 target		<http://www.Department{t6_40}.University{t5_40}.edu/{v_AssociateProfessor}{t3_40}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_40`, 
@@ -444,7 +444,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-5279b86ec5d54399bbdcd1a3115dadfb
+mappingId	MAPID-a291d78387ac4fab9f0e0fe9a489d2a6
 target		<http://www.Department{t6_39}.University{t5_39}.edu/{v_AssociateProfessor}{t3_39}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_39`, 
@@ -457,7 +457,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-60eeddc0ee054878a79f92d44f8bf8cb
+mappingId	MAPID-a21fef1056474cbb9fa42366b53c6528
 target		<http://www.Department{t6_38}.University{t5_38}.edu/{v_FullProfessor}{t3_38}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_38`, 
@@ -470,7 +470,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-ff3ba145144643b8a3d904e3a3c97d6e
+mappingId	MAPID-5e2adc5770fc44ac859abfe2ef6fdbfc
 target		<http://www.Department{t6_37}.University{t5_37}.edu/{v_FullProfessor}{t3_37}> a :Person . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_37`, 
@@ -483,7 +483,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-1304a7bbf40f45519d83c685f3acea7d
+mappingId	MAPID-faecb90ebf5240d5bf8bea69937e4467
 target		<http://www.Department{t2_45}.University{t3_45}.edu/{v_SystemsStaff}{t1_45}> a :Person . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_45`, 
@@ -495,7 +495,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-357d33b67cb84bed8bbed6ee6ad0ffd6
+mappingId	MAPID-4bf912137b0a42279756893d39ef314f
 target		<http://www.Department{t2_46}.University{t3_46}.edu/{v_ClericalStaff}{t1_46}> a :Person . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_46`, 
@@ -507,7 +507,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-5705587802a9483b826ef0b150d05760
+mappingId	MAPID-cf9401a6d7f64d5c8b4d30c8143c5f1d
 target		<http://www.Department{t3_47}.University{t2_47}.edu/{v_UndergraduateStudent}{t1_47}> a :Person . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_47`, 
@@ -517,7 +517,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-93bfbdc67429417fac0baafe033c5e2c
+mappingId	MAPID-255f1b6830984984b294c5596362a70d
 target		<http://www.Department{t3_48}.University{t2_48}.edu/{v_GraduateStudent}{t1_48}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_48`, 
@@ -527,7 +527,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-de87663f06aa4d389e0a264ddef5de24
+mappingId	MAPID-99ec081583874e538731f6175778b6b5
 target		<http://www.Department{t6_52}.University{t7_52}.edu/{v_GraduateStudent}{t5_52}> a :Person . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_52`, 
@@ -540,7 +540,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-cf938f579a004f2b8772fc90d5a80f63
+mappingId	MAPID-c37c149d9be647c795d5ce38539fb25e
 target		<http://www.Department{t6_51}.University{t7_51}.edu/{v_GraduateStudent}{t5_51}> a :Person . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_51`, 
@@ -553,7 +553,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-12f24c6c29834c2d8c2267bdb9a8a646
+mappingId	MAPID-7a7fa27646a24d21843fc3d017c6d244
 target		<http://www.Department{t6_50}.University{t7_50}.edu/{v_UndergraduateStudent}{t5_50}> a :Person . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_50`, 
@@ -566,7 +566,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-fb14e603a61a4a709dd1a74cd5b1c842
+mappingId	MAPID-8ead80e5e77f483c9565ad81bf6311fc
 target		<http://www.Department{t6_49}.University{t7_49}.edu/{v_UndergraduateStudent}{t5_49}> a :Person . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_49`, 
@@ -579,7 +579,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-2791783f03324f43a48417fb6fe54d94
+mappingId	MAPID-ceda09c9a2d04f71b703198f637cf252
 target		<http://www.Department{t3_53}.University{t2_53}.edu/{v_GraduateStudent}{t1_53}> a :Person . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_53`, 
@@ -589,7 +589,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-57ef81c527ff4602ab9b0482d038a093
+mappingId	MAPID-7d4a8bf42fa34e12a7fb00a51edb2ec9
 target		<http://www.Department{t3_54}.University{t2_54}.edu/{v_GraduateStudent}{t1_54}> a :Person . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_54`, 
@@ -599,7 +599,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-c24985fd8bcc4222be78a90e18804e22
+mappingId	MAPID-68b78e3f59764700a3a1d2df7092af5a
 target		<http://www.Department{t3_55}.University{t2_55}.edu/{v_GraduateStudent}{t1_55}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_55`, 
@@ -611,7 +611,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`isResearchAsst` = 1)
 
-mappingId	MAPID-cb0bbe76d90a45ed85a7cd1cb876fd51
+mappingId	MAPID-9b61d95ee15a478d908784fda5f43054
 target		<http://www.Department{t2_56}.University{t3_56}.edu/{t4_56}{t1_56}> a :Person . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_56`, 
@@ -623,7 +623,7 @@ source		SELECT
 			WHERE 
 			(`QPeopleTMP0`.`gender` = 'M')
 
-mappingId	MAPID-75244b941de249beaf81993de43e5b91
+mappingId	MAPID-4869702f3c964905ade8b5d6f77c325e
 target		<http://www.Department{t2_57}.University{t3_57}.edu/{v_Chair}{t1_57}> a :Person . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_57`, 
@@ -633,7 +633,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-3a308847bf7e4779a8bf8c887b040ccc
+mappingId	MAPID-16e7dbd6f65448b598704b0134b25e6f
 target		<http://www.Department{t2_58}.University{t3_58}.edu/{t4_58}{t1_58}> a :Person . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_58`, 
@@ -645,7 +645,7 @@ source		SELECT
 			WHERE 
 			(`QPeopleTMP0`.`gender` = 'F')
 
-mappingId	MAPID-a947745033454b7aabbeb3b4aff5c5b4
+mappingId	MAPID-8be08d1145d84cc1a2385ad561161c5c
 target		<http://www.Department{t3_62}.University{t2_62}.edu/{v_GraduateStudent}{t1_62}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_62`, 
@@ -657,7 +657,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-81e4891702b64f198f8b80a5d356c121
+mappingId	MAPID-2e8ec6f560584b7fbbcbeef77506bf1c
 target		<http://www.Department{t3_61}.University{t2_61}.edu/{v_GraduateStudent}{t1_61}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_61`, 
@@ -669,7 +669,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-3b20b4fd960843258ea376abc0aff9d2
+mappingId	MAPID-436d672bffd4498781bfd0eaa926f13e
 target		<http://www.Department{t3_60}.University{t2_60}.edu/{v_GraduateStudent}{t1_60}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_60`, 
@@ -681,7 +681,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-9260999b4c4a47bb9a13a7b56a205fa2
+mappingId	MAPID-00b0b749f300482e9dc4df7adcc61264
 target		<http://www.Department{t3_59}.University{t2_59}.edu/{v_GraduateStudent}{t1_59}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_59`, 
@@ -693,7 +693,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-c6d5ec04ed88401e9cd8c5abe6cc1760
+mappingId	MAPID-e82fcf43e0484e1fb50be8ec395bd670
 target		<http://www.Department{t2_66}.University{t3_66}.edu/{v_Lecturer}{t1_66}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_66`, 
@@ -703,7 +703,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-84d38c22fb094cadab995c6174b16f64
+mappingId	MAPID-09130c83d62d422f91d4e999daf8f286
 target		<http://www.Department{t2_65}.University{t3_65}.edu/{v_AssistantProfessor}{t1_65}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_65`, 
@@ -715,7 +715,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-36ff4f2ae53042aebe423e914fd1d028
+mappingId	MAPID-2cf0f5a346314bfbbaf6863c48fbcfcf
 target		<http://www.Department{t2_64}.University{t3_64}.edu/{v_AssociateProfessor}{t1_64}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_64`, 
@@ -727,7 +727,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-d01d6e687c3a484c9633022af4a8f577
+mappingId	MAPID-5d8f82a278c24a9188f31a4830c26929
 target		<http://www.Department{t2_63}.University{t3_63}.edu/{v_FullProfessor}{t1_63}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_63`, 
@@ -739,7 +739,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-fd4daf434fa840a0a517d761280b9295
+mappingId	MAPID-54dc35a612874df699cdd528a6eff175
 target		<http://www.Department{t2_67}.University{t3_67}.edu/{t4_67}{t1_67}> a :Person . 
 source		SELECT 
 			   `QAuthorsTMP0`.`deptID` AS `t2_67`, 
@@ -749,7 +749,7 @@ source		SELECT
 			 FROM 
 			Authors `QAuthorsTMP0`
 
-mappingId	MAPID-5ecb10ed894e4e98a65cf4c4783a8415
+mappingId	MAPID-28631914b2014ac19b7302d8dacaff6c
 target		<http://www.Department{t2_71}.University{t3_71}.edu/{v_AssistantProfessor}{t1_71}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_71`, 
@@ -762,7 +762,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-52697d09fd494a2cb130e5fd768ee1c9
+mappingId	MAPID-85a2a6fc11ef462abee675c9259ba81a
 target		<http://www.Department{t2_70}.University{t3_70}.edu/{v_AssociateProfessor}{t1_70}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_70`, 
@@ -775,7 +775,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-4e03916ccd964da8af927fe6670f1cc4
+mappingId	MAPID-3f7b785d7f7c48cb9016fa10067d93bc
 target		<http://www.Department{t2_69}.University{t3_69}.edu/{v_FullProfessor}{t1_69}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_69`, 
@@ -788,7 +788,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-5a930c6495d949ed8fa226ecefb0dd56
+mappingId	MAPID-72f79eaddac444c5b436047f986e8b0d
 target		<http://www.Department{t2_68}.University{t3_68}.edu/{v_Chair}{t1_68}> a :Person . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_68`, 
@@ -798,7 +798,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-70719aff31b14fa9b8531b10d3577759
+mappingId	MAPID-12fe978ca5d344e3b2cd527bdcb11291
 target		<http://www.Department{t3_73}.University{t2_73}.edu/{v_UndergraduateStudent}{t1_73}> a :Person . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_73`, 
@@ -808,7 +808,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-4af1c729d7724ebb9a736b51f90d9f84
+mappingId	MAPID-e8e711d19c8940cc8ee03c3267803ace
 target		<http://www.Department{t3_72}.University{t2_72}.edu/{v_GraduateStudent}{t1_72}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_72`, 
@@ -818,7 +818,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-c5ed2da6ae664c178361899637672df7
+mappingId	MAPID-f3fa3ecca0ea433294c4b1b548b66a64
 target		<http://www.Department{t2_82}.University{t3_82}.edu/{v_SystemsStaff}{t1_82}> a :Person . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_82`, 
@@ -830,7 +830,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-2bc2e86a76ba4d5180833a2a82acfd9a
+mappingId	MAPID-4e493921bd37417db296598989bf9399
 target		<http://www.Department{t2_81}.University{t3_81}.edu/{v_ClericalStaff}{t1_81}> a :Person . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_81`, 
@@ -842,7 +842,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-58de4a0f530f4277a62b5fe0561cb73a
+mappingId	MAPID-5d48e7b10e8746879fad7e0637843684
 target		<http://www.Department{t2_80}.University{t3_80}.edu/{v_Lecturer}{t1_80}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_80`, 
@@ -854,7 +854,7 @@ source		SELECT
 			WHERE 
 			(`QLecturersTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-cb72eeabc0a2475999f8c703f0d1934e
+mappingId	MAPID-4e41a912bef544a283adc3dd7929ef56
 target		<http://www.Department{t2_79}.University{t3_79}.edu/{v_AssistantProfessor}{t1_79}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_79`, 
@@ -867,7 +867,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-5660b739b21e4c05aad8c540b6623033
+mappingId	MAPID-168c375635424e69b9857ac5183b0714
 target		<http://www.Department{t2_78}.University{t3_78}.edu/{v_AssociateProfessor}{t1_78}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_78`, 
@@ -880,7 +880,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-2cd5d9444a91484da744090231e483a6
+mappingId	MAPID-934ad6f9a8224e23904263ddd6b9bda4
 target		<http://www.Department{t2_77}.University{t3_77}.edu/{v_FullProfessor}{t1_77}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_77`, 
@@ -893,7 +893,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-71ef7eeb091443288a6c48aa5cbd5366
+mappingId	MAPID-b1634d8a3cfd4507a3015c58774c9b46
 target		<http://www.Department{t2_76}.University{t3_76}.edu/{v_Lecturer}{t1_76}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_76`, 
@@ -903,7 +903,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-5dd66a8667a34dcd958b81299b584367
+mappingId	MAPID-bb6838be22df439cb558ca39625f9cd1
 target		<http://www.Department{t2_75}.University{t3_75}.edu/{v_AssistantProfessor}{t1_75}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_75`, 
@@ -915,7 +915,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-f58090a6283240a5b04779bd43fe834a
+mappingId	MAPID-d13476f033ef40b3b85f25ae80760e4f
 target		<http://www.Department{t2_74}.University{t3_74}.edu/{v_AssociateProfessor}{t1_74}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_74`, 
@@ -927,7 +927,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-2578bd6201654fef8bf7afb7e02db6ba
+mappingId	MAPID-6709ebdd4a9a468286f8e254a188dbe9
 target		<http://www.Department{t2_86}.University{t3_86}.edu/{v_Lecturer}{t1_86}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_86`, 
@@ -937,7 +937,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-be85ef342bea47f0b1c7ee7a15e47bdd
+mappingId	MAPID-75b79c30d72a422a8d2c131242ee9963
 target		<http://www.Department{t2_85}.University{t3_85}.edu/{v_AssistantProfessor}{t1_85}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_85`, 
@@ -949,7 +949,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-920099885fc64aaf9273757ae246602d
+mappingId	MAPID-f336198b914e49afb29d6f9c9f05c306
 target		<http://www.Department{t2_84}.University{t3_84}.edu/{v_AssociateProfessor}{t1_84}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_84`, 
@@ -961,7 +961,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-dbdb360dc53e4f8dac06385cd136aeea
+mappingId	MAPID-01b0e3105fa2438abc12d5407d191701
 target		<http://www.Department{t2_83}.University{t3_83}.edu/{v_FullProfessor}{t1_83}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_83`, 
@@ -973,7 +973,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-581e0813e1c242eead07f5bea2701834
+mappingId	MAPID-f25ae3ad62724d0185305b9167cd7167
 target		<http://www.Department{t2_91}.University{t3_91}.edu/{v_Lecturer}{t1_91}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_91`, 
@@ -983,7 +983,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-497e4c60d4994c4e83614d82c4b8aa20
+mappingId	MAPID-001a7457d1894d648546ceb8a6ba177b
 target		<http://www.Department{t2_90}.University{t3_90}.edu/{v_AssistantProfessor}{t1_90}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_90`, 
@@ -995,7 +995,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-4e08f13dd7a943d1a385cbec3f05f418
+mappingId	MAPID-99f60d235f744bb9b8010beed4050312
 target		<http://www.Department{t2_89}.University{t3_89}.edu/{v_AssociateProfessor}{t1_89}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_89`, 
@@ -1007,7 +1007,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-c9532a3430954433a8576b1261d24baa
+mappingId	MAPID-4df6dae2df634cee983fba71d8935159
 target		<http://www.Department{t2_88}.University{t3_88}.edu/{v_FullProfessor}{t1_88}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_88`, 
@@ -1019,7 +1019,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-81cdf25832b648f6995bba9243d0f451
+mappingId	MAPID-bf9c03af5a74478b9c7fdfc5f1040b37
 target		<http://www.Department{t3_87}.University{t2_87}.edu/{v_GraduateStudent}{t1_87}> a :Person . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_87`, 
@@ -1029,7 +1029,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-3ea238fd6d074fb997bb48940b3c100b
+mappingId	MAPID-be06887befb241749e6c9a5548db7869
 target		<http://www.Department{t2_95}.University{t3_95}.edu/{v_Lecturer}{t1_95}> a :Person . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_95`, 
@@ -1039,7 +1039,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-affab6759e2a427a99cf033c1225f624
+mappingId	MAPID-ad31cfa2c77e4917a356132aaea45783
 target		<http://www.Department{t2_94}.University{t3_94}.edu/{v_AssistantProfessor}{t1_94}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_94`, 
@@ -1051,7 +1051,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-2d6852ce1c084bc9ae5a6ae82a473f8f
+mappingId	MAPID-a1c768122a3d431ab5a18ff9e3228af3
 target		<http://www.Department{t2_93}.University{t3_93}.edu/{v_AssociateProfessor}{t1_93}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_93`, 
@@ -1063,7 +1063,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-c3c9f4b4382b4d2e936819b4d8572952
+mappingId	MAPID-c7927fcaa9bf460dadbea6ba33985b70
 target		<http://www.Department{t2_92}.University{t3_92}.edu/{v_FullProfessor}{t1_92}> a :Person . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_92`, 
@@ -1075,7 +1075,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-d190fa45e7714ad9ab386be801f22316
+mappingId	MAPID-728bffda30af4d638e432c46a280c3b6
 target		<http://www.Department{t6_96}.University{t7_96}.edu/{t8_96}{t5_96}> a :Person . 
 source		SELECT 
 			   `QFriendsTMP0`.`personDeptID` AS `t6_96`, 
@@ -1085,7 +1085,7 @@ source		SELECT
 			 FROM 
 			Friends `QFriendsTMP0`
 
-mappingId	MAPID-fc5179e7967d4645a0017f5d991cb1d5
+mappingId	MAPID-058c97ce990b4066a1db291f1684246a
 target		<http://www.Department{t2_97}.University{t3_97}.edu/{t4_97}{t1_97}> a :Person . 
 source		SELECT 
 			   `QFriendsTMP0`.`friendDeptID` AS `t2_97`, 
@@ -1095,7 +1095,7 @@ source		SELECT
 			 FROM 
 			Friends `QFriendsTMP0`
 
-mappingId	MAPID-bca348c2503544df8a41d385c4228306
+mappingId	MAPID-88bfeea877af4895af62d9b719c07d48
 target		<http://www.Department{t1_98}.University{t2_98}.edu> a :Department . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`deptID` AS `t1_98`, 
@@ -1103,7 +1103,7 @@ source		SELECT
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-f91121f12ffe49c5984d1e300979ad32
+mappingId	MAPID-85a2e83876c44fa9943ab121de8028c3
 target		<http://www.Department{t3_100}.University{t2_100}.edu> a :Department . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_100`, 
@@ -1111,7 +1111,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-98957535f5684acaad43f6216da4b35a
+mappingId	MAPID-93ca83f66666471e913cfa3b6bcd2e24
 target		<http://www.Department{t3_99}.University{t2_99}.edu> a :Department . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_99`, 
@@ -1119,7 +1119,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-674ae21aa07f47ce8d6db3e0819d4b3c
+mappingId	MAPID-b6a58276a96a4210a027d80c20c6b0fd
 target		<http://www.Department{t2_102}.University{t3_102}.edu/{v_GraduateCourse}{t1_102}> a :Course . 
 source		SELECT 
 			   `QCoursesTMP0`.`deptID` AS `t2_102`, 
@@ -1131,7 +1131,7 @@ source		SELECT
 			WHERE 
 			(`QCoursesTMP0`.`courseType` = 'GraduateCourse')
 
-mappingId	MAPID-34e8366bcd224655b77f26c3bf386618
+mappingId	MAPID-be2e545026244eb8bc10a38162d12247
 target		<http://www.Department{t2_101}.University{t3_101}.edu/{v_Course}{t1_101}> a :Course . 
 source		SELECT 
 			   `QCoursesTMP0`.`deptID` AS `t2_101`, 
@@ -1143,7 +1143,7 @@ source		SELECT
 			WHERE 
 			(`QCoursesTMP0`.`courseType` = 'Course')
 
-mappingId	MAPID-f4a3b64f266640bda58a4c7225f04685
+mappingId	MAPID-2b975b334f3f427a86f0db64a54be8e5
 target		<http://www.Department{t2_106}.University{t3_106}.edu/{v_GraduateCourse}{t1_106}> a :Course . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_106`, 
@@ -1160,7 +1160,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-059715117fc845169987ed04b40b345c
+mappingId	MAPID-41c380ee92974cb181c29a637fdda2c7
 target		<http://www.Department{t6_105}.University{t7_105}.edu/{v_Course}{t1_105}> a :Course . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_105`, 
@@ -1177,7 +1177,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-586ef1b80ccb417cb994c2215ca18b61
+mappingId	MAPID-3be9dfdf464d485cad2721e138932d40
 target		<http://www.Department{t6_104}.University{t7_104}.edu/{v_GraduateCourse}{t1_104}> a :Course . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_104`, 
@@ -1195,7 +1195,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-4b60f8bf6c1341c1936af62f5d2cd177
+mappingId	MAPID-d7a76233686441d3af61217efb637d8e
 target		<http://www.Department{t2_103}.University{t3_103}.edu/{v_Course}{t1_103}> a :Course . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_103`, 
@@ -1213,7 +1213,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-f0207350c0bf48af9c515460df8cf875
+mappingId	MAPID-7a7005a62d614e548d28ad5c12217367
 target		<http://www.Department{t3_111}.University{t2_111}.edu/Course{t4_111}> a :Course . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_111`, 
@@ -1222,7 +1222,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-2ce35f7f3926466fbb05f6693e5a92b2
+mappingId	MAPID-e7201f6e922343458fafe7b37adead10
 target		<http://www.Department{t6_119}.University{t5_119}.edu/{v_GraduateCourse}{t1_119}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_119`, 
@@ -1235,7 +1235,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-7afe481837824e93a25ac03ba0db058b
+mappingId	MAPID-ab896220f0dd4ff08e467b5d1252a281
 target		<http://www.Department{t6_118}.University{t5_118}.edu/{v_Course}{t1_118}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_118`, 
@@ -1248,7 +1248,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-7ea60384a8af47a3ab333e9b21788aaf
+mappingId	MAPID-1c25feb97268412e82cde0ba5bfedc10
 target		<http://www.Department{t6_117}.University{t5_117}.edu/{v_GraduateCourse}{t1_117}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_117`, 
@@ -1261,7 +1261,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-ba0c6bb3d2094dcbbef7bbe762a2aacc
+mappingId	MAPID-3de2bc24f16a4b50b05bd254df59c7d3
 target		<http://www.Department{t6_116}.University{t5_116}.edu/{v_Course}{t1_116}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_116`, 
@@ -1274,7 +1274,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-bee66add9a354c7daf3a84ce6fde164e
+mappingId	MAPID-013c1a4537ea45a7818f9bf8d9466274
 target		<http://www.Department{t6_115}.University{t5_115}.edu/{v_GraduateCourse}{t1_115}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_115`, 
@@ -1287,7 +1287,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-199f8b2de28841649c104de71f1f0cb0
+mappingId	MAPID-6452408111ad49b6963417125efa7943
 target		<http://www.Department{t6_114}.University{t5_114}.edu/{v_Course}{t1_114}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_114`, 
@@ -1300,7 +1300,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-424c91fd058445d793048dd331893d75
+mappingId	MAPID-e12f1600622c48b0a6eae7ee59f193ee
 target		<http://www.Department{t6_113}.University{t5_113}.edu/{v_GraduateCourse}{t1_113}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_113`, 
@@ -1313,7 +1313,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-d715a695b2694c66b1fc37bfa6cef495
+mappingId	MAPID-8b8b881346cc4b92b959fb2aa32e12d2
 target		<http://www.Department{t6_112}.University{t5_112}.edu/{v_Course}{t1_112}> a :Course . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_112`, 
@@ -1326,7 +1326,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-9c5342fd3e5d451b81e6d3d4af0e8c8e
+mappingId	MAPID-d60f04a6e8c64c3e91dae96ba3d75dca
 target		<http://www.Department{t2_120}.University{t3_120}.edu/{v_Lecturer}{t1_120}> a :Employee . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_120`, 
@@ -1336,7 +1336,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-2d84a3f667f54c96a2927f4302c74eb7
+mappingId	MAPID-e7234427f77e4cb89ae38470939af9eb
 target		<http://www.Department{t2_121}.University{t3_121}.edu/{v_AssociateProfessor}{t1_121}> a :Employee . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_121`, 
@@ -1348,7 +1348,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-2c7981732f76444091bb89e34993595b
+mappingId	MAPID-fc0d56e937ab42009a6bdd631597dc18
 target		<http://www.Department{t2_122}.University{t3_122}.edu/{v_FullProfessor}{t1_122}> a :Employee . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_122`, 
@@ -1360,7 +1360,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-9dc8678325fd4f9da12f78e605669606
+mappingId	MAPID-01b202d751d746739a289caef463a599
 target		<http://www.Department{t2_123}.University{t3_123}.edu/{v_AssistantProfessor}{t1_123}> a :Employee . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_123`, 
@@ -1372,7 +1372,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-efbee328e30a4ea49998c216b264b073
+mappingId	MAPID-fefba4ad4203461ab3f9d5f698281a64
 target		<http://www.Department{t2_124}.University{t3_124}.edu/{v_Chair}{t1_124}> a :Employee . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_124`, 
@@ -1382,7 +1382,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-f431bd8a446c4184a3160513b05bb793
+mappingId	MAPID-4bc6b67629b3464aa63d8e7f333c1b0d
 target		<http://www.Department{t3_128}.University{t2_128}.edu/{v_Lecturer}{t4_128}> a :Employee . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_128`, 
@@ -1394,7 +1394,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-f6ae7f152a7b471fbd6304191f2a1dd9
+mappingId	MAPID-3edfc5b4cc3446f3af7272cdd05a4d48
 target		<http://www.Department{t3_127}.University{t2_127}.edu/{v_AssistantProfessor}{t4_127}> a :Employee . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_127`, 
@@ -1406,7 +1406,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-99011477a45b4aa3b43f8019b5861f0a
+mappingId	MAPID-3725bd3b5902465a892b10ab9bca9e47
 target		<http://www.Department{t3_126}.University{t2_126}.edu/{v_FullProfessor}{t4_126}> a :Employee . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_126`, 
@@ -1418,7 +1418,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-218dd1c101194b4ea62c40c7dd3b7096
+mappingId	MAPID-77da26622369438585edbe25d77ddd83
 target		<http://www.Department{t3_125}.University{t2_125}.edu/{v_FullProfessor}{t4_125}> a :Employee . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_125`, 
@@ -1430,7 +1430,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-84eacc4421a04cd8804014cede14ffa0
+mappingId	MAPID-a7eb68e06bfd4a019c480fdd80b67a37
 target		<http://www.Department{t6_136}.University{t5_136}.edu/{v_Lecturer}{t3_136}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_136`, 
@@ -1443,7 +1443,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-9d74a4f6fd0548f2bf1e325e126b4f20
+mappingId	MAPID-cceeaca1fc664c84bf4c5804b58701e3
 target		<http://www.Department{t6_135}.University{t5_135}.edu/{v_Lecturer}{t3_135}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_135`, 
@@ -1456,7 +1456,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-cb37642c4d1a4529943358d5c4ac3d7a
+mappingId	MAPID-cfa917c650f24acbae30cb61dbc3d0d1
 target		<http://www.Department{t6_134}.University{t5_134}.edu/{v_AssistantProfessor}{t3_134}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_134`, 
@@ -1469,7 +1469,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-35e73c6278704577909add41a4850ef2
+mappingId	MAPID-e82ca84eb92e45008c40eeafc0378fb5
 target		<http://www.Department{t6_133}.University{t5_133}.edu/{v_AssistantProfessor}{t3_133}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_133`, 
@@ -1482,7 +1482,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-c5fbf8fd843940a7afa83077132c5538
+mappingId	MAPID-46bee97b2280400ba877dc3f3953d9bc
 target		<http://www.Department{t6_132}.University{t5_132}.edu/{v_AssociateProfessor}{t3_132}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_132`, 
@@ -1495,7 +1495,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-5c0752d0b4f04e47a2c2ff062a59a5f2
+mappingId	MAPID-72fbd5c0179943aa9b3f4db9decfd097
 target		<http://www.Department{t6_131}.University{t5_131}.edu/{v_AssociateProfessor}{t3_131}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_131`, 
@@ -1508,7 +1508,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-8e2c53ddbb1b4653a03dcc71795b4c93
+mappingId	MAPID-d08cc8d115984b78895ce676d85b8acf
 target		<http://www.Department{t6_130}.University{t5_130}.edu/{v_FullProfessor}{t3_130}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_130`, 
@@ -1521,7 +1521,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-305f12fa389541a29fc101ed559bb2b1
+mappingId	MAPID-7c9c0ef4a3c645ebb50a71fd3ac2b14e
 target		<http://www.Department{t6_129}.University{t5_129}.edu/{v_FullProfessor}{t3_129}> a :Employee . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_129`, 
@@ -1534,7 +1534,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-86db7bd3b1674781bd560e16309b40dd
+mappingId	MAPID-4d52a053538f4a0eaa7b866999eb862c
 target		<http://www.Department{t2_137}.University{t3_137}.edu/{v_SystemsStaff}{t1_137}> a :Employee . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_137`, 
@@ -1546,7 +1546,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-05aba45c270640c9b23b05f7e1318ac4
+mappingId	MAPID-cb8540a086f1436499f572bc434d3f42
 target		<http://www.Department{t2_138}.University{t3_138}.edu/{v_ClericalStaff}{t1_138}> a :Employee . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_138`, 
@@ -1558,7 +1558,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-01054532c40d4885a549a051de1e2337
+mappingId	MAPID-72b7aa30b1b1437b8235f118f0670364
 target		<http://www.Department{t2_139}.University{t3_139}.edu/{v_AssociateProfessor}{t1_139}> a :AssociateProfessor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_139`, 
@@ -1570,7 +1570,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-7c965d1f5bf749adaf4a42f8c48eef7d
+mappingId	MAPID-95f8c54459c740d6a032bd5ce5e54653
 target		<http://www.Department{t2_140}.University{t3_140}.edu/Publication{t1_140}> a :Software . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_140`, 
@@ -1581,7 +1581,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Software')
 
-mappingId	MAPID-f934cb44368e4b3cbe6e205e05d6f4e0
+mappingId	MAPID-16d5422a32ee4bd88a7a86ffe0583564
 target		<http://www.Department{t2_141}.University{t3_141}.edu/Publication{t1_141}> a :Specification . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_141`, 
@@ -1592,7 +1592,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Specification')
 
-mappingId	MAPID-db12b47a8ae44262a10ebe4f10a4911c
+mappingId	MAPID-1a9f166760f74892b091925c8682b617
 target		<http://www.Department{t2_142}.University{t3_142}.edu/Publication{t1_142}> a :Article . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_142`, 
@@ -1603,7 +1603,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Article')
 
-mappingId	MAPID-8eee60b5350645608404fea7bb4f0a41
+mappingId	MAPID-e0ca05a21f804f80bda5f7e4753bc917
 target		<http://www.Department{t2_143}.University{t3_143}.edu/Publication{t1_143}> a :Article . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_143`, 
@@ -1614,7 +1614,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'JournalArtical')
 
-mappingId	MAPID-55932e8f70264350a68fc3b5d8af828b
+mappingId	MAPID-e67f3779797c4d92a76c9e9cb79957c1
 target		<http://www.Department{t2_144}.University{t3_144}.edu/Publication{t1_144}> a :Article . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_144`, 
@@ -1625,7 +1625,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'ConferencePaper')
 
-mappingId	MAPID-0908234846e54c4388054398e0a935a6
+mappingId	MAPID-875a7500bb024122b22b48efc04df397
 target		<http://www.Department{t2_145}.University{t3_145}.edu/Publication{t1_145}> a :Article . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_145`, 
@@ -1636,7 +1636,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'TechnicalReport')
 
-mappingId	MAPID-3742915542854dcbbd401953554a60e6
+mappingId	MAPID-c0615386f9914f3b9f59b11a887525c6
 target		<http://www.Department{t2_146}.University{t3_146}.edu/{v_Lecturer}{t1_146}> a :Faculty . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_146`, 
@@ -1646,7 +1646,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-a85f57fa7b4c4cdd8096b6ef7fac846d
+mappingId	MAPID-e537646f4f824a36ac961681074ce6bf
 target		<http://www.Department{t2_147}.University{t3_147}.edu/{v_AssociateProfessor}{t1_147}> a :Faculty . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_147`, 
@@ -1658,7 +1658,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-bc4533c4b3264cbcaa2c629ce4e55938
+mappingId	MAPID-36cb16851a37476fa06ceadb8a765e60
 target		<http://www.Department{t2_148}.University{t3_148}.edu/{v_FullProfessor}{t1_148}> a :Faculty . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_148`, 
@@ -1670,7 +1670,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-44b507f6a6dc4da99fd756c3832b1e42
+mappingId	MAPID-90741740f86047b78ead702239c3ebb1
 target		<http://www.Department{t2_149}.University{t3_149}.edu/{v_AssistantProfessor}{t1_149}> a :Faculty . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_149`, 
@@ -1682,7 +1682,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-213cba4ac3b142ae852f8e485bbe7a88
+mappingId	MAPID-cdd75577226f45108b8405fdb4227e66
 target		<http://www.Department{t2_150}.University{t3_150}.edu/{v_Chair}{t1_150}> a :Faculty . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_150`, 
@@ -1692,7 +1692,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-e0c081c3ad3a4149988cec7b85b1bfa0
+mappingId	MAPID-e233ff62e4d6478f8f68eb610374b945
 target		<http://www.Department{t3_154}.University{t2_154}.edu/{v_Lecturer}{t4_154}> a :Faculty . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_154`, 
@@ -1704,7 +1704,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-01c0c1c31ad641039a77f335a28e6a3b
+mappingId	MAPID-f5759d1c49934755a1db8290917f00ee
 target		<http://www.Department{t3_153}.University{t2_153}.edu/{v_AssistantProfessor}{t4_153}> a :Faculty . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_153`, 
@@ -1716,7 +1716,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-f1a7a8da736c45e2bbcc308cb2c680ae
+mappingId	MAPID-04f67eeaae5d46539120923bb36c8fc3
 target		<http://www.Department{t3_152}.University{t2_152}.edu/{v_FullProfessor}{t4_152}> a :Faculty . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_152`, 
@@ -1728,7 +1728,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-7237039efbc24b5c9dde180d47a4b5f6
+mappingId	MAPID-17618724fa1f44bfb28d85af4899a802
 target		<http://www.Department{t3_151}.University{t2_151}.edu/{v_FullProfessor}{t4_151}> a :Faculty . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_151`, 
@@ -1740,7 +1740,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-5d5fe4f0dcbb4e4ebc289de470d13aac
+mappingId	MAPID-7ae86f9cf23c470db37568f0d7805824
 target		<http://www.Department{t6_162}.University{t5_162}.edu/{v_Lecturer}{t3_162}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_162`, 
@@ -1753,7 +1753,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-a72abf49510b4e57a77f2264157ca6cc
+mappingId	MAPID-0abcd1762dde46abb094896abcbca2b7
 target		<http://www.Department{t6_161}.University{t5_161}.edu/{v_Lecturer}{t3_161}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_161`, 
@@ -1766,7 +1766,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-1a382df14ffb4a5394a573bf07c88179
+mappingId	MAPID-17305505717044178a3964e388a92feb
 target		<http://www.Department{t6_160}.University{t5_160}.edu/{v_AssistantProfessor}{t3_160}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_160`, 
@@ -1779,7 +1779,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-6b9f3f35cff641798f3e2ce5c3113e1a
+mappingId	MAPID-729926fcf0be46c6aa29da960d20ee4f
 target		<http://www.Department{t6_159}.University{t5_159}.edu/{v_AssistantProfessor}{t3_159}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_159`, 
@@ -1792,7 +1792,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-763d731ee20b46638c09dc6dbe8b298a
+mappingId	MAPID-6ff0b3e22b5b484bb89dda1ff8cde809
 target		<http://www.Department{t6_158}.University{t5_158}.edu/{v_AssociateProfessor}{t3_158}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_158`, 
@@ -1805,7 +1805,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-f04a7c3a7f1d47f98e94a47021ecd53c
+mappingId	MAPID-401582cadd484fbebeaa3968ef4c8da6
 target		<http://www.Department{t6_157}.University{t5_157}.edu/{v_AssociateProfessor}{t3_157}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_157`, 
@@ -1818,7 +1818,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-875ef8516e8d4f0d97dab15c3d5853f7
+mappingId	MAPID-712a2d81fc8540c4a7ea1a1a8db50acf
 target		<http://www.Department{t6_156}.University{t5_156}.edu/{v_FullProfessor}{t3_156}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_156`, 
@@ -1831,7 +1831,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-d573e824192f45758f2d028e55025f62
+mappingId	MAPID-676bb318668f46ef81d9dd403cb285e9
 target		<http://www.Department{t6_155}.University{t5_155}.edu/{v_FullProfessor}{t3_155}> a :Faculty . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_155`, 
@@ -1844,21 +1844,21 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-f420648af0574d65bfffaa789b0d6573
+mappingId	MAPID-3cbec0913ef5418f9596a20f6d17e7cc
 target		<http://www.University{t1_163}.edu> a :University . 
 source		SELECT 
 			   `QUniversitiesTMP0`.`uniID` AS `t1_163`
 			 FROM 
 			Universities `QUniversitiesTMP0`
 
-mappingId	MAPID-c15235625f98484a83858fcaa3121b1c
+mappingId	MAPID-cea51e2603c04a65aaf98f563de8b650
 target		<http://www.University{t6_167}.edu> a :University . 
 source		SELECT 
 			   `QLecturersTMP0`.`doctoralDegreeID` AS `t6_167`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-6662fe7e51d54c39abf91b58bcd526e7
+mappingId	MAPID-9d3d7dec86bf45c2b28dd056185ca331
 target		<http://www.University{t8_166}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_166`
@@ -1867,7 +1867,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-178f1cdecb9a480790f9df46b9d11312
+mappingId	MAPID-17077d5da7a74dc2b7690163722dde72
 target		<http://www.University{t8_165}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_165`
@@ -1876,7 +1876,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-16247e1fee6249cca485efcb2764324e
+mappingId	MAPID-dbac1877a5124d969374e15122310032
 target		<http://www.University{t8_164}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_164`
@@ -1885,14 +1885,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-5534d7c888f441aeb776a2f58eafdb8d
+mappingId	MAPID-ea20a78c0822487c813e46f77bf29f2c
 target		<http://www.University{t5_171}.edu> a :University . 
 source		SELECT 
 			   `QLecturersTMP0`.`masterDegreeID` AS `t5_171`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-8af23aae9a8945b8b9ca95b32080cea3
+mappingId	MAPID-e19d9f0b24be4469a7e1e7e051bd8e2c
 target		<http://www.University{t7_170}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_170`
@@ -1901,7 +1901,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-d68c5aedbc6d462bb8374448d56b9296
+mappingId	MAPID-c94f4d3d9e174916b43d460cf873a5f9
 target		<http://www.University{t7_169}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_169`
@@ -1910,7 +1910,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-c5e8fdb0906847f9b1dd63359c362098
+mappingId	MAPID-a772b2347ffe400faf8e8e76b1ef9bf4
 target		<http://www.University{t7_168}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_168`
@@ -1919,14 +1919,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-70c355c069d44344ad056e2d2c846bcb
+mappingId	MAPID-1c2d3cf9d45846848647fdd1c098071b
 target		<http://www.University{t4_176}.edu> a :University . 
 source		SELECT 
 			   `QLecturersTMP0`.`underGradDegreeID` AS `t4_176`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-bec246fc99964e60a2cd9165dbf5e840
+mappingId	MAPID-ff8e1b0fdc60414ca4e2684b64a22cce
 target		<http://www.University{t6_175}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_175`
@@ -1935,7 +1935,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-f5927639f5684520b28c131d5f6a27e0
+mappingId	MAPID-1384d0391050487f82cb419aebe8ef96
 target		<http://www.University{t6_174}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_174`
@@ -1944,7 +1944,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-5f3d1b737d3a4b828b52dc07913c8045
+mappingId	MAPID-75f1f83134d64883a5c6fb152653d762
 target		<http://www.University{t6_173}.edu> a :University . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_173`
@@ -1953,14 +1953,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-0aa4b10733424cf284e92947eb1b0929
+mappingId	MAPID-df4f742b8cee489bbc8464a8e22ad7a6
 target		<http://www.University{t6_172}.edu> a :University . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`UnderGradUnvID` AS `t6_172`
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-bbab494412874121835ca707ed994f4b
+mappingId	MAPID-35a1332a9e5e4819b058cd58661ff7d3
 target		<http://www.College{t2_179}.University{t1_179}.edu> a :Organization . 
 source		SELECT 
 			   `QCollegesTMP0`.`collegeID` AS `t2_179`, 
@@ -1968,7 +1968,7 @@ source		SELECT
 			 FROM 
 			Colleges `QCollegesTMP0`
 
-mappingId	MAPID-7770a935d4f1483d80f9755419b76c37
+mappingId	MAPID-fd8f847ce54740aabe5003d755b802a5
 target		<http://www.Department{t1_178}.University{t2_178}.edu> a :Organization . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`deptID` AS `t1_178`, 
@@ -1976,7 +1976,7 @@ source		SELECT
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-276030de6f4743cdafc0c3d86c86b677
+mappingId	MAPID-18879c5386ec4b10b8919ada2c36d1e9
 target		<http://www.Department{t3_177}.University{t2_177}.edu/ResearchGroup{t1_177}> a :Organization . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_177`, 
@@ -1985,7 +1985,7 @@ source		SELECT
 			 FROM 
 			ResearchGroups `QResearchGroupsTMP0`
 
-mappingId	MAPID-8a7add0db2044e078d6c5e61a369f144
+mappingId	MAPID-8afeb8a32b1c4781ad3b6c3b669dd58f
 target		<http://www.Department{t3_180}.University{t2_180}.edu/ResearchGroup{t1_180}> a :Organization . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_180`, 
@@ -1998,7 +1998,7 @@ source		SELECT
 			(`QResearchGroupsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QResearchGroupsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-62b6ba7024954a57b61b67d470f64979
+mappingId	MAPID-b3b15a0beb104437aa0f1c6421bdad83
 target		<http://www.Department{t1_282}.University{t2_282}.edu> a :Organization . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`deptID` AS `t1_282`, 
@@ -2006,21 +2006,21 @@ source		SELECT
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-e47a61976bd94950af6281e56cd82b2e
+mappingId	MAPID-64fc1e202d4e460299b73cd2dcb8df9e
 target		<http://www.University{t1_285}.edu> a :Organization . 
 source		SELECT 
 			   `QCollegesTMP0`.`uniID` AS `t1_285`
 			 FROM 
 			Colleges `QCollegesTMP0`
 
-mappingId	MAPID-04bbbfb3025a408fbcf56b9353b08a9f
+mappingId	MAPID-9aa069894e484490846a43a15fd8f43b
 target		<http://www.University{t2_284}.edu> a :Organization . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`uniID` AS `t2_284`
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-79d02f63776c477e941231289a00fcec
+mappingId	MAPID-09c120a447ef42be869258b053566959
 target		<http://www.Department{t3_283}.University{t2_283}.edu> a :Organization . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_283`, 
@@ -2028,7 +2028,7 @@ source		SELECT
 			 FROM 
 			ResearchGroups `QResearchGroupsTMP0`
 
-mappingId	MAPID-79d3253fcfdc4db2b7644ab187f55e1c
+mappingId	MAPID-506f317ff4a64fb783fbdfd2caa8f8e6
 target		<http://www.University{t2_286}.edu> a :Organization . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`uniID` AS `t2_286`
@@ -2039,7 +2039,7 @@ source		SELECT
 			(`QResearchGroupsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QResearchGroupsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-d2527b824e1d4c5f94c4eaa24232e322
+mappingId	MAPID-d66e0689ce4f404c994d1fbd690ba1e4
 target		<http://www.Department{t3_388}.University{t2_388}.edu/ResearchGroup{t1_388}> a :Organization . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_388`, 
@@ -2048,21 +2048,21 @@ source		SELECT
 			 FROM 
 			ResearchGroups `QResearchGroupsTMP0`
 
-mappingId	MAPID-c007b80b55ef46c39b363d6cb552a157
+mappingId	MAPID-2582d7626e1c47d19e6588703cd17163
 target		<http://www.University{t1_389}.edu> a :Organization . 
 source		SELECT 
 			   `QUniversitiesTMP0`.`uniID` AS `t1_389`
 			 FROM 
 			Universities `QUniversitiesTMP0`
 
-mappingId	MAPID-83a4bf87b7ce42ada7dad828589c65ce
+mappingId	MAPID-c1a82eeae3d44d37afca7a763e01d098
 target		<http://www.University{t6_393}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`doctoralDegreeID` AS `t6_393`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-098f3692131545e2b4a4ed649483b24e
+mappingId	MAPID-04cfd22fa55c40389213da2fd1b777b4
 target		<http://www.University{t8_392}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_392`
@@ -2071,7 +2071,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-24df5a636bcd48219f284607958e1652
+mappingId	MAPID-5884c8829a8c4f83a8cb25d0a47bb107
 target		<http://www.University{t8_391}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_391`
@@ -2080,7 +2080,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-f12ca49b1fa84d02a8b13b6e3968d168
+mappingId	MAPID-c7e68c8cae184861b82eb4872425d17f
 target		<http://www.University{t8_390}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_390`
@@ -2089,14 +2089,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-38e73b731e1649f8aff9694c4d5d3cc2
+mappingId	MAPID-4a6daf1ada4b46f99d05f5da8e9be164
 target		<http://www.University{t5_397}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`masterDegreeID` AS `t5_397`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-736ac66a8f3f48f48f1361986f7a32b8
+mappingId	MAPID-93eef3ee198d43d394aebd0d7a31409d
 target		<http://www.University{t7_396}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_396`
@@ -2105,7 +2105,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-bebb21e11107435ebd4f03e1288ae0a1
+mappingId	MAPID-e72c2970a1bf4ed99c5c207c3154ab81
 target		<http://www.University{t7_395}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_395`
@@ -2114,7 +2114,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-6ed665e3cd3141f5b33119c96e103baf
+mappingId	MAPID-790697b33a8a444389424affe447216e
 target		<http://www.University{t7_394}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_394`
@@ -2123,14 +2123,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-39f73315a2474b329c3806b0e31528b9
+mappingId	MAPID-db861aea79fb45f9a8fbcd43f53d31fd
 target		<http://www.University{t4_402}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`underGradDegreeID` AS `t4_402`
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-4a48c08f33894486a5099f8b8e7d0983
+mappingId	MAPID-a8712aba542745f39f6e6c7a69222ed4
 target		<http://www.University{t6_401}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_401`
@@ -2139,7 +2139,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-0dbfac5619d542b0b8cd1a4cdf6d759f
+mappingId	MAPID-f5b215bcce244c659cbe5cefdec6c8c5
 target		<http://www.University{t6_400}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_400`
@@ -2148,7 +2148,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-7edc1dd371f74f5db0cbee6c2d5bb81c
+mappingId	MAPID-9e40f4aa04c74939b3cc9f6695197dff
 target		<http://www.University{t6_399}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_399`
@@ -2157,14 +2157,14 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-58d42d0f3b594188a0788940dabe2da6
+mappingId	MAPID-a130276e6fa0402a99aef7746bf4cbed
 target		<http://www.University{t6_398}.edu> a :Organization . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`UnderGradUnvID` AS `t6_398`
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-723e67b2223546faaa130fd0f7f75607
+mappingId	MAPID-4caa950b897242238dfdab057aca5f5c
 target		<http://www.College{t2_403}.University{t1_403}.edu> a :Organization . 
 source		SELECT 
 			   `QCollegesTMP0`.`collegeID` AS `t2_403`, 
@@ -2172,7 +2172,7 @@ source		SELECT
 			 FROM 
 			Colleges `QCollegesTMP0`
 
-mappingId	MAPID-ef8c55eb9e954571ab255f53092a2d7b
+mappingId	MAPID-604609db48d14c2e82c2474922536cba
 target		<http://www.Department{t2_407}.University{t3_407}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_407`, 
@@ -2183,7 +2183,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-9c6fb18fc7e04441a62d2f7f3eaee2d5
+mappingId	MAPID-76b9d73e674c46a2b9b1e67c0463328e
 target		<http://www.Department{t2_406}.University{t3_406}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_406`, 
@@ -2194,7 +2194,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-7f095e432aea464aba1ef3c499d49f5b
+mappingId	MAPID-cb56aae80a9b46d5a7091c449627ad8e
 target		<http://www.Department{t2_405}.University{t3_405}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_405`, 
@@ -2205,7 +2205,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-e6c53df2a7f94db7aac67ad7e7d509e4
+mappingId	MAPID-bdcdd24fe8894a4e85ff3643b141ff21
 target		<http://www.Department{t2_404}.University{t3_404}.edu> a :Organization . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_404`, 
@@ -2213,7 +2213,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-7290c00cbeea4516963a16065ea91052
+mappingId	MAPID-1fb72e15a77a44cbbd0baca5bd1aab64
 target		<http://www.Department{t2_411}.University{t3_411}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_411`, 
@@ -2221,7 +2221,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-9c11e4650b15437aa680ba6f75951f95
+mappingId	MAPID-a439132dabdc42c9bca2bad20c7231c7
 target		<http://www.Department{t2_410}.University{t3_410}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_410`, 
@@ -2231,7 +2231,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-153f6954350644bd8f210fd54fc29bdf
+mappingId	MAPID-bb509af1ba064e63acb1f0dea724b129
 target		<http://www.Department{t2_409}.University{t3_409}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_409`, 
@@ -2241,7 +2241,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-5dee5cd87b264a97acd7ab617fe718f0
+mappingId	MAPID-f3939b23b928404faedada0256ca626c
 target		<http://www.Department{t2_408}.University{t3_408}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_408`, 
@@ -2251,7 +2251,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-9aaee0b80a5544a3875654110d61e3e8
+mappingId	MAPID-6e8dbb20f4ec4ea98ac8bc8985deb56f
 target		<http://www.Department{t2_420}.University{t3_420}.edu> a :Organization . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_420`, 
@@ -2261,7 +2261,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-da6d1664e4f74d89957a52f64a475768
+mappingId	MAPID-58befa9416f341c6b0dd9890ef7a0b96
 target		<http://www.Department{t2_419}.University{t3_419}.edu> a :Organization . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_419`, 
@@ -2271,7 +2271,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-9071deb8945c4c84abce7f2e0130616b
+mappingId	MAPID-50af58b4076a411fa10221a57fc9b89e
 target		<http://www.Department{t2_418}.University{t3_418}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_418`, 
@@ -2281,7 +2281,7 @@ source		SELECT
 			WHERE 
 			(`QLecturersTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-8d10c38ab3cf4899b51b1ab60cf77a0d
+mappingId	MAPID-d122725c0bd14469972b708f7742b193
 target		<http://www.Department{t2_417}.University{t3_417}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_417`, 
@@ -2292,7 +2292,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-38044d6e652642ec9567f0672fa0158a
+mappingId	MAPID-e558cb29d421483ab1070c2b76627216
 target		<http://www.Department{t2_416}.University{t3_416}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_416`, 
@@ -2303,7 +2303,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-66bd4dc011ce4785bfdfa402d0d261c5
+mappingId	MAPID-25fa2e63f78d4f7fa1d680e4427e1b2a
 target		<http://www.Department{t2_415}.University{t3_415}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_415`, 
@@ -2314,7 +2314,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-1e0f58005ab842228b4ca5af7486fd88
+mappingId	MAPID-d53254e6719e4654ba453c36537c52b8
 target		<http://www.Department{t2_414}.University{t3_414}.edu> a :Organization . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_414`, 
@@ -2322,7 +2322,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-e19f1feffa114fd1bfb6bf3b29fb73e5
+mappingId	MAPID-61f210aa391040739f21b722138abb02
 target		<http://www.Department{t2_413}.University{t3_413}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_413`, 
@@ -2332,7 +2332,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-a22a9d417f994b70bb21158d4040dfd3
+mappingId	MAPID-2100992373ed4eb197dda9ec4920bfca
 target		<http://www.Department{t2_412}.University{t3_412}.edu> a :Organization . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_412`, 
@@ -2342,7 +2342,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-0710303b962c4b37ad8f3cc3b68e15bd
+mappingId	MAPID-cfc83a6d51fc46b6817308537a773f85
 target		<http://www.Department{t3_422}.University{t2_422}.edu> a :Organization . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_422`, 
@@ -2350,7 +2350,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-ab762bcad9f04b18acb023a9974ed967
+mappingId	MAPID-605ab07023684dcab48651fa6ed10721
 target		<http://www.Department{t3_421}.University{t2_421}.edu> a :Organization . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_421`, 
@@ -2358,7 +2358,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-9a520cd4a2a04b97968415217caed76e
+mappingId	MAPID-679a106d74fe443f9db77db7f44d5e0d
 target		<http://www.Department{t2_423}.University{t3_423}.edu/Publication{t1_423}> a :UnofficialPublication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_423`, 
@@ -2369,7 +2369,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'UnofficialPublication')
 
-mappingId	MAPID-5ecc37996a334fa7842d95da863fec92
+mappingId	MAPID-24a8bce7bafb42bca2d3f407fe42d267
 target		<http://www.Department{t3_424}.University{t2_424}.edu/{v_GraduateStudent}{t1_424}> a :GraduateStudent . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_424`, 
@@ -2379,7 +2379,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-40dc230bc0344f57908e8036f3f606b4
+mappingId	MAPID-47e7d379f2de42b0bf51a5869a8c5960
 target		<http://www.Department{t2_425}.University{t3_425}.edu/Publication{t1_425}> a :JournalArticle . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_425`, 
@@ -2390,7 +2390,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'JournalArtical')
 
-mappingId	MAPID-d8c1136259584c76965d018123903ab8
+mappingId	MAPID-b4f94fd1976e449db3f9ca6aa8c27461
 target		<http://www.Department{t2_426}.University{t3_426}.edu/{t4_426}{t1_426}> a :Woman . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_426`, 
@@ -2402,7 +2402,7 @@ source		SELECT
 			WHERE 
 			(`QPeopleTMP0`.`gender` = 'F')
 
-mappingId	MAPID-7971ea5f88fc47f69f3f248875a3cf4b
+mappingId	MAPID-55c327415af343499ff82b0184c939b9
 target		<http://www.Department{t3_427}.University{t2_427}.edu/{v_UndergraduateStudent}{t1_427}> a :Student . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_427`, 
@@ -2412,7 +2412,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-1258ac227463405aa1f8a8ea12a6ba04
+mappingId	MAPID-643fcefadcf7479aba8bc91132f8e1de
 target		<http://www.Department{t3_428}.University{t2_428}.edu/{v_GraduateStudent}{t1_428}> a :Student . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_428`, 
@@ -2422,7 +2422,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-d8034242571e488daf71c5d8b06e41b8
+mappingId	MAPID-1cc2c05446694bad87b4a34cb4dfc47b
 target		<http://www.Department{t6_432}.University{t7_432}.edu/{v_GraduateStudent}{t5_432}> a :Student . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_432`, 
@@ -2435,7 +2435,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-047f1ac60cfd45e9a44ca6dfaf84f850
+mappingId	MAPID-dc72538967b04357862fa45c2e38f143
 target		<http://www.Department{t6_431}.University{t7_431}.edu/{v_GraduateStudent}{t5_431}> a :Student . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_431`, 
@@ -2448,7 +2448,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-f10189d4b6b94a5c8683699f2367c591
+mappingId	MAPID-1e93327962744d1bb19e7f1e7e5803bb
 target		<http://www.Department{t6_430}.University{t7_430}.edu/{v_UndergraduateStudent}{t5_430}> a :Student . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_430`, 
@@ -2461,7 +2461,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-2480384adac84b15a725b65b51991ea0
+mappingId	MAPID-d7488cd7abd54a40961b3804019d9e1d
 target		<http://www.Department{t6_429}.University{t7_429}.edu/{v_UndergraduateStudent}{t5_429}> a :Student . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_429`, 
@@ -2474,7 +2474,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-4e977de4b9d04d5ca9f68064e997acb3
+mappingId	MAPID-8c310583032641728d6fbb31efff2569
 target		<http://www.Department{t3_434}.University{t2_434}.edu/{v_UndergraduateStudent}{t1_434}> a :Student . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_434`, 
@@ -2484,7 +2484,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-b9e907409c234db1b9cb90af7ef8ac04
+mappingId	MAPID-11442e29d7494aff87ba1da9c8b3977e
 target		<http://www.Department{t3_433}.University{t2_433}.edu/{v_GraduateStudent}{t1_433}> a :Student . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_433`, 
@@ -2494,7 +2494,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-22fd5aae69114ca8b1a91b324c017942
+mappingId	MAPID-ac1506acd32c4b51adec0c786a3fdd06
 target		<http://www.Department{t2_435}.University{t3_435}.edu/{v_SystemsStaff}{t1_435}> a :SystemsStaff . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_435`, 
@@ -2506,7 +2506,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-0b8408dbe7394627b9cf9332124b57e9
+mappingId	MAPID-a56178573b824ca5bce0b278b359c891
 target		<http://www.Department{t2_436}.University{t3_436}.edu/{v_AssistantProfessor}{t1_436}> a :AssistantProfessor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_436`, 
@@ -2518,7 +2518,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-70aa57ecef324182873554ce8a376efa
+mappingId	MAPID-e2420309a1bd4d7d8bcbfe1e82343ef8
 target		<http://www.Department{t2_437}.University{t3_437}.edu/Publication{t1_437}> a :Manual . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_437`, 
@@ -2529,7 +2529,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Manual')
 
-mappingId	MAPID-69981ea8c03d440c9b3b165ab4553f80
+mappingId	MAPID-036745c9b10b45e1af223eba4bc7169d
 target		<http://www.Department{t2_439}.University{t3_439}.edu/{v_GraduateCourse}{t1_439}> a :Work . 
 source		SELECT 
 			   `QCoursesTMP0`.`deptID` AS `t2_439`, 
@@ -2541,7 +2541,7 @@ source		SELECT
 			WHERE 
 			(`QCoursesTMP0`.`courseType` = 'GraduateCourse')
 
-mappingId	MAPID-4c58bf6ea15f4f87a2e5328284ca5a32
+mappingId	MAPID-69f04d621c4748888d8ef7d80418f7d5
 target		<http://www.Department{t2_438}.University{t3_438}.edu/{v_Course}{t1_438}> a :Work . 
 source		SELECT 
 			   `QCoursesTMP0`.`deptID` AS `t2_438`, 
@@ -2553,7 +2553,7 @@ source		SELECT
 			WHERE 
 			(`QCoursesTMP0`.`courseType` = 'Course')
 
-mappingId	MAPID-a7ee4aecee1c498a8106e350c22a9160
+mappingId	MAPID-c4387823e37c4a609f702a95b9375436
 target		<http://www.Department{t2_443}.University{t3_443}.edu/{v_GraduateCourse}{t1_443}> a :Work . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_443`, 
@@ -2570,7 +2570,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-5d23268b9ca2453c9c5e65fde915e294
+mappingId	MAPID-4727c65ed6d44b1fbce405f67880f8a4
 target		<http://www.Department{t6_442}.University{t7_442}.edu/{v_Course}{t1_442}> a :Work . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_442`, 
@@ -2587,7 +2587,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-238266eff19845029088c4a980b3600c
+mappingId	MAPID-518b96927c424bc99c8c15e611684b88
 target		<http://www.Department{t6_441}.University{t7_441}.edu/{v_GraduateCourse}{t1_441}> a :Work . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_441`, 
@@ -2605,7 +2605,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-1b9b7dc7ec3f458f99f3223d242d8f28
+mappingId	MAPID-c074f0fd81ab4d83851e2edd7b4adabc
 target		<http://www.Department{t2_440}.University{t3_440}.edu/{v_Course}{t1_440}> a :Work . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_440`, 
@@ -2623,7 +2623,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-2ecde79bfdc74acf899dabfe90acf736
+mappingId	MAPID-3a8c98247190436bbe66f6878d11bb0f
 target		<http://www.Department{t3_448}.University{t2_448}.edu/Course{t4_448}> a :Work . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_448`, 
@@ -2632,7 +2632,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-09d872b764b546429ff45be87b507486
+mappingId	MAPID-d02e9647c8d4460b854d4571cae3cd3d
 target		<http://www.Department{t6_456}.University{t5_456}.edu/{v_GraduateCourse}{t1_456}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_456`, 
@@ -2645,7 +2645,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-530a37ffb0e1466a9c176c2983ee0514
+mappingId	MAPID-140fe17a83034470b8b416607fcf1da0
 target		<http://www.Department{t6_455}.University{t5_455}.edu/{v_Course}{t1_455}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_455`, 
@@ -2658,7 +2658,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-ee57bed0498d461d994ed57891d7bacf
+mappingId	MAPID-89af6d80c29f41eaa15c76d914b783e1
 target		<http://www.Department{t6_454}.University{t5_454}.edu/{v_GraduateCourse}{t1_454}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_454`, 
@@ -2671,7 +2671,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-f7cf2b4524da41858d8ab2f8ec7ce2c2
+mappingId	MAPID-5c617dfeeaa340fdadb25ae5e75592c3
 target		<http://www.Department{t6_453}.University{t5_453}.edu/{v_Course}{t1_453}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_453`, 
@@ -2684,7 +2684,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-770e8fc7d91b4a1a9019412870b4bbb7
+mappingId	MAPID-aefa9194bbd34d7fb1f312b2310fc90e
 target		<http://www.Department{t6_452}.University{t5_452}.edu/{v_GraduateCourse}{t1_452}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_452`, 
@@ -2697,7 +2697,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-0b776684a68c4ab3865cd78a52335f29
+mappingId	MAPID-70cc7c8ad8e6494097f4e99d0ba70bcf
 target		<http://www.Department{t6_451}.University{t5_451}.edu/{v_Course}{t1_451}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_451`, 
@@ -2710,7 +2710,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-d8cacbf4a0d74a7283f77026337dc433
+mappingId	MAPID-d06eba7afae048d5b7beaaadce89159d
 target		<http://www.Department{t6_450}.University{t5_450}.edu/{v_GraduateCourse}{t1_450}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_450`, 
@@ -2723,7 +2723,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-98871791c186445ca2f6e74f9c534017
+mappingId	MAPID-62e2e59243b84a8086867daebcc366ad
 target		<http://www.Department{t6_449}.University{t5_449}.edu/{v_Course}{t1_449}> a :Work . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_449`, 
@@ -2736,21 +2736,21 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-c035b5775c2e412d8acd4872dbb67828
+mappingId	MAPID-85e5108e1b144e3797d978784b2b60d2
 target		{_313} a :AcademicSubject . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`major` AS `_313`
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-5b80c840aec6475d8ef2a814ac1a379c
+mappingId	MAPID-da370410de0c47e4bcf79394b6194185
 target		{_313} a :AcademicSubject . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`major` AS `_313`
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-6a88b149a8ec4926b9b411b11ed19fb0
+mappingId	MAPID-0f4e9225a3b444868ab15e25ff798dd4
 target		<http://www.Department{t2_467}.University{t3_467}.edu/Publication{t1_467}> a :TechnicalReport . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_467`, 
@@ -2761,7 +2761,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'TechnicalReport')
 
-mappingId	MAPID-09f77896dadb49e39f131487282ca629
+mappingId	MAPID-19bf5d536c15499d8903f84ade32ce13
 target		<http://www.Department{t2_468}.University{t3_468}.edu/Publication{t1_468}> a :Book . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_468`, 
@@ -2772,7 +2772,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Book')
 
-mappingId	MAPID-92ba5fc5755f49d59fcf0ca555d312f3
+mappingId	MAPID-dcadc6c7d4b645708ad9eda82c6ee5c0
 target		<http://www.Department{t2_472}.University{t3_472}.edu/{v_GraduateCourse}{t1_472}> a :GraduateCourse . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_472`, 
@@ -2789,7 +2789,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-06f2755a94b14eff86cc5614d10747ae
+mappingId	MAPID-c4ce7e9a614146b1aa39df273ea496ce
 target		<http://www.Department{t6_471}.University{t7_471}.edu/{v_Course}{t1_471}> a :GraduateCourse . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_471`, 
@@ -2806,7 +2806,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studUniID` = `QGraduateStudentsTMP1`.`uniID`) AND
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`)
 
-mappingId	MAPID-9723dfd32fc042729587031b433131c4
+mappingId	MAPID-1972730178a94963b232e9cf1517bec8
 target		<http://www.Department{t6_470}.University{t7_470}.edu/{v_GraduateCourse}{t1_470}> a :GraduateCourse . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_470`, 
@@ -2824,7 +2824,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-27809ea8aba2453fb65d5175f9d2a9cb
+mappingId	MAPID-51b9d1fab5cc4937bd73f89886f62fd0
 target		<http://www.Department{t2_469}.University{t3_469}.edu/{v_Course}{t1_469}> a :GraduateCourse . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`courseDeptID` AS `t2_469`, 
@@ -2842,7 +2842,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`studDeptID` = `QGraduateStudentsTMP1`.`deptID`) AND
 			('UndergraduateStudent' = 'GraduateStudent')
 
-mappingId	MAPID-ef8f4f33332b4859979a5c7d3d499abc
+mappingId	MAPID-88c8d534cc80415ab2cdcb0ac59a5ecf
 target		<http://www.Department{t2_477}.University{t3_477}.edu/Publication{t1_477}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_477`, 
@@ -2853,7 +2853,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Specification')
 
-mappingId	MAPID-57d3c806960d4ab18438d9f3ed1d56c3
+mappingId	MAPID-5797fe72ceee4fb99e7e1a2b5f5f4695
 target		<http://www.Department{t2_478}.University{t3_478}.edu/Publication{t1_478}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_478`, 
@@ -2864,7 +2864,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'UnofficialPublication')
 
-mappingId	MAPID-d20b922604be4fd3985eb4ed991f8d66
+mappingId	MAPID-d7cc54c9b95440b698085eff961b27b6
 target		<http://www.Department{t2_479}.University{t3_479}.edu/Publication{t1_479}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_479`, 
@@ -2875,7 +2875,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Manual')
 
-mappingId	MAPID-f41cab2b2841432d917b283336eca807
+mappingId	MAPID-0adc1cba40e449fe94871a9e8c9b421f
 target		<http://www.Department{t2_480}.University{t3_480}.edu/Publication{t1_480}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_480`, 
@@ -2886,7 +2886,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Book')
 
-mappingId	MAPID-4363cdc1799e4916bc57dbede968432e
+mappingId	MAPID-4df1c23c90c546ad9ac88b819d0a3dc3
 target		<http://www.Department{t2_481}.University{t3_481}.edu/Publication{t1_481}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_481`, 
@@ -2897,7 +2897,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Article')
 
-mappingId	MAPID-241df6f977a14841b52bce1c9c939e36
+mappingId	MAPID-9360884613f14c4abba25371672999ba
 target		<http://www.Department{t2_482}.University{t3_482}.edu/Publication{t1_482}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_482`, 
@@ -2908,7 +2908,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'JournalArtical')
 
-mappingId	MAPID-f1f62bfa4ebe472a9757dc23975f9254
+mappingId	MAPID-69cd2a9707cf4cd3ac5836a89f123732
 target		<http://www.Department{t2_483}.University{t3_483}.edu/Publication{t1_483}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_483`, 
@@ -2919,7 +2919,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'ConferencePaper')
 
-mappingId	MAPID-69ebe11404684b11b6566b13b516feef
+mappingId	MAPID-89d9a3d81d8649bbbaa770c4bce7e858
 target		<http://www.Department{t2_484}.University{t3_484}.edu/Publication{t1_484}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_484`, 
@@ -2930,7 +2930,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'TechnicalReport')
 
-mappingId	MAPID-9a922b63765746dda4d60b5000d31759
+mappingId	MAPID-51867b5bab82414dac962e381b8f8e15
 target		<http://www.Department{t2_485}.University{t3_485}.edu/Publication{t1_485}> a :Publication . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_485`, 
@@ -2941,7 +2941,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'Software')
 
-mappingId	MAPID-a90b71802d914bb696feec49cf4b0f84
+mappingId	MAPID-cd55410aae6a4a22af282f66f7815645
 target		<http://www.Department{t2_486}.University{t3_486}.edu/Publication{t5_486}> a :Publication . 
 source		SELECT 
 			   `QAuthorsTMP0`.`deptID` AS `t2_486`, 
@@ -2950,7 +2950,7 @@ source		SELECT
 			 FROM 
 			Authors `QAuthorsTMP0`
 
-mappingId	MAPID-297d4db32b9b4dd7b28333371ef074b7
+mappingId	MAPID-1568146e902843fb9140dd66a8358ff0
 target		<http://www.Department{t3_487}.University{t2_487}.edu/{v_UndergraduateStudent}{t1_487}> a :UndergraduateStudent . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_487`, 
@@ -2960,7 +2960,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-f403d6c03f4f4425806f74274bf179d6
+mappingId	MAPID-ceef9787a3fd478f8585a4a34ec576a2
 target		<http://www.Department{t2_488}.University{t3_488}.edu/Publication{t1_488}> a :ConferencePaper . 
 source		SELECT 
 			   `QPublicationsTMP0`.`deptID` AS `t2_488`, 
@@ -2971,7 +2971,7 @@ source		SELECT
 			WHERE 
 			(`QPublicationsTMP0`.`pubType` = 'ConferencePaper')
 
-mappingId	MAPID-57d52fdb971a49b19efe7563560f276a
+mappingId	MAPID-19e72b87e6424080832c9650e5703160
 target		<http://www.Department{t2_489}.University{t3_489}.edu/{v_Lecturer}{t1_489}> a :Lecturer . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_489`, 
@@ -2981,7 +2981,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-19d0c67553c846e288b2b20ccbd00bbc
+mappingId	MAPID-86f792810f0f49d6accb2e037a21153a
 target		<http://www.Department{t2_490}.University{t3_490}.edu/{v_SystemsStaff}{t1_490}> a :SupportingStaff . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_490`, 
@@ -2993,7 +2993,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-06253c345e9a45808fd2af3e6ad97a02
+mappingId	MAPID-74844c767efb46d790cc56f21f3a6747
 target		<http://www.Department{t2_491}.University{t3_491}.edu/{v_ClericalStaff}{t1_491}> a :SupportingStaff . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_491`, 
@@ -3005,7 +3005,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-002ef9efc31546bebd14ec8bee80cc97
+mappingId	MAPID-b89413cd18cb496cb32a21846860cd80
 target		<http://www.Department{t2_492}.University{t3_492}.edu/{v_AssociateProfessor}{t1_492}> a :Professor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_492`, 
@@ -3017,7 +3017,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-eb19f3dcbaf0401fbee9aaa8f371407d
+mappingId	MAPID-51b2b348a1794748bce12ebd252d16d0
 target		<http://www.Department{t2_493}.University{t3_493}.edu/{v_FullProfessor}{t1_493}> a :Professor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_493`, 
@@ -3029,7 +3029,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-d33368338af840389e5451f576cd0ba8
+mappingId	MAPID-7691cd62268c404296910e851c678b03
 target		<http://www.Department{t2_494}.University{t3_494}.edu/{v_AssistantProfessor}{t1_494}> a :Professor . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_494`, 
@@ -3041,7 +3041,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-35168dbdd7404412ad97170d5b03969c
+mappingId	MAPID-f1a4e4703e004cee91faf274e45d4948
 target		<http://www.Department{t2_495}.University{t3_495}.edu/{v_Chair}{t1_495}> a :Professor . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_495`, 
@@ -3051,7 +3051,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-85824a7d5e604f89aa5094fa92b8c077
+mappingId	MAPID-4a726df948b64ce89083f25b8592bfb5
 target		<http://www.Department{t3_499}.University{t2_499}.edu/{v_Lecturer}{t4_499}> a :Professor . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_499`, 
@@ -3063,7 +3063,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-4e527c12a3c04d0cb4e906113653286e
+mappingId	MAPID-02ee33f56f11462a9f36bde83ac1a589
 target		<http://www.Department{t3_498}.University{t2_498}.edu/{v_AssistantProfessor}{t4_498}> a :Professor . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_498`, 
@@ -3075,7 +3075,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-1e613fccd2b0438fa021e5cff0907a33
+mappingId	MAPID-3bdd738a6f8946e792a9ecfae2bed1e8
 target		<http://www.Department{t3_497}.University{t2_497}.edu/{v_FullProfessor}{t4_497}> a :Professor . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_497`, 
@@ -3087,7 +3087,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-9b11b0e7d905418b8d2afabb581a2495
+mappingId	MAPID-9baf2f77ca4e484abda749655d530c06
 target		<http://www.Department{t3_496}.University{t2_496}.edu/{v_FullProfessor}{t4_496}> a :Professor . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_496`, 
@@ -3099,7 +3099,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-332f023f3ac2435c8043beedd5191663
+mappingId	MAPID-f030789e5c1c4d3f9d30ac1a168e0c5c
 target		<http://www.Department{t3_500}.University{t2_500}.edu/{v_GraduateStudent}{t1_500}> a :ResearchAssistant . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_500`, 
@@ -3111,7 +3111,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`isResearchAsst` = 1)
 
-mappingId	MAPID-b61e11108e3949ad99961de9ee0bbfdb
+mappingId	MAPID-b546fa186aeb4991a909b65dc1168fa3
 target		<http://www.Department{t3_501}.University{t2_501}.edu/ResearchGroup{t1_501}> a :ResearchGroup . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_501`, 
@@ -3120,7 +3120,7 @@ source		SELECT
 			 FROM 
 			ResearchGroups `QResearchGroupsTMP0`
 
-mappingId	MAPID-097ac2235a7c43148cde7201d2a09ca8
+mappingId	MAPID-de274590ac394213b17cf6b68b3428c3
 target		<http://www.Department{t6_509}.University{t5_509}.edu/{v_GraduateCourse}{t1_509}> :isTaughtBy <http://www.Department{t6_509}.University{t5_509}.edu/{v_Lecturer}{t3_509}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_509`, 
@@ -3135,7 +3135,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-94eb871c75534d49a7de6e2ef7cc8cbd
+mappingId	MAPID-6a657703db084b11a59eae9099d1571e
 target		<http://www.Department{t6_508}.University{t5_508}.edu/{v_Course}{t1_508}> :isTaughtBy <http://www.Department{t6_508}.University{t5_508}.edu/{v_Lecturer}{t3_508}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_508`, 
@@ -3150,7 +3150,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-48efe7d6588c4f67bd08c63748c184db
+mappingId	MAPID-52c4e5a216b643c6ad60fa6955f0e800
 target		<http://www.Department{t6_507}.University{t5_507}.edu/{v_GraduateCourse}{t1_507}> :isTaughtBy <http://www.Department{t6_507}.University{t5_507}.edu/{v_AssistantProfessor}{t3_507}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_507`, 
@@ -3165,7 +3165,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-5d37a15e2f724701a843d358981d0a97
+mappingId	MAPID-b184f4f257a048a4a0e3748bed0e2b76
 target		<http://www.Department{t6_506}.University{t5_506}.edu/{v_Course}{t1_506}> :isTaughtBy <http://www.Department{t6_506}.University{t5_506}.edu/{v_AssistantProfessor}{t3_506}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_506`, 
@@ -3180,7 +3180,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-c23435bfba514b81bc729e8a784ae58f
+mappingId	MAPID-6ab2502d501f467da22bc306d2715236
 target		<http://www.Department{t6_505}.University{t5_505}.edu/{v_GraduateCourse}{t1_505}> :isTaughtBy <http://www.Department{t6_505}.University{t5_505}.edu/{v_AssociateProfessor}{t3_505}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_505`, 
@@ -3195,7 +3195,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-8cbbf22e4b9d4998a7879197200e40bd
+mappingId	MAPID-a6cc483128c540e286478c7966e0b0f2
 target		<http://www.Department{t6_504}.University{t5_504}.edu/{v_Course}{t1_504}> :isTaughtBy <http://www.Department{t6_504}.University{t5_504}.edu/{v_AssociateProfessor}{t3_504}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_504`, 
@@ -3210,7 +3210,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-59e1ce50e45340e6934f8fccdaffe7cb
+mappingId	MAPID-b474175fa3824d508966749dcb4915cf
 target		<http://www.Department{t6_503}.University{t5_503}.edu/{v_GraduateCourse}{t1_503}> :isTaughtBy <http://www.Department{t6_503}.University{t5_503}.edu/{v_FullProfessor}{t3_503}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_503`, 
@@ -3225,7 +3225,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-efa24630c5434f09ac29d821e6222386
+mappingId	MAPID-61818c4b81c640fab1a7b3d3142b75f2
 target		<http://www.Department{t6_502}.University{t5_502}.edu/{v_Course}{t1_502}> :isTaughtBy <http://www.Department{t6_502}.University{t5_502}.edu/{v_FullProfessor}{t3_502}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_502`, 
@@ -3240,7 +3240,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-59a0c24f52e2415fa79f519db069680d
+mappingId	MAPID-8c13f36496ce44c0aac1f5bba86d1d44
 target		<http://www.Department{t3_510}.University{t2_510}.edu/{v_GraduateStudent}{t1_510}> :teachingAssistantOf <http://www.Department{t3_510}.University{t2_510}.edu/Course{t4_510}> . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_510`, 
@@ -3251,7 +3251,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-8a60ba6ccb0d4e50b4e2256e71ab161b
+mappingId	MAPID-b16ab7d21be84486acd43e24eda7d90b
 target		<http://www.Department{t2_519}.University{t3_519}.edu/{v_SystemsStaff}{t1_519}> :worksFor <http://www.Department{t2_519}.University{t3_519}.edu> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_519`, 
@@ -3263,7 +3263,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-2bc022c1cf764951b4f034259a580d4b
+mappingId	MAPID-87a757e3a6fd4da58e14fab68a4dc672
 target		<http://www.Department{t2_518}.University{t3_518}.edu/{v_ClericalStaff}{t1_518}> :worksFor <http://www.Department{t2_518}.University{t3_518}.edu> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_518`, 
@@ -3275,7 +3275,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-2229e7057cb04871befdc364a796dd9d
+mappingId	MAPID-95b05cb9db064efea120743742ee8dee
 target		<http://www.Department{t2_517}.University{t3_517}.edu/{v_Lecturer}{t1_517}> :worksFor <http://www.Department{t2_517}.University{t3_517}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_517`, 
@@ -3287,7 +3287,7 @@ source		SELECT
 			WHERE 
 			(`QLecturersTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-6695995602974288bc9540db152407fe
+mappingId	MAPID-b72ceb2e080d4eaaa65e414c4d96e5a6
 target		<http://www.Department{t2_516}.University{t3_516}.edu/{v_AssistantProfessor}{t1_516}> :worksFor <http://www.Department{t2_516}.University{t3_516}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_516`, 
@@ -3300,7 +3300,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-152cca3b40874ff7833acbcb8833fa8f
+mappingId	MAPID-b048e0b1b8514a5ba17739e788ffc14a
 target		<http://www.Department{t2_515}.University{t3_515}.edu/{v_AssociateProfessor}{t1_515}> :worksFor <http://www.Department{t2_515}.University{t3_515}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_515`, 
@@ -3313,7 +3313,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-9bd983e1ef94486bbb4b9bb85234064b
+mappingId	MAPID-31adbb26ccc5428b938462427440d416
 target		<http://www.Department{t2_514}.University{t3_514}.edu/{v_FullProfessor}{t1_514}> :worksFor <http://www.Department{t2_514}.University{t3_514}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_514`, 
@@ -3326,7 +3326,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-9b5afdaeae0e485c9c11cee936f2e4a6
+mappingId	MAPID-09f1034a524a4944b575a7746e99010d
 target		<http://www.Department{t2_513}.University{t3_513}.edu/{v_Lecturer}{t1_513}> :worksFor <http://www.Department{t2_513}.University{t3_513}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_513`, 
@@ -3336,7 +3336,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-5d8dfe38f49b478c8b4abb031fd12d32
+mappingId	MAPID-9b3a5e448925436380d41f1d5a703c14
 target		<http://www.Department{t2_512}.University{t3_512}.edu/{v_AssistantProfessor}{t1_512}> :worksFor <http://www.Department{t2_512}.University{t3_512}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_512`, 
@@ -3348,7 +3348,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-87e2efcd898a4e4189ae1770c7a1e5df
+mappingId	MAPID-5019010d81bf4377ada85cf268a9755d
 target		<http://www.Department{t2_511}.University{t3_511}.edu/{v_AssociateProfessor}{t1_511}> :worksFor <http://www.Department{t2_511}.University{t3_511}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_511`, 
@@ -3360,7 +3360,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-9d5521e46998486fb32de5421e151bc2
+mappingId	MAPID-1ce18ce6f51b438d92b15c406883f8f4
 target		<http://www.Department{t2_523}.University{t3_523}.edu/{v_AssistantProfessor}{t1_523}> :worksFor <http://www.Department{t2_523}.University{t3_523}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_523`, 
@@ -3373,7 +3373,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-f0b49248bc234cd0a81e7d5348e39758
+mappingId	MAPID-134ce6e924fe4311bdb1e2ab85cbd365
 target		<http://www.Department{t2_522}.University{t3_522}.edu/{v_AssociateProfessor}{t1_522}> :worksFor <http://www.Department{t2_522}.University{t3_522}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_522`, 
@@ -3386,7 +3386,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-2b9cbb361b3d470ba894e2632a72e871
+mappingId	MAPID-28b513a8fbf74d95949fe3d78297402f
 target		<http://www.Department{t2_521}.University{t3_521}.edu/{v_FullProfessor}{t1_521}> :worksFor <http://www.Department{t2_521}.University{t3_521}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_521`, 
@@ -3399,7 +3399,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-7d03b72a1b064b46aeb99119ef55540d
+mappingId	MAPID-e6d5d5424f774ed4a40aa85dccc7900c
 target		<http://www.Department{t2_520}.University{t3_520}.edu/{v_Chair}{t1_520}> :worksFor <http://www.Department{t2_520}.University{t3_520}.edu> . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_520`, 
@@ -3409,7 +3409,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-7d58d16d21c142d2bd029bf1a49184fc
+mappingId	MAPID-ed2932c9d6cc417895da4dd77fa0bff1
 target		<http://www.Department{t3_525}.University{t2_525}.edu/{v_UndergraduateStudent}{t1_525}> :enrollIn <http://www.Department{t3_525}.University{t2_525}.edu> . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_525`, 
@@ -3419,7 +3419,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-53d4257a30c04f84b3b6d8352c2ecb35
+mappingId	MAPID-c800de883c9b432eadc1abf4d3554d35
 target		<http://www.Department{t3_524}.University{t2_524}.edu/{v_GraduateStudent}{t1_524}> :enrollIn <http://www.Department{t3_524}.University{t2_524}.edu> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_524`, 
@@ -3429,7 +3429,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-549fa22398a34bdf8ae12ce736175f07
+mappingId	MAPID-240ce8aa5a04475e96af41889d4b6e31
 target		<http://www.College{t2_528}.University{t1_528}.edu> :subOrganizationOf <http://www.University{t1_528}.edu> . 
 source		SELECT 
 			   `QCollegesTMP0`.`collegeID` AS `t2_528`, 
@@ -3437,7 +3437,7 @@ source		SELECT
 			 FROM 
 			Colleges `QCollegesTMP0`
 
-mappingId	MAPID-a0b900c9f75941c9af22206d2622e754
+mappingId	MAPID-3fa1dec93d8b480aaf83c02353cb6fbf
 target		<http://www.Department{t1_527}.University{t2_527}.edu> :subOrganizationOf <http://www.University{t2_527}.edu> . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`deptID` AS `t1_527`, 
@@ -3445,7 +3445,7 @@ source		SELECT
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-9464afcb551c497a82cc4a1e7ca81cf5
+mappingId	MAPID-17bd151088f540699945003cdd5ee9e9
 target		<http://www.Department{t3_526}.University{t2_526}.edu/ResearchGroup{t1_526}> :subOrganizationOf <http://www.Department{t3_526}.University{t2_526}.edu> . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_526`, 
@@ -3454,7 +3454,7 @@ source		SELECT
 			 FROM 
 			ResearchGroups `QResearchGroupsTMP0`
 
-mappingId	MAPID-5b0e99c3aa7d48ac9b7f007ad4fcdbd1
+mappingId	MAPID-95178346cbf44838b958b2c14035fc45
 target		<http://www.Department{t3_529}.University{t2_529}.edu/ResearchGroup{t1_529}> :subOrganizationOf <http://www.University{t2_529}.edu> . 
 source		SELECT 
 			   `QResearchGroupsTMP0`.`deptID` AS `t3_529`, 
@@ -3467,7 +3467,7 @@ source		SELECT
 			(`QResearchGroupsTMP0`.`deptID` = `QDepartmentsTMP1`.`deptID`) AND
 			(`QResearchGroupsTMP0`.`uniID` = `QDepartmentsTMP1`.`uniID`)
 
-mappingId	MAPID-1cc00f04f3c24e5fb01a86fa55c484de
+mappingId	MAPID-bef86ff2dbe6466493d3dd8af05836a0
 target		<http://www.Department{t2_751}.University{t3_751}.edu/{t4_751}{t1_751}> :love {_587} . 
 source		SELECT 
 			   `QInterestsTMP0`.`deptID` AS `t2_751`, 
@@ -3478,7 +3478,7 @@ source		SELECT
 			 FROM 
 			Interests `QInterestsTMP0`
 
-mappingId	MAPID-a9c29e94901b448e84a003af0a710276
+mappingId	MAPID-bcbe634e9cee45099c5c95617a2d54e9
 target		<http://www.Department{t2_752}.University{t3_752}.edu/{t4_752}{t1_752}> :love {_589} . 
 source		SELECT 
 			   `QInterestsTMP0`.`deptID` AS `t2_752`, 
@@ -3491,7 +3491,7 @@ source		SELECT
 			WHERE 
 			(`QInterestsTMP0`.`isCrazyAbout` = 1)
 
-mappingId	MAPID-b68361f163db4652874cb4e00fc8f5a7
+mappingId	MAPID-f3ccc1dbb9444c54be0d588e704dc34e
 target		<http://www.Department{t2_756}.University{t3_756}.edu/{v_AssistantProfessor}{t1_756}> :isHeadOf <http://www.Department{t2_756}.University{t3_756}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_756`, 
@@ -3504,7 +3504,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-b24ea67429ce4abd94b0cd8fab45fef6
+mappingId	MAPID-8c8a7642542441568ccfd002f943e425
 target		<http://www.Department{t2_755}.University{t3_755}.edu/{v_AssociateProfessor}{t1_755}> :isHeadOf <http://www.Department{t2_755}.University{t3_755}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_755`, 
@@ -3517,7 +3517,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-f10e701286fa46b8b369ada08b804223
+mappingId	MAPID-5b9e4859e7a0492982aa88c59cc9bc16
 target		<http://www.Department{t2_754}.University{t3_754}.edu/{v_FullProfessor}{t1_754}> :isHeadOf <http://www.Department{t2_754}.University{t3_754}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_754`, 
@@ -3530,7 +3530,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-9d670b0503594e71a17c885ffae56849
+mappingId	MAPID-4878efecabea4b8993ecb19301794812
 target		<http://www.Department{t2_753}.University{t3_753}.edu/{v_Chair}{t1_753}> :isHeadOf <http://www.Department{t2_753}.University{t3_753}.edu> . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_753`, 
@@ -3540,7 +3540,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-85c85e22d2174e378e3062273e0ab781
+mappingId	MAPID-ecdd651aa9d74cd3a90c10ede861f248
 target		<http://www.Department{t6_760}.University{t7_760}.edu/{v_GraduateStudent}{t5_760}> :takesCourse <http://www.Department{t2_760}.University{t3_760}.edu/{v_GraduateCourse}{t1_760}> . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_760`, 
@@ -3557,7 +3557,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-6b861f37902443ab89c168515f2916cf
+mappingId	MAPID-7a1afe53a62d456d954579d91878a318
 target		<http://www.Department{t6_759}.University{t7_759}.edu/{v_GraduateStudent}{t5_759}> :takesCourse <http://www.Department{t6_759}.University{t7_759}.edu/{v_Course}{t1_759}> . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_759`, 
@@ -3572,7 +3572,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-30f1885570734565a26561f341d93c45
+mappingId	MAPID-2a9a032801d1457197bae3f3968ca954
 target		<http://www.Department{t6_758}.University{t7_758}.edu/{v_UndergraduateStudent}{t5_758}> :takesCourse <http://www.Department{t6_758}.University{t7_758}.edu/{v_GraduateCourse}{t1_758}> . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_758`, 
@@ -3587,7 +3587,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-a6727a178dee4d529f86708e61fb29a2
+mappingId	MAPID-d79b558680e3467d96f112e29bb7cd8c
 target		<http://www.Department{t6_757}.University{t7_757}.edu/{v_UndergraduateStudent}{t5_757}> :takesCourse <http://www.Department{t2_757}.University{t3_757}.edu/{v_Course}{t1_757}> . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_757`, 
@@ -3604,7 +3604,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-2af1af1fe6194216805067216feb349c
+mappingId	MAPID-f765793968174f4abeec6b61e1b80d8c
 target		<http://www.Department{t2_761}.University{t3_761}.edu/{t4_761}{t1_761}> :isFriendOf <http://www.Department{t6_761}.University{t7_761}.edu/{t8_761}{t5_761}> . 
 source		SELECT 
 			   `QFriendsTMP0`.`friendDeptID` AS `t2_761`, 
@@ -3618,7 +3618,7 @@ source		SELECT
 			 FROM 
 			Friends `QFriendsTMP0`
 
-mappingId	MAPID-3b539c8a0852493180bf0decb1064937
+mappingId	MAPID-9c738fb85dfd4ed89dd71316e0bac184
 target		<http://www.Department{t6_762}.University{t7_762}.edu/{t8_762}{t5_762}> :isFriendOf <http://www.Department{t2_762}.University{t3_762}.edu/{t4_762}{t1_762}> . 
 source		SELECT 
 			   `QFriendsTMP0`.`personDeptID` AS `t6_762`, 
@@ -3632,7 +3632,7 @@ source		SELECT
 			 FROM 
 			Friends `QFriendsTMP0`
 
-mappingId	MAPID-ea8fd572e48747ef8fce9b1f7ccf5eda
+mappingId	MAPID-cf34c0c8c3ce4f86a8e3802efd5e30ef
 target		<http://www.Department{t2_766}.University{t3_766}.edu/{v_Lecturer}{t1_766}> :isMemberOf <http://www.Department{t2_766}.University{t3_766}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_766`, 
@@ -3642,7 +3642,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-5be9affdf08343489e68294b463cf1d8
+mappingId	MAPID-e5724090848b406781e615111bb3fbe4
 target		<http://www.Department{t2_765}.University{t3_765}.edu/{v_AssistantProfessor}{t1_765}> :isMemberOf <http://www.Department{t2_765}.University{t3_765}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_765`, 
@@ -3654,7 +3654,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-ee77d3252f794f6aac2a36e476421c39
+mappingId	MAPID-e5dbc948e108434188f4c4f4de8339bc
 target		<http://www.Department{t2_764}.University{t3_764}.edu/{v_AssociateProfessor}{t1_764}> :isMemberOf <http://www.Department{t2_764}.University{t3_764}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_764`, 
@@ -3666,7 +3666,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-6809313b4d1e44bd8645a9b5ffc9f2ec
+mappingId	MAPID-364a12021f6c490792479ba4f4357fb9
 target		<http://www.Department{t2_763}.University{t3_763}.edu/{v_FullProfessor}{t1_763}> :isMemberOf <http://www.Department{t2_763}.University{t3_763}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_763`, 
@@ -3678,7 +3678,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-6b8d01527718442abb5fb8ca7465cee7
+mappingId	MAPID-132c91f34c114bfab19f33788cbc18e6
 target		<http://www.Department{t3_768}.University{t2_768}.edu/{v_UndergraduateStudent}{t1_768}> :isMemberOf <http://www.Department{t3_768}.University{t2_768}.edu> . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_768`, 
@@ -3688,7 +3688,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-f139195db4cf4ce1b28b58997f9cfc16
+mappingId	MAPID-e4f18731b7154a189159fe38d44e3e17
 target		<http://www.Department{t3_767}.University{t2_767}.edu/{v_GraduateStudent}{t1_767}> :isMemberOf <http://www.Department{t3_767}.University{t2_767}.edu> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_767`, 
@@ -3698,7 +3698,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-c186fe8a136c48c7889cb34442e5dbec
+mappingId	MAPID-3d2ee12eb217492c97d24e852e1dca15
 target		<http://www.Department{t2_777}.University{t3_777}.edu/{v_SystemsStaff}{t1_777}> :isMemberOf <http://www.Department{t2_777}.University{t3_777}.edu> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_777`, 
@@ -3710,7 +3710,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-d6da12fb61cb43bd8ca6f7059ab99aa1
+mappingId	MAPID-d5642f4c20b140fba316918a8940a46a
 target		<http://www.Department{t2_776}.University{t3_776}.edu/{v_ClericalStaff}{t1_776}> :isMemberOf <http://www.Department{t2_776}.University{t3_776}.edu> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_776`, 
@@ -3722,7 +3722,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-27bdcd6726c24f23b30da3440a6d0477
+mappingId	MAPID-1d6a991b230147e2b8754e4c2d87b434
 target		<http://www.Department{t2_775}.University{t3_775}.edu/{v_Lecturer}{t1_775}> :isMemberOf <http://www.Department{t2_775}.University{t3_775}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_775`, 
@@ -3734,7 +3734,7 @@ source		SELECT
 			WHERE 
 			(`QLecturersTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-dd1d701381ee417fb27e897831044cc9
+mappingId	MAPID-1892f25772824bbe833b8303f27962ea
 target		<http://www.Department{t2_774}.University{t3_774}.edu/{v_AssistantProfessor}{t1_774}> :isMemberOf <http://www.Department{t2_774}.University{t3_774}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_774`, 
@@ -3747,7 +3747,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-6b6684a6c7854d1993030b7af752b729
+mappingId	MAPID-2c21b88565dd43fead8abd05a4c89c9c
 target		<http://www.Department{t2_773}.University{t3_773}.edu/{v_AssociateProfessor}{t1_773}> :isMemberOf <http://www.Department{t2_773}.University{t3_773}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_773`, 
@@ -3760,7 +3760,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-ae8ae09ac3bb473194923e0d5f552817
+mappingId	MAPID-e9d9cb202f674f2893781ad40628122e
 target		<http://www.Department{t2_772}.University{t3_772}.edu/{v_FullProfessor}{t1_772}> :isMemberOf <http://www.Department{t2_772}.University{t3_772}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_772`, 
@@ -3773,7 +3773,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-0f849d90b0b44f75b2358e228071d69d
+mappingId	MAPID-298d148e3c134b55a7f86478688100dd
 target		<http://www.Department{t2_771}.University{t3_771}.edu/{v_Lecturer}{t1_771}> :isMemberOf <http://www.Department{t2_771}.University{t3_771}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_771`, 
@@ -3783,7 +3783,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-ef4d9f167f5c4f91b6a820f801ea72c7
+mappingId	MAPID-c35fa4d0b48e4a09acbf1f5d93aa1851
 target		<http://www.Department{t2_770}.University{t3_770}.edu/{v_AssistantProfessor}{t1_770}> :isMemberOf <http://www.Department{t2_770}.University{t3_770}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_770`, 
@@ -3795,7 +3795,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-296e969c9b944882a961bc1451281b18
+mappingId	MAPID-a53e729a2ad8414e9d79495d1744556d
 target		<http://www.Department{t2_769}.University{t3_769}.edu/{v_AssociateProfessor}{t1_769}> :isMemberOf <http://www.Department{t2_769}.University{t3_769}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_769`, 
@@ -3807,7 +3807,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-7a649ce57f82415fae59c4c21424b922
+mappingId	MAPID-c8ed04f34759469caa19a14429b2e4f4
 target		<http://www.Department{t2_781}.University{t3_781}.edu/{v_AssistantProfessor}{t1_781}> :isMemberOf <http://www.Department{t2_781}.University{t3_781}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_781`, 
@@ -3820,7 +3820,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-4af8659c3b2d417e9b5dcf2dd75108b0
+mappingId	MAPID-addcd94337384319a13a3271b21bb9b5
 target		<http://www.Department{t2_780}.University{t3_780}.edu/{v_AssociateProfessor}{t1_780}> :isMemberOf <http://www.Department{t2_780}.University{t3_780}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_780`, 
@@ -3833,7 +3833,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-03f5c29e734c48d59b1046a65d895642
+mappingId	MAPID-ef156f8c0f10491580e3a9183ff19301
 target		<http://www.Department{t2_779}.University{t3_779}.edu/{v_FullProfessor}{t1_779}> :isMemberOf <http://www.Department{t2_779}.University{t3_779}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_779`, 
@@ -3846,7 +3846,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-302f267f7390470fb95ca349855f22a1
+mappingId	MAPID-f810acec15b2489a95f940a2353cb11b
 target		<http://www.Department{t2_778}.University{t3_778}.edu/{v_Chair}{t1_778}> :isMemberOf <http://www.Department{t2_778}.University{t3_778}.edu> . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_778`, 
@@ -3856,7 +3856,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-2d0984a62772499b8fdabe2c2146903b
+mappingId	MAPID-2e644057350b4a56b4b5d046fac7ae59
 target		<http://www.Department{t3_785}.University{t2_785}.edu/{v_GraduateStudent}{t1_785}> :isAdvisedBy <http://www.Department{t3_785}.University{t2_785}.edu/{v_Lecturer}{t4_785}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_785`, 
@@ -3870,7 +3870,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-6aaf3f2a90b0479d8ad9a93e24dd3a95
+mappingId	MAPID-118188d8048f442ab8ea2283067f194f
 target		<http://www.Department{t3_784}.University{t2_784}.edu/{v_GraduateStudent}{t1_784}> :isAdvisedBy <http://www.Department{t3_784}.University{t2_784}.edu/{v_AssistantProfessor}{t4_784}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_784`, 
@@ -3884,7 +3884,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-4a944ba176cc46059865bf4d8e20eb9d
+mappingId	MAPID-4a52dcb7e31c44fda6536d7d3d69014f
 target		<http://www.Department{t3_783}.University{t2_783}.edu/{v_GraduateStudent}{t1_783}> :isAdvisedBy <http://www.Department{t3_783}.University{t2_783}.edu/{v_FullProfessor}{t4_783}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_783`, 
@@ -3898,7 +3898,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-776ec7c94f1c43c293dae38a0c6cc5dd
+mappingId	MAPID-2d1f81dc96a24a21ad90513a5a3fadcc
 target		<http://www.Department{t3_782}.University{t2_782}.edu/{v_GraduateStudent}{t1_782}> :isAdvisedBy <http://www.Department{t3_782}.University{t2_782}.edu/{v_FullProfessor}{t4_782}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_782`, 
@@ -3912,7 +3912,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-6dfcc8f379694d9783d4285314f641bb
+mappingId	MAPID-7b37d44952c14045a0943e74d2e5a70b
 target		<http://www.Department{t2_786}.University{t3_786}.edu/{t4_786}{t1_786}> :isCrazyAbout {_636} . 
 source		SELECT 
 			   `QInterestsTMP0`.`deptID` AS `t2_786`, 
@@ -3925,7 +3925,7 @@ source		SELECT
 			WHERE 
 			(`QInterestsTMP0`.`isCrazyAbout` = 1)
 
-mappingId	MAPID-2ffce493b7254b23ac113f958db93786
+mappingId	MAPID-c6e179a5d7b04d94b175033160b17c18
 target		<http://www.Department{t2_791}.University{t3_791}.edu/{v_Lecturer}{t1_791}> :hasUndergraduateDegreeFrom <http://www.University{t4_791}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_791`, 
@@ -3936,7 +3936,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-a1886923bbfd4ae69dd3b4f2b716a17f
+mappingId	MAPID-3088be5aee6e4725a3240d6402a30a35
 target		<http://www.Department{t2_790}.University{t3_790}.edu/{v_AssistantProfessor}{t1_790}> :hasUndergraduateDegreeFrom <http://www.University{t6_790}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_790`, 
@@ -3949,7 +3949,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-0a90bdb8d8d84affbfeffc8a5efb7f74
+mappingId	MAPID-f96973a79061421b97a7d5175828b75c
 target		<http://www.Department{t2_789}.University{t3_789}.edu/{v_AssociateProfessor}{t1_789}> :hasUndergraduateDegreeFrom <http://www.University{t6_789}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_789`, 
@@ -3962,7 +3962,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-e3c2312bff5f45f08cd8a3acddf6267d
+mappingId	MAPID-a5565847271f418fa1b26ecc02126f9c
 target		<http://www.Department{t2_788}.University{t3_788}.edu/{v_FullProfessor}{t1_788}> :hasUndergraduateDegreeFrom <http://www.University{t6_788}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_788`, 
@@ -3975,7 +3975,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-6d657598f156407ca0c27b6fbea946bf
+mappingId	MAPID-53c88b3463a64c83b7eaef2675d512d6
 target		<http://www.Department{t3_787}.University{t2_787}.edu/{v_GraduateStudent}{t1_787}> :hasUndergraduateDegreeFrom <http://www.University{t6_787}.edu> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_787`, 
@@ -3986,7 +3986,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-9d4f3b765b604523b4784c95ee787151
+mappingId	MAPID-4be727e659604b62af95a5f6851ccad9
 target		<http://www.Department{t3_793}.University{t2_793}.edu/{v_UndergraduateStudent}{t1_793}> :isStudentOf <http://www.Department{t3_793}.University{t2_793}.edu> . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_793`, 
@@ -3996,7 +3996,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-d86331691cb144f7b3856333b3a0d841
+mappingId	MAPID-cf94957d0c6d4aae8f6dd5e0a6bd75aa
 target		<http://www.Department{t3_792}.University{t2_792}.edu/{v_GraduateStudent}{t1_792}> :isStudentOf <http://www.Department{t3_792}.University{t2_792}.edu> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_792`, 
@@ -4006,7 +4006,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-b122bded4cc24b1f9f311aae97dba3fc
+mappingId	MAPID-39913a92804543e0b427934a60a02aca
 target		<http://www.Department{t6_801}.University{t5_801}.edu/{v_Lecturer}{t3_801}> :teacherOf <http://www.Department{t6_801}.University{t5_801}.edu/{v_GraduateCourse}{t1_801}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_801`, 
@@ -4021,7 +4021,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-1b86492fb9634bef835b3d3021639c77
+mappingId	MAPID-47dae0fea6e34054afb18bba2d6763f4
 target		<http://www.Department{t6_800}.University{t5_800}.edu/{v_Lecturer}{t3_800}> :teacherOf <http://www.Department{t6_800}.University{t5_800}.edu/{v_Course}{t1_800}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_800`, 
@@ -4036,7 +4036,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-8992a99526c44fb08280a202a9e6b8b7
+mappingId	MAPID-29a81fe6dae94ca7b244b50df54cc6c5
 target		<http://www.Department{t6_799}.University{t5_799}.edu/{v_AssistantProfessor}{t3_799}> :teacherOf <http://www.Department{t6_799}.University{t5_799}.edu/{v_GraduateCourse}{t1_799}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_799`, 
@@ -4051,7 +4051,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-db3bede09340409d9e9ed3af97124574
+mappingId	MAPID-e1e2a261b76d48e1ac3784453b884172
 target		<http://www.Department{t6_798}.University{t5_798}.edu/{v_AssistantProfessor}{t3_798}> :teacherOf <http://www.Department{t6_798}.University{t5_798}.edu/{v_Course}{t1_798}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_798`, 
@@ -4066,7 +4066,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-fbc0573b83d14b27b59480966641e6c6
+mappingId	MAPID-8e7ed1bfee8d486093800a64d1afa31e
 target		<http://www.Department{t6_797}.University{t5_797}.edu/{v_AssociateProfessor}{t3_797}> :teacherOf <http://www.Department{t6_797}.University{t5_797}.edu/{v_GraduateCourse}{t1_797}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_797`, 
@@ -4081,7 +4081,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-37a5db9aa2d348bdbfbcc804d89fc909
+mappingId	MAPID-a81898df224c488d9feaaf5ac26e6aba
 target		<http://www.Department{t6_796}.University{t5_796}.edu/{v_AssociateProfessor}{t3_796}> :teacherOf <http://www.Department{t6_796}.University{t5_796}.edu/{v_Course}{t1_796}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_796`, 
@@ -4096,7 +4096,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-be777f0ead8a4bdcadb75a4c9472beb8
+mappingId	MAPID-fd184009864844d4b049d23046e4c63b
 target		<http://www.Department{t6_795}.University{t5_795}.edu/{v_FullProfessor}{t3_795}> :teacherOf <http://www.Department{t6_795}.University{t5_795}.edu/{v_GraduateCourse}{t1_795}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_795`, 
@@ -4111,7 +4111,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-c4622098a14e46018661bd8f6dd05ff0
+mappingId	MAPID-9c34ccda10c94d07ac4de47831e2f137
 target		<http://www.Department{t6_794}.University{t5_794}.edu/{v_FullProfessor}{t3_794}> :teacherOf <http://www.Department{t6_794}.University{t5_794}.edu/{v_Course}{t1_794}> . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_794`, 
@@ -4126,7 +4126,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-2c015233c05a4b4fb8b8f767cd7a559f
+mappingId	MAPID-acf4d20559714a4d8fddf9a44b51b5a6
 target		<http://www.Department{t2_805}.University{t3_805}.edu/{v_Lecturer}{t1_805}> :hasMasterDegreeFrom <http://www.University{t5_805}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_805`, 
@@ -4137,7 +4137,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-b9ad9c2324cf4aadaf686bdccb4055a2
+mappingId	MAPID-78ef92d79a7f49ac9e45734598ecb8ac
 target		<http://www.Department{t2_804}.University{t3_804}.edu/{v_AssistantProfessor}{t1_804}> :hasMasterDegreeFrom <http://www.University{t7_804}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_804`, 
@@ -4150,7 +4150,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-2c99b3b5a4064002a6d3822f6aa429b2
+mappingId	MAPID-7107d84d3f944f2b850ceb33a9a6d3ea
 target		<http://www.Department{t2_803}.University{t3_803}.edu/{v_AssociateProfessor}{t1_803}> :hasMasterDegreeFrom <http://www.University{t7_803}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_803`, 
@@ -4163,7 +4163,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-202c7c64291449b1a2cea972f90ab9fa
+mappingId	MAPID-1973fc3c5a81453e937648a6ccc4f56e
 target		<http://www.Department{t2_802}.University{t3_802}.edu/{v_FullProfessor}{t1_802}> :hasMasterDegreeFrom <http://www.University{t7_802}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_802`, 
@@ -4176,7 +4176,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-4bb1717178404dcf8167c252c7a15154
+mappingId	MAPID-33d97ae83035415fb22d3006ab94455d
 target		<http://www.Department{t2_806}.University{t3_806}.edu/{t4_806}{t1_806}> :like {_667} . 
 source		SELECT 
 			   `QInterestsTMP0`.`deptID` AS `t2_806`, 
@@ -4187,7 +4187,7 @@ source		SELECT
 			 FROM 
 			Interests `QInterestsTMP0`
 
-mappingId	MAPID-63188447124344838090390857a2d093
+mappingId	MAPID-3c4ec5cceb4441428190bcb9bc286a70
 target		<http://www.Department{t2_807}.University{t3_807}.edu/{t4_807}{t1_807}> :like {_669} . 
 source		SELECT 
 			   `QInterestsTMP0`.`deptID` AS `t2_807`, 
@@ -4200,7 +4200,7 @@ source		SELECT
 			WHERE 
 			(`QInterestsTMP0`.`isCrazyAbout` = 1)
 
-mappingId	MAPID-eaba3c28127849098eedab3374329a76
+mappingId	MAPID-0d7b84d2aa4843c4b95baaa34bf82540
 target		<http://www.Department{t2_811}.University{t3_811}.edu> :hasMember <http://www.Department{t2_811}.University{t3_811}.edu/{v_Lecturer}{t1_811}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_811`, 
@@ -4210,7 +4210,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-8e59c191ab8644d4a0ae38a077c23053
+mappingId	MAPID-f3f667cd39f9499c87b03892c07d3b81
 target		<http://www.Department{t2_810}.University{t3_810}.edu> :hasMember <http://www.Department{t2_810}.University{t3_810}.edu/{v_AssistantProfessor}{t1_810}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_810`, 
@@ -4222,7 +4222,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-06a8e492340e42ce9dc4af21bf5177ab
+mappingId	MAPID-f8f8ad931cf04f499054047a75ceddd1
 target		<http://www.Department{t2_809}.University{t3_809}.edu> :hasMember <http://www.Department{t2_809}.University{t3_809}.edu/{v_AssociateProfessor}{t1_809}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_809`, 
@@ -4234,7 +4234,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-3f27e27f767043eaa5916dabdd0591f9
+mappingId	MAPID-3543b7eff8a342249027c6bd6a4831f4
 target		<http://www.Department{t2_808}.University{t3_808}.edu> :hasMember <http://www.Department{t2_808}.University{t3_808}.edu/{v_FullProfessor}{t1_808}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_808`, 
@@ -4246,7 +4246,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-b4d4de12fb0e4e41a5c600dfa1d8e700
+mappingId	MAPID-7bf3e0542f0a408da27578739849f86e
 target		<http://www.Department{t2_820}.University{t3_820}.edu> :hasMember <http://www.Department{t2_820}.University{t3_820}.edu/{v_SystemsStaff}{t1_820}> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_820`, 
@@ -4258,7 +4258,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-6e73e0e8f6d34c9189ab2f301c3a73c0
+mappingId	MAPID-42083e10d8f746e2a6afbf9d64976ec9
 target		<http://www.Department{t2_819}.University{t3_819}.edu> :hasMember <http://www.Department{t2_819}.University{t3_819}.edu/{v_ClericalStaff}{t1_819}> . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_819`, 
@@ -4270,7 +4270,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-b686a33605194949a49035d4ed8e533b
+mappingId	MAPID-097e9b63c17a4766bc54044b3bd69d98
 target		<http://www.Department{t2_818}.University{t3_818}.edu> :hasMember <http://www.Department{t2_818}.University{t3_818}.edu/{v_Lecturer}{t1_818}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_818`, 
@@ -4282,7 +4282,7 @@ source		SELECT
 			WHERE 
 			(`QLecturersTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-8e5c118cf5c34aa79b38e84342622b14
+mappingId	MAPID-305d0168cdce4a7697a8fa161f606827
 target		<http://www.Department{t2_817}.University{t3_817}.edu> :hasMember <http://www.Department{t2_817}.University{t3_817}.edu/{v_AssistantProfessor}{t1_817}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_817`, 
@@ -4295,7 +4295,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-fcb95caa227b4edcab536f013b894689
+mappingId	MAPID-b7f3067d3edc41129960d3f13e56e927
 target		<http://www.Department{t2_816}.University{t3_816}.edu> :hasMember <http://www.Department{t2_816}.University{t3_816}.edu/{v_AssociateProfessor}{t1_816}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_816`, 
@@ -4308,7 +4308,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-8dc22ac6d9fa4c1d8debf488174bac93
+mappingId	MAPID-8655942b60e441668b779243919e4010
 target		<http://www.Department{t2_815}.University{t3_815}.edu> :hasMember <http://www.Department{t2_815}.University{t3_815}.edu/{v_FullProfessor}{t1_815}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_815`, 
@@ -4321,7 +4321,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isWorking` = 1)
 
-mappingId	MAPID-e7f81fbc66f64e7fa5823e1bad404465
+mappingId	MAPID-1b9330bb39ee49aeb30947f23d47bf3a
 target		<http://www.Department{t2_814}.University{t3_814}.edu> :hasMember <http://www.Department{t2_814}.University{t3_814}.edu/{v_Lecturer}{t1_814}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_814`, 
@@ -4331,7 +4331,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-e492907b1202407ebbc1df002b04c76a
+mappingId	MAPID-d1aa6f3aaf254174bb2eb9f3c344ee37
 target		<http://www.Department{t2_813}.University{t3_813}.edu> :hasMember <http://www.Department{t2_813}.University{t3_813}.edu/{v_AssistantProfessor}{t1_813}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_813`, 
@@ -4343,7 +4343,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-ed9c6ea3c3d046d68a51ba607f382a70
+mappingId	MAPID-3089f300164141cd990d5d7982bf075e
 target		<http://www.Department{t2_812}.University{t3_812}.edu> :hasMember <http://www.Department{t2_812}.University{t3_812}.edu/{v_AssociateProfessor}{t1_812}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_812`, 
@@ -4355,7 +4355,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-3d8e65eb53704af19e2ecd4d40fcdd73
+mappingId	MAPID-9a54ca59a6cc46568ccd5f2cc54dc89f
 target		<http://www.Department{t2_824}.University{t3_824}.edu> :hasMember <http://www.Department{t2_824}.University{t3_824}.edu/{v_AssistantProfessor}{t1_824}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_824`, 
@@ -4368,7 +4368,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-42bf5f21ecaf48de8ff95ea1112ddacb
+mappingId	MAPID-c5e7a1d5ebb1490e9c43c51ee0410148
 target		<http://www.Department{t2_823}.University{t3_823}.edu> :hasMember <http://www.Department{t2_823}.University{t3_823}.edu/{v_AssociateProfessor}{t1_823}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_823`, 
@@ -4381,7 +4381,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-b278e269db8f40cb9824f914dc106428
+mappingId	MAPID-c78527e6ee354ab9bc298933eb8dbbd8
 target		<http://www.Department{t2_822}.University{t3_822}.edu> :hasMember <http://www.Department{t2_822}.University{t3_822}.edu/{v_FullProfessor}{t1_822}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_822`, 
@@ -4394,7 +4394,7 @@ source		SELECT
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor') AND
 			(`QProfessorsTMP0`.`isHeadOfDep` = 1)
 
-mappingId	MAPID-ed88e230d9bf4f68996283c677dfcb9e
+mappingId	MAPID-4cb5cafd37cf48f0920f766a1674961e
 target		<http://www.Department{t2_821}.University{t3_821}.edu> :hasMember <http://www.Department{t2_821}.University{t3_821}.edu/{v_Chair}{t1_821}> . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_821`, 
@@ -4404,7 +4404,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-2f63b4fa5d394f3890718f1e941b30a7
+mappingId	MAPID-1fc06a4cb4874e6da36a743561db155b
 target		<http://www.Department{t3_826}.University{t2_826}.edu> :hasMember <http://www.Department{t3_826}.University{t2_826}.edu/{v_UndergraduateStudent}{t1_826}> . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_826`, 
@@ -4414,7 +4414,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-969aa4805bef46f29b00d6b0a4d8c893
+mappingId	MAPID-873f423232aa44b3a653152d3794536f
 target		<http://www.Department{t3_825}.University{t2_825}.edu> :hasMember <http://www.Department{t3_825}.University{t2_825}.edu/{v_GraduateStudent}{t1_825}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_825`, 
@@ -4424,7 +4424,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-5c1a2f6e493140868e20c8a9cea32410
+mappingId	MAPID-cc3a12a5f7624fa7afafc7f3b815a9d3
 target		<http://www.Department{t3_828}.University{t2_828}.edu/{v_UndergraduateStudent}{t1_828}> :hasMajor {_685} . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_828`, 
@@ -4435,7 +4435,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-f83f26eff86f45dcaf58ba3440ead3c4
+mappingId	MAPID-8c8f5dfac2d841319b63e5f382ff5081
 target		<http://www.Department{t3_827}.University{t2_827}.edu/{v_GraduateStudent}{t1_827}> :hasMajor {_685} . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_827`, 
@@ -4446,7 +4446,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-4707d8641ec74e7b9bd85c394d31eb85
+mappingId	MAPID-a270656c91ff4c24b9224857e8eb3c84
 target		<http://www.Department{t2_832}.University{t3_832}.edu/{v_Lecturer}{t1_832}> :hasDegreeFrom <http://www.University{t6_832}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_832`, 
@@ -4457,7 +4457,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-35d5a92df86c4b288c32f2f9db0b67c3
+mappingId	MAPID-0b7ca49d87384ef08990d2d583cbdcf6
 target		<http://www.Department{t2_831}.University{t3_831}.edu/{v_AssistantProfessor}{t1_831}> :hasDegreeFrom <http://www.University{t8_831}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_831`, 
@@ -4470,7 +4470,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-97f169a768ff4878ba77172d5a369f0f
+mappingId	MAPID-786229cb2ade48c09173c8d58ff0ba45
 target		<http://www.Department{t2_830}.University{t3_830}.edu/{v_AssociateProfessor}{t1_830}> :hasDegreeFrom <http://www.University{t8_830}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_830`, 
@@ -4483,7 +4483,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-34f3622b17be4c76a882d21e7d83c75f
+mappingId	MAPID-bbea8d9e95a84ae38e051fd307731ffa
 target		<http://www.Department{t2_829}.University{t3_829}.edu/{v_FullProfessor}{t1_829}> :hasDegreeFrom <http://www.University{t8_829}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_829`, 
@@ -4496,7 +4496,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-34debe8c66b943009e22f7df86681d19
+mappingId	MAPID-2b6851c7cf09413e805356bfc49b1abf
 target		<http://www.Department{t2_837}.University{t3_837}.edu/{v_Lecturer}{t1_837}> :hasDegreeFrom <http://www.University{t4_837}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_837`, 
@@ -4507,7 +4507,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-723e17c5e5c842fd9ba9770ee62a8b6e
+mappingId	MAPID-eb3990d028004f16afb2b183cb9b84ba
 target		<http://www.Department{t2_836}.University{t3_836}.edu/{v_AssistantProfessor}{t1_836}> :hasDegreeFrom <http://www.University{t6_836}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_836`, 
@@ -4520,7 +4520,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-bf66294ef6f84f8888db4f910748326d
+mappingId	MAPID-3f8e4d0c64eb46f0bf65c92ebdf844c0
 target		<http://www.Department{t2_835}.University{t3_835}.edu/{v_AssociateProfessor}{t1_835}> :hasDegreeFrom <http://www.University{t6_835}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_835`, 
@@ -4533,7 +4533,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-c2da3b169b144744abf8c46be1de5cff
+mappingId	MAPID-bbc536d70f74483c918c54bb9e0a9d74
 target		<http://www.Department{t2_834}.University{t3_834}.edu/{v_FullProfessor}{t1_834}> :hasDegreeFrom <http://www.University{t6_834}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_834`, 
@@ -4546,7 +4546,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-5c6ff44c175b4b54b5036d7a85314a05
+mappingId	MAPID-a1ce55ff440c405183c78e247de7e9bf
 target		<http://www.Department{t3_833}.University{t2_833}.edu/{v_GraduateStudent}{t1_833}> :hasDegreeFrom <http://www.University{t6_833}.edu> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_833`, 
@@ -4557,7 +4557,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-bc95cbf9d1e645158fa2679127e630ba
+mappingId	MAPID-8dce7a3916f74c35a20a008a9415ce29
 target		<http://www.Department{t2_841}.University{t3_841}.edu/{v_Lecturer}{t1_841}> :hasDegreeFrom <http://www.University{t5_841}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_841`, 
@@ -4568,7 +4568,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-2eb889e9ba7e4484aa5d69bfd1b52fc5
+mappingId	MAPID-87520848a72d42b2a96d527d9125029c
 target		<http://www.Department{t2_840}.University{t3_840}.edu/{v_AssistantProfessor}{t1_840}> :hasDegreeFrom <http://www.University{t7_840}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_840`, 
@@ -4581,7 +4581,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-860d5b04eb684b1da9d2b8d8bc62b0d3
+mappingId	MAPID-86c26b65dcdd42deb60a1068c4bc3ab8
 target		<http://www.Department{t2_839}.University{t3_839}.edu/{v_AssociateProfessor}{t1_839}> :hasDegreeFrom <http://www.University{t7_839}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_839`, 
@@ -4594,7 +4594,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-e534c8ad0c3d40aea2b99c42014734c9
+mappingId	MAPID-76d5fb5c96be447c9e2db50805fb3767
 target		<http://www.Department{t2_838}.University{t3_838}.edu/{v_FullProfessor}{t1_838}> :hasDegreeFrom <http://www.University{t7_838}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_838`, 
@@ -4607,7 +4607,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-a06cf94d208f4d0aa2dc0e28c0cad91d
+mappingId	MAPID-da93bb018cc34bbaaf8f9b986b446291
 target		<http://www.University{t4_846}.edu> :hasAlumnus <http://www.Department{t2_846}.University{t3_846}.edu/{v_Lecturer}{t1_846}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`underGradDegreeID` AS `t4_846`, 
@@ -4618,7 +4618,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-135bb3b84f9e4d7c9321ca0966ab7ad3
+mappingId	MAPID-beb60782b23c4dba9ad090bd8a6ebc67
 target		<http://www.University{t6_845}.edu> :hasAlumnus <http://www.Department{t2_845}.University{t3_845}.edu/{v_AssistantProfessor}{t1_845}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_845`, 
@@ -4631,7 +4631,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-5b523fdf6a124e0787d7a9dd0408da48
+mappingId	MAPID-c7d10891fad647f8b0eff771f9ded12c
 target		<http://www.University{t6_844}.edu> :hasAlumnus <http://www.Department{t2_844}.University{t3_844}.edu/{v_AssociateProfessor}{t1_844}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_844`, 
@@ -4644,7 +4644,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-79080472fbc24bb4b115e16b2f04cd42
+mappingId	MAPID-7bcf109bcfdc40a48ec4c6f9db3d7cc8
 target		<http://www.University{t6_843}.edu> :hasAlumnus <http://www.Department{t2_843}.University{t3_843}.edu/{v_FullProfessor}{t1_843}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`underGradDegreeID` AS `t6_843`, 
@@ -4657,7 +4657,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-ed447a2552144029955547fcefeaa539
+mappingId	MAPID-009d164a2f5a4c01a953cf9a2eb4b2d4
 target		<http://www.University{t6_842}.edu> :hasAlumnus <http://www.Department{t3_842}.University{t2_842}.edu/{v_GraduateStudent}{t1_842}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`UnderGradUnvID` AS `t6_842`, 
@@ -4668,7 +4668,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-d2c814640e534983af016b59c05a7d1a
+mappingId	MAPID-21180590b4174f4186d10da88ccf46a0
 target		<http://www.University{t5_850}.edu> :hasAlumnus <http://www.Department{t2_850}.University{t3_850}.edu/{v_Lecturer}{t1_850}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`masterDegreeID` AS `t5_850`, 
@@ -4679,7 +4679,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-3f890708c5044c60976cb2d2c9d68bf6
+mappingId	MAPID-b520af98f74f435397799b0200e5f780
 target		<http://www.University{t7_849}.edu> :hasAlumnus <http://www.Department{t2_849}.University{t3_849}.edu/{v_AssistantProfessor}{t1_849}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_849`, 
@@ -4692,7 +4692,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-2583b533017a420e9f5832fc80e0c036
+mappingId	MAPID-3e85b71de7d349d297a377f826791831
 target		<http://www.University{t7_848}.edu> :hasAlumnus <http://www.Department{t2_848}.University{t3_848}.edu/{v_AssociateProfessor}{t1_848}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_848`, 
@@ -4705,7 +4705,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-06a622c4812440d1bd9e0bd8c7f2c646
+mappingId	MAPID-9b3896531c5042c898a1d7aa9fd412c9
 target		<http://www.University{t7_847}.edu> :hasAlumnus <http://www.Department{t2_847}.University{t3_847}.edu/{v_FullProfessor}{t1_847}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`masterDegreeID` AS `t7_847`, 
@@ -4718,7 +4718,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-b2b62a43bdf945a4b847e5ab43eec633
+mappingId	MAPID-b8bd5bde3f9f457ab8e02f18ef94fe2c
 target		<http://www.University{t6_854}.edu> :hasAlumnus <http://www.Department{t2_854}.University{t3_854}.edu/{v_Lecturer}{t1_854}> . 
 source		SELECT 
 			   `QLecturersTMP0`.`doctoralDegreeID` AS `t6_854`, 
@@ -4729,7 +4729,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-5db70d860b9946d5b3da5e33b38d9e29
+mappingId	MAPID-e750e11226514f5dad3360868d91cec8
 target		<http://www.University{t8_853}.edu> :hasAlumnus <http://www.Department{t2_853}.University{t3_853}.edu/{v_AssistantProfessor}{t1_853}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_853`, 
@@ -4742,7 +4742,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-c31b260419c94157b067f0f6b430d6f7
+mappingId	MAPID-fff13db32fd04953bb289471461312dc
 target		<http://www.University{t8_852}.edu> :hasAlumnus <http://www.Department{t2_852}.University{t3_852}.edu/{v_AssociateProfessor}{t1_852}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_852`, 
@@ -4755,7 +4755,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-064af6de78264ae2babec18805e09ba5
+mappingId	MAPID-07a624ac71744aeebfed2f55dca79519
 target		<http://www.University{t8_851}.edu> :hasAlumnus <http://www.Department{t2_851}.University{t3_851}.edu/{v_FullProfessor}{t1_851}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`doctoralDegreeID` AS `t8_851`, 
@@ -4768,7 +4768,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-51f04270f1f34ad6aff9c0738dc8d419
+mappingId	MAPID-43017f53f14141819a625e6e5fb8d691
 target		<http://www.Department{t3_856}.University{t2_856}.edu> :hasStudent <http://www.Department{t3_856}.University{t2_856}.edu/{v_UndergraduateStudent}{t1_856}> . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_856`, 
@@ -4778,7 +4778,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-5f14b7e42576493c80dc565fc65c7577
+mappingId	MAPID-770e560e12294f789c0cf9728c6467df
 target		<http://www.Department{t3_855}.University{t2_855}.edu> :hasStudent <http://www.Department{t3_855}.University{t2_855}.edu/{v_GraduateStudent}{t1_855}> . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_855`, 
@@ -4788,7 +4788,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-8ec0f100a144431ea2d6a463a566b50d
+mappingId	MAPID-94c7dd688b174fcfafd314af55051b89
 target		<http://www.Department{t2_857}.University{t3_857}.edu/Publication{t5_857}> :publicationAuthor <http://www.Department{t2_857}.University{t3_857}.edu/{t4_857}{t1_857}> . 
 source		SELECT 
 			   `QAuthorsTMP0`.`deptID` AS `t2_857`, 
@@ -4799,7 +4799,7 @@ source		SELECT
 			 FROM 
 			Authors `QAuthorsTMP0`
 
-mappingId	MAPID-8356ed7873aa471bade4e9712a20f706
+mappingId	MAPID-3d594c951a214bcfae0a80444f8e5ca5
 target		<http://www.Department{t2_861}.University{t3_861}.edu/{v_Lecturer}{t1_861}> :hasDoctoralDegreeFrom <http://www.University{t6_861}.edu> . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_861`, 
@@ -4810,7 +4810,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-b006466659df4b74b3ad5b835192c53e
+mappingId	MAPID-921f8b93bb1840418745005d31757fc6
 target		<http://www.Department{t2_860}.University{t3_860}.edu/{v_AssistantProfessor}{t1_860}> :hasDoctoralDegreeFrom <http://www.University{t8_860}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_860`, 
@@ -4823,7 +4823,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-4df9514b06a74ac3b9333a8271a7baee
+mappingId	MAPID-a86f21abdda54e5ab56443838043a937
 target		<http://www.Department{t2_859}.University{t3_859}.edu/{v_AssociateProfessor}{t1_859}> :hasDoctoralDegreeFrom <http://www.University{t8_859}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_859`, 
@@ -4836,7 +4836,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-d8d072ca26214e269cca29164d1c2d3f
+mappingId	MAPID-3cceb91d5dbe4d3d955f687c29c87f6e
 target		<http://www.Department{t2_858}.University{t3_858}.edu/{v_FullProfessor}{t1_858}> :hasDoctoralDegreeFrom <http://www.University{t8_858}.edu> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_858`, 
@@ -4849,7 +4849,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-7ae05446bba14853b9e4f06ff3366f63
+mappingId	MAPID-2a9550d8079e43a48adc602b4205781f
 target		<http://www.University{t1_863}.edu> :name {_738} . 
 source		SELECT 
 			   `QUniversitiesTMP0`.`uniID` AS `t1_863`, 
@@ -4857,7 +4857,7 @@ source		SELECT
 			 FROM 
 			Universities `QUniversitiesTMP0`
 
-mappingId	MAPID-b6a688e37030456494ff30f7ea4bf165
+mappingId	MAPID-b485ed0b46c84527bbf51dfa062193ff
 target		<http://www.Department{t1_862}.University{t2_862}.edu> :name {_738} . 
 source		SELECT 
 			   `QDepartmentsTMP0`.`deptID` AS `t1_862`, 
@@ -4866,7 +4866,7 @@ source		SELECT
 			 FROM 
 			Departments `QDepartmentsTMP0`
 
-mappingId	MAPID-8991edcd238446298b08d8af7cb74dba
+mappingId	MAPID-7631e0adf4f3459fba7810b8d25d9b08
 target		<http://www.Department{t2_864}.University{t3_864}.edu/{t4_864}{t1_864}> :firstName {_746} . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_864`, 
@@ -4877,7 +4877,7 @@ source		SELECT
 			 FROM 
 			People `QPeopleTMP0`
 
-mappingId	MAPID-bb56e6febc0f4b39bd22d6b2c4fd763b
+mappingId	MAPID-3f6fe2b54fcc469f9e949721e59f623c
 target		<http://www.Department{t2_865}.University{t3_865}.edu/{t4_865}{t1_865}> :lastName {_751} . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_865`, 
@@ -4888,7 +4888,7 @@ source		SELECT
 			 FROM 
 			People `QPeopleTMP0`
 
-mappingId	MAPID-d98b0b379d4f49168dafc008d6ff86f8
+mappingId	MAPID-155079412b754cc0827e115e991e8e78
 target		<http://www.Department{t2_866}.University{t3_866}.edu/{t4_866}{t1_866}> :emailAddress {_756} . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_866`, 
@@ -4899,7 +4899,7 @@ source		SELECT
 			 FROM 
 			People `QPeopleTMP0`
 
-mappingId	MAPID-c47625f4d542462084fe73f26d7e3c4b
+mappingId	MAPID-b1bdc8619c714195aef5958e0d4c7739
 target		<http://www.Department{t2_869}.University{t3_869}.edu/{v_AssistantProfessor}{t1_869}> :researchInterest <http://www.Department{t2_869}.University{t3_869}.edu/Research{t5_869}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_869`, 
@@ -4912,7 +4912,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-9fc26b52921f456894737132b0790977
+mappingId	MAPID-d38f3cbb09b64abd8c0cdecf38db83b6
 target		<http://www.Department{t2_868}.University{t3_868}.edu/{v_AssociateProfessor}{t1_868}> :researchInterest <http://www.Department{t2_868}.University{t3_868}.edu/Research{t5_868}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_868`, 
@@ -4925,7 +4925,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-e7678b3ce3f345829e1fb4ee2f35c899
+mappingId	MAPID-29a738df549f4dafbb4a5963b98d98fa
 target		<http://www.Department{t2_867}.University{t3_867}.edu/{v_FullProfessor}{t1_867}> :researchInterest <http://www.Department{t2_867}.University{t3_867}.edu/Research{t5_867}> . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_867`, 
@@ -4938,7 +4938,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-1e06dc7407eb45f095fcf3fbae7ec6c1
+mappingId	MAPID-0631237ddcac49f99a960a8b9cdc4043
 target		<http://www.Department{t2_870}.University{t3_870}.edu/{t4_870}{t1_870}> :telephone {_766} . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_870`, 
@@ -4949,7 +4949,7 @@ source		SELECT
 			 FROM 
 			People `QPeopleTMP0`
 
-mappingId	MAPID-9e6da06bf7514579b8b89cf32e5445df
+mappingId	MAPID-b3b170e970fb4b8c86c0fe93fc14e8a8
 target		<http://www.Department{t2_871}.University{t3_871}.edu/{v_Chair}{t1_871}> a :Person_fresh6 . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_871`, 
@@ -4959,7 +4959,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-12995bb02aae46019a5bf9baaf290364
+mappingId	MAPID-6f20adff097f4160a4638aeccd57bac8
 target		<http://www.Department{t2_872}.University{t3_872}.edu/{v_Chair}{t1_872}> a :Person_fresh6 . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_872`, 
@@ -4969,7 +4969,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-5d735ede15d0459487a60a5199172882
+mappingId	MAPID-b35a167a6124417885c2603c7d2d2b32
 target		<http://www.Department{t2_881}.University{t3_881}.edu/{v_AssociateProfessor}{t1_881}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_881`, 
@@ -4981,7 +4981,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-32370026329d45a39d898f351fb9423e
+mappingId	MAPID-b5b3f7a00b134c7fa561a9defa7e1518
 target		<http://www.Department{t2_882}.University{t3_882}.edu/{v_FullProfessor}{t1_882}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_882`, 
@@ -4993,7 +4993,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-a7656f3976d6467ab9507ebc0b8880e9
+mappingId	MAPID-045aeac42d8c495a8dbfc2d630aae002
 target		<http://www.Department{t2_883}.University{t3_883}.edu/{v_AssistantProfessor}{t1_883}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_883`, 
@@ -5005,7 +5005,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-95d74daf0ab94cdb8222cee42115934f
+mappingId	MAPID-5777a25f422e4cc586ede542539f837f
 target		<http://www.Department{t2_884}.University{t3_884}.edu/{v_Chair}{t1_884}> a :Person_fresh4 . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_884`, 
@@ -5015,7 +5015,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-bf7867ec04d34262b7e7164df4d41b6b
+mappingId	MAPID-84c1ffa1b65241d1adedb6debae55dab
 target		<http://www.Department{t3_888}.University{t2_888}.edu/{v_Lecturer}{t4_888}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_888`, 
@@ -5027,7 +5027,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-aeb99298c68e4b938321535881ba34e8
+mappingId	MAPID-8e2af3473cb040d0a59a56112cbeea99
 target		<http://www.Department{t3_887}.University{t2_887}.edu/{v_AssistantProfessor}{t4_887}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_887`, 
@@ -5039,7 +5039,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-22cdf425b1e3467890519711f915a4c2
+mappingId	MAPID-468970433af24142b36c0448070b1c4e
 target		<http://www.Department{t3_886}.University{t2_886}.edu/{v_FullProfessor}{t4_886}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_886`, 
@@ -5051,7 +5051,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-81c3c44935b444d09ea63629e4b02e1f
+mappingId	MAPID-8a1934c6d62a42c084b84b269301eca9
 target		<http://www.Department{t3_885}.University{t2_885}.edu/{v_FullProfessor}{t4_885}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_885`, 
@@ -5063,7 +5063,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-513517a63ad14ca6b3d96e34cc8720f9
+mappingId	MAPID-35e5ed0e9dfe4dd2a5cac05fce3c8f2d
 target		<http://www.Department{t2_889}.University{t3_889}.edu/{v_Lecturer}{t1_889}> a :Person_fresh4 . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_889`, 
@@ -5073,7 +5073,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-c5377829b1cd4ce5b7eb13850229f43d
+mappingId	MAPID-aa8362b3645d48c49593d5d1795d239f
 target		<http://www.Department{t6_897}.University{t5_897}.edu/{v_Lecturer}{t3_897}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_897`, 
@@ -5086,7 +5086,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-858497f37e964c65a8dea8a91ff8fda9
+mappingId	MAPID-d022b2165abc430688c31e5b88429039
 target		<http://www.Department{t6_896}.University{t5_896}.edu/{v_Lecturer}{t3_896}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_896`, 
@@ -5099,7 +5099,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-96a4649306364948b2598da6da192657
+mappingId	MAPID-e852ae1ebac24c288f8050c5521bfffb
 target		<http://www.Department{t6_895}.University{t5_895}.edu/{v_AssistantProfessor}{t3_895}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_895`, 
@@ -5112,7 +5112,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-4d12c928afc84d0faa63b99fc5ab1c6b
+mappingId	MAPID-1187d2cae51a415d9dcdce8bf9a02a51
 target		<http://www.Department{t6_894}.University{t5_894}.edu/{v_AssistantProfessor}{t3_894}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_894`, 
@@ -5125,7 +5125,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-30e30234440942829ece5d5235234e67
+mappingId	MAPID-8c72bfe62f204a339ddf68583b649368
 target		<http://www.Department{t6_893}.University{t5_893}.edu/{v_AssociateProfessor}{t3_893}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_893`, 
@@ -5138,7 +5138,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-73096892cdbf468381ec1a734738a42a
+mappingId	MAPID-192520a3d6bc468a9310ff6942704f7e
 target		<http://www.Department{t6_892}.University{t5_892}.edu/{v_AssociateProfessor}{t3_892}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_892`, 
@@ -5151,7 +5151,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-6168b05c1ad546a3901557aab4c89338
+mappingId	MAPID-632cb7c938144b9a9deed5a52a99be56
 target		<http://www.Department{t6_891}.University{t5_891}.edu/{v_FullProfessor}{t3_891}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_891`, 
@@ -5164,7 +5164,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-c54f5959c5ab407b8558b2b0885bd4f0
+mappingId	MAPID-74c8017ad3114ee0ac30cb2ce7c464c0
 target		<http://www.Department{t6_890}.University{t5_890}.edu/{v_FullProfessor}{t3_890}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_890`, 
@@ -5177,7 +5177,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-73b545e54a6c44d0bd7e1cc3d57fbec9
+mappingId	MAPID-63b16a4c7fc040c0af7fb5410aeef375
 target		<http://www.Department{t2_898}.University{t3_898}.edu/{v_SystemsStaff}{t1_898}> a :Person_fresh4 . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_898`, 
@@ -5189,7 +5189,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-f0494605558547389fe9a42a913b2aac
+mappingId	MAPID-bcd1087834c94992a93167229b07c4a5
 target		<http://www.Department{t2_899}.University{t3_899}.edu/{v_ClericalStaff}{t1_899}> a :Person_fresh4 . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_899`, 
@@ -5201,7 +5201,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-aa83c81fcd6d4ad68b2799b5572b4fb3
+mappingId	MAPID-71f7e3af5d6e4dacb8c3ed652dbf9a16
 target		<http://www.Department{t2_900}.University{t3_900}.edu/{v_AssociateProfessor}{t1_900}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_900`, 
@@ -5213,7 +5213,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssociateProfessor')
 
-mappingId	MAPID-d13c06a7f8f941e386325f1482f1b7d7
+mappingId	MAPID-87ab463b1e174257a17ff6a9d93032e5
 target		<http://www.Department{t2_901}.University{t3_901}.edu/{v_FullProfessor}{t1_901}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_901`, 
@@ -5225,7 +5225,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'FullProfessor')
 
-mappingId	MAPID-174900bae01b436889bbeb0510784d11
+mappingId	MAPID-f267477429f1431a9b08f1298739c0d9
 target		<http://www.Department{t2_902}.University{t3_902}.edu/{v_AssistantProfessor}{t1_902}> a :Person_fresh4 . 
 source		SELECT 
 			   `QProfessorsTMP0`.`deptID` AS `t2_902`, 
@@ -5237,7 +5237,7 @@ source		SELECT
 			WHERE 
 			(`QProfessorsTMP0`.`profType` = 'AssistantProfessor')
 
-mappingId	MAPID-64c602bad5ea4eefafa2ff34b75f55f1
+mappingId	MAPID-343e2fa305394e19bdaba687b8428027
 target		<http://www.Department{t2_903}.University{t3_903}.edu/{v_Chair}{t1_903}> a :Person_fresh4 . 
 source		SELECT 
 			   `QChairsTMP0`.`deptID` AS `t2_903`, 
@@ -5247,7 +5247,7 @@ source		SELECT
 			 FROM 
 			Chairs `QChairsTMP0`
 
-mappingId	MAPID-38c1874bf9e64fbeb748f0ca107ca1a2
+mappingId	MAPID-383808dbc5b0425b991bb5c01dd03c87
 target		<http://www.Department{t3_907}.University{t2_907}.edu/{v_Lecturer}{t4_907}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_907`, 
@@ -5259,7 +5259,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'Lecturer')
 
-mappingId	MAPID-88397810e63f4e08b73ab613d3ad7ef9
+mappingId	MAPID-3c759a800a544fcbb08893ed16fd584b
 target		<http://www.Department{t3_906}.University{t2_906}.edu/{v_AssistantProfessor}{t4_906}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_906`, 
@@ -5271,7 +5271,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssistantProfessor')
 
-mappingId	MAPID-49d8920672e948af9f120d7de823d7d9
+mappingId	MAPID-91c03691031841c18950ec926c6196aa
 target		<http://www.Department{t3_905}.University{t2_905}.edu/{v_FullProfessor}{t4_905}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_905`, 
@@ -5283,7 +5283,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'AssociateProfessor')
 
-mappingId	MAPID-716328c4070a4d4dba8b2189c30b895a
+mappingId	MAPID-15081b6b836441ce8aef5a1d311c0e7c
 target		<http://www.Department{t3_904}.University{t2_904}.edu/{v_FullProfessor}{t4_904}> a :Person_fresh4 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_904`, 
@@ -5295,7 +5295,7 @@ source		SELECT
 			WHERE 
 			(`QGraduateStudentsTMP0`.`advisorType` = 'FullProfessor')
 
-mappingId	MAPID-694144e502834b1083044938f0f54d9e
+mappingId	MAPID-fb97ac0370b64d3dad6e2419010711e0
 target		<http://www.Department{t2_908}.University{t3_908}.edu/{v_Lecturer}{t1_908}> a :Person_fresh4 . 
 source		SELECT 
 			   `QLecturersTMP0`.`deptID` AS `t2_908`, 
@@ -5305,7 +5305,7 @@ source		SELECT
 			 FROM 
 			Lecturers `QLecturersTMP0`
 
-mappingId	MAPID-c283586810994d2ebe0366fba93a6b4c
+mappingId	MAPID-09339f7c69e142f1ad5b71ae3e39be59
 target		<http://www.Department{t6_916}.University{t5_916}.edu/{v_Lecturer}{t3_916}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_916`, 
@@ -5318,7 +5318,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-506d0bd0d51d4d2d86cc1187d7df882d
+mappingId	MAPID-bbd51b876e7544659b2a48d145841a76
 target		<http://www.Department{t6_915}.University{t5_915}.edu/{v_Lecturer}{t3_915}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_915`, 
@@ -5331,7 +5331,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'Lecturer')
 
-mappingId	MAPID-f85aae9fd8b5432ab9728d79646c2a92
+mappingId	MAPID-8b8c656e986f441babca3ba2bcc9384e
 target		<http://www.Department{t6_914}.University{t5_914}.edu/{v_AssistantProfessor}{t3_914}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_914`, 
@@ -5344,7 +5344,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-558e50a9f0cc4ae3b7daaaab82989192
+mappingId	MAPID-1018e99b35754a348e4add6ae8293d0c
 target		<http://www.Department{t6_913}.University{t5_913}.edu/{v_AssistantProfessor}{t3_913}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_913`, 
@@ -5357,7 +5357,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssistantProfessor')
 
-mappingId	MAPID-02b4e3630c914241b73a3e3758f97004
+mappingId	MAPID-a78655aa10b04ba5a4a38846ed30bf12
 target		<http://www.Department{t6_912}.University{t5_912}.edu/{v_AssociateProfessor}{t3_912}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_912`, 
@@ -5370,7 +5370,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-b568474a0cd149a487a7f293448d0082
+mappingId	MAPID-6e778b1531ca487084289083f77010c4
 target		<http://www.Department{t6_911}.University{t5_911}.edu/{v_AssociateProfessor}{t3_911}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_911`, 
@@ -5383,7 +5383,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'AssociateProfessor')
 
-mappingId	MAPID-1be903dc82874e6d9ba4ccfdb500b831
+mappingId	MAPID-fb9c03a0cb2d4049a0fba3d538c66139
 target		<http://www.Department{t6_910}.University{t5_910}.edu/{v_FullProfessor}{t3_910}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_910`, 
@@ -5396,7 +5396,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-76147a79de7a483b85302eaea8ea764a
+mappingId	MAPID-92d23284883a4546ae4c7efaa47e1ff6
 target		<http://www.Department{t6_909}.University{t5_909}.edu/{v_FullProfessor}{t3_909}> a :Person_fresh4 . 
 source		SELECT 
 			   `QTeachingTMP0`.`deptID` AS `t6_909`, 
@@ -5409,7 +5409,7 @@ source		SELECT
 			(`QTeachingTMP0`.`courseType` = 'Course') AND
 			(`QTeachingTMP0`.`teacherType` = 'FullProfessor')
 
-mappingId	MAPID-b39432292fbd42e3863bba2b5be43358
+mappingId	MAPID-b150a84333a8494f838aa743c26319cc
 target		<http://www.Department{t2_917}.University{t3_917}.edu/{v_SystemsStaff}{t1_917}> a :Person_fresh4 . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_917`, 
@@ -5421,7 +5421,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'SystemsStaff')
 
-mappingId	MAPID-63275e22cf384bc194e02f0916798af5
+mappingId	MAPID-3a4bc36947604552a9dacba2934d2d40
 target		<http://www.Department{t2_918}.University{t3_918}.edu/{v_ClericalStaff}{t1_918}> a :Person_fresh4 . 
 source		SELECT 
 			   `QSupportStaffTMP0`.`deptID` AS `t2_918`, 
@@ -5433,7 +5433,7 @@ source		SELECT
 			WHERE 
 			(`QSupportStaffTMP0`.`staffType` = 'ClericalStaff')
 
-mappingId	MAPID-81b855b5d6214267aeaf41e78596ace4
+mappingId	MAPID-f7a407dc42db47528e03dcc32ce407e7
 target		<http://www.Department{t3_919}.University{t2_919}.edu/{v_UndergraduateStudent}{t1_919}> a :Person_fresh5 . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_919`, 
@@ -5443,7 +5443,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-bae0916a585b4af4ae0850464524031d
+mappingId	MAPID-5257c8b4869f4118a3a6a0dd83543a59
 target		<http://www.Department{t3_920}.University{t2_920}.edu/{v_GraduateStudent}{t1_920}> a :Person_fresh5 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_920`, 
@@ -5453,7 +5453,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-40840dde254e4f85b7ca2f0b267ee74e
+mappingId	MAPID-45dcaa3567994dfdb847107c80ba49fd
 target		<http://www.Department{t6_924}.University{t7_924}.edu/{v_GraduateStudent}{t5_924}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_924`, 
@@ -5466,7 +5466,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-41b95361b37e49ee8147dd2c2c01b8ad
+mappingId	MAPID-b8a6e331341244988acd3b81f86e98b3
 target		<http://www.Department{t6_923}.University{t7_923}.edu/{v_GraduateStudent}{t5_923}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_923`, 
@@ -5479,7 +5479,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-c61f489a0da8423ebaa0d1319b4b8cbe
+mappingId	MAPID-2d9e29a4890e4bd490376f352807ea4b
 target		<http://www.Department{t6_922}.University{t7_922}.edu/{v_UndergraduateStudent}{t5_922}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_922`, 
@@ -5492,7 +5492,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-9345c26b41284c38a633f3df83d62734
+mappingId	MAPID-6c549f84eb8949d6853d9d77d5c93383
 target		<http://www.Department{t6_921}.University{t7_921}.edu/{v_UndergraduateStudent}{t5_921}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_921`, 
@@ -5505,7 +5505,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-feaa7a6a715d4f388edc9d1869619f05
+mappingId	MAPID-0017ad4afccc412bbff0974424878e95
 target		<http://www.Department{t3_926}.University{t2_926}.edu/{v_UndergraduateStudent}{t1_926}> a :Person_fresh5 . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_926`, 
@@ -5515,7 +5515,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-2f11660e4e944b5da7cef5c31238ed87
+mappingId	MAPID-3cbbafd57b114dffaa937dc66397a855
 target		<http://www.Department{t3_925}.University{t2_925}.edu/{v_GraduateStudent}{t1_925}> a :Person_fresh5 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_925`, 
@@ -5525,7 +5525,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-95385a984c3c4033843a9ac6328e9169
+mappingId	MAPID-0a48607199194b468952308cb4de7837
 target		<http://www.Department{t3_927}.University{t2_927}.edu/{v_UndergraduateStudent}{t1_927}> a :Person_fresh5 . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_927`, 
@@ -5535,7 +5535,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-6807190312bb45f19876f929854107ef
+mappingId	MAPID-ff542ce531cb4425865cb0139038067c
 target		<http://www.Department{t3_928}.University{t2_928}.edu/{v_GraduateStudent}{t1_928}> a :Person_fresh5 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_928`, 
@@ -5545,7 +5545,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-c0d8231579dd4b0ba02379f733b35769
+mappingId	MAPID-7c04f7c2c94e43c2aa1253ac1ca72c2e
 target		<http://www.Department{t6_932}.University{t7_932}.edu/{v_GraduateStudent}{t5_932}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_932`, 
@@ -5558,7 +5558,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-9368e0f2326c47fca3ba0dc2402f67e5
+mappingId	MAPID-69be54dabe8e44568ceec93c1c139e99
 target		<http://www.Department{t6_931}.University{t7_931}.edu/{v_GraduateStudent}{t5_931}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_931`, 
@@ -5571,7 +5571,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'GraduateStudent')
 
-mappingId	MAPID-2bdc7ba16d1e44fba0fb60c5e5ae2a4d
+mappingId	MAPID-ad9317e301ef41a2959625a34a14a144
 target		<http://www.Department{t6_930}.University{t7_930}.edu/{v_UndergraduateStudent}{t5_930}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_930`, 
@@ -5584,7 +5584,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'GraduateCourse') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-a7164baa833b436080c445d185d44b87
+mappingId	MAPID-7cfc3e3fd9d549f9a240023f8d78f5ec
 target		<http://www.Department{t6_929}.University{t7_929}.edu/{v_UndergraduateStudent}{t5_929}> a :Person_fresh5 . 
 source		SELECT 
 			   `QCourseEnrollmentsTMP0`.`studDeptID` AS `t6_929`, 
@@ -5597,7 +5597,7 @@ source		SELECT
 			(`QCourseEnrollmentsTMP0`.`courseType` = 'Course') AND
 			(`QCourseEnrollmentsTMP0`.`studentType` = 'UndergraduateStudent')
 
-mappingId	MAPID-1024970f92d14dbeafe27e22c373da93
+mappingId	MAPID-770d1196173e43c1b1d6839d42f8061a
 target		<http://www.Department{t3_934}.University{t2_934}.edu/{v_UndergraduateStudent}{t1_934}> a :Person_fresh5 . 
 source		SELECT 
 			   `QUnderGradStudentsTMP0`.`deptID` AS `t3_934`, 
@@ -5607,7 +5607,7 @@ source		SELECT
 			 FROM 
 			UnderGradStudents `QUnderGradStudentsTMP0`
 
-mappingId	MAPID-9d65f060848443d1a68ed3a59131c668
+mappingId	MAPID-b671ae31f7e14177b87780c350bcf760
 target		<http://www.Department{t3_933}.University{t2_933}.edu/{v_GraduateStudent}{t1_933}> a :Person_fresh5 . 
 source		SELECT 
 			   `QGraduateStudentsTMP0`.`deptID` AS `t3_933`, 
@@ -5617,7 +5617,7 @@ source		SELECT
 			 FROM 
 			GraduateStudents `QGraduateStudentsTMP0`
 
-mappingId	MAPID-627897972ac6491c93a251f6a46e1c53
+mappingId	MAPID-ec86e814f53d4ca3951488aaecac0aad
 target		<http://www.Department{t2_935}.University{t3_935}.edu/{t4_935}{t1_935}> a :Man_Woman . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_935`, 
@@ -5630,7 +5630,7 @@ source		SELECT
 			(`QPeopleTMP0`.`gender` = 'M') AND
 			('M' = 'F')
 
-mappingId	MAPID-fa66df67ba154e72bf7f84a722b88a3c
+mappingId	MAPID-7eec3598f794439bb47aa7257d17a4c5
 target		<http://www.Department{t2_937}.University{t3_937}.edu/{t4_937}{t1_937}> a :Man_Woman . 
 source		SELECT 
 			   `QPeopleTMP0`.`deptID` AS `t2_937`, 
@@ -5643,7 +5643,7 @@ source		SELECT
 			(`QPeopleTMP0`.`gender` = 'M') AND
 			('M' = 'F')
 
-mappingId	MAPID-5d974120942940ff83386b4f8947c56e
+mappingId	MAPID-976b6218009645fa868320b682e99188
 target		<http://www.Department{t3_939}.University{t2_939}.edu/{v_GraduateStudent}{t1_939}> a :Person_fresh13 . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_939`, 
@@ -5653,7 +5653,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-b7ec1277717646808cd1767b03ed2827
+mappingId	MAPID-923138524ac34c36b52a37932eb3609b
 target		<http://www.Department{t3_940}.University{t2_940}.edu/{v_GraduateStudent}{t1_940}> a :Person_fresh13 . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_940`, 
@@ -5663,7 +5663,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-8f1b4eb4d2cb41ba99db3aaf4275188b
+mappingId	MAPID-55a925089ed74debb35c2630297ba8d2
 target		<http://www.Department{t3_941}.University{t2_941}.edu/{v_GraduateStudent}{t1_941}> a :Person_fresh13 . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_941`, 
@@ -5673,7 +5673,7 @@ source		SELECT
 			 FROM 
 			TeachingAssistants `QTeachingAssistantsTMP0`
 
-mappingId	MAPID-765ac97d65f948c2b1dcfa657bb4bc19
+mappingId	MAPID-541f0b6607ab4135a88e5207f2bdd4c6
 target		<http://www.Department{t3_942}.University{t2_942}.edu/{v_GraduateStudent}{t1_942}> a :Person_fresh13 . 
 source		SELECT 
 			   `QTeachingAssistantsTMP0`.`deptID` AS `t3_942`, 

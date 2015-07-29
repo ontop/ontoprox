@@ -122,7 +122,7 @@ public class CompilationTest {
     }
 
     private OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException {
-        HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile);
+        HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile, 5);
         rewriter.rewrite();
         OBDAModel newModel = rewriter.getRewrittenOBDAModel();
         return newModel;

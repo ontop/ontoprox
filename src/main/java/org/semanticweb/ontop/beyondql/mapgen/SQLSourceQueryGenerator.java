@@ -77,6 +77,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+
+/**
+ * Adapted from SQLGenerator from the version2 branch. The main difference is that we do not output "type" and "lang"
+ * columns in this generator.
+ */
+
 /**
  * This class generates a SQL string from the datalog program coming from the
  * unfolder.
@@ -89,8 +95,6 @@ import java.util.Set;
  *
  */
 public class SQLSourceQueryGenerator {
-
-	private static final long serialVersionUID = 7477161929752147045L;
 
 	/**
 	 * Operator symbols

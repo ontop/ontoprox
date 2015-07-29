@@ -87,39 +87,25 @@ public class DatalogToMappingAxiomTranslater {
         return obdaMappingAxioms;
     }
 
-
-//    /*
-//     * http://it.unibz.krdb/obda/test/simple#A(URI("http://it.unibz.krdb/obda/test/simple#{}",t1_1))
-//     *      :- TABLE2(t1_1,t2_1,t3_1), LT(t1_1,5), TABLE2(t1_1,t2_2,t3_2), LT(t1_1,3), TABLE2(t1_1,t2_3,t3_3), GT(t1_1,1)
-//     * ->
-//     * ans(t1_1) :- TABLE2(t1_1,t2_1,t3_1), LT(t1_1,5), TABLE2(t1_1,t2_2,t3_2), LT(t1_1,3), TABLE2(t1_1,t2_3,t3_3), GT(t1_1,1)
-//     */
-//    public static DatalogProgram removeFunctionsInHead(DatalogProgram p){
-//        List<CQIE> newRules = Lists.newArrayList();
-//
-//        Map<Variable, ValueConstant> map = new HashMap<>();
-//
-//        for(CQIE rule : p.getRules()){
-//            CQIE cqie = removeFunctionsInHead(rule, map);
-//            newRules.add(cqie);
-//        }
-//
-//        return DATA_FACTORY.getDatalogProgram(newRules);
-//    }
-
-
     /**
-     * q(URI("http://www.Department{}.University{}.edu/{}{}",t2_14,t3_14,"Lecturer",t1_14))
-     * ->
-     * ans(t2_14,t3_14,tnew,t1_14),
-     * {v_Lecture -> "Lecturer"}
+     *
+     * Removes the functions in the head of the rule and keeps the variables inside. If there are constants in the head,
+     * introduce fresh variables for them.
+     *
+     * Example,
+     *
+     * the head
+     * <pre>q(URI("http://www.Department{}.University{}.edu/{}{}",t2_14,t3_14,"Lecturer",t1_14))</pre>
+     * is changed to
+     * <pre>ans(t2_14,t3_14,v_Lecture,t1_14),</pre>
+     *
+     * and
+     * {@code newVariableMap} : <pre> {v_Lecture -> "Lecturer"} </pre>
+     * {@code newHeadTerms}: <pre>[t2_14,t3_14,v_Lecture,t1_14]</pre>
      */
     private static CQIE removeFunctionsInHead(CQIE rule, Map<Variable, ValueConstant> newVariableMap, List<Term> newHeadTerms) {
         // LinkedHashSet preserves order
         Set<Variable> headVariables = new LinkedHashSet<>();
-        //TermUtils.addReferencedVariablesTo(headVariables, rule.getHead());
-
-//        List<Term> newHeadTerms = new ArrayList<>();
 
         for (Term term : rule.getHead().getTerms()) {
 
@@ -159,9 +145,6 @@ public class DatalogToMappingAxiomTranslater {
         }
 
 
-        //newHeadContainer[0] = DATA_FACTORY.getFunction(rule.getHead().getFunctionSymbol(), newHeadTerms);
-
-        //List<Variable> headVariables = QueryUtils.getVariablesInAtom(rule.getHead());
         return DATA_FACTORY.getCQIE(DATA_FACTORY.getFunction(ANS, Lists.<Term>newArrayList(headVariables)), rule.getBody());
     }
 
@@ -174,9 +157,6 @@ public class DatalogToMappingAxiomTranslater {
      */
     public CQIE generateTargetQuery(CQIE rule, List<Term> newHeadTerms) {
         return DATA_FACTORY.getCQIE(TARGET_QUERY_HEAD, DATA_FACTORY.getFunction(rule.getHead().getFunctionSymbol(), newHeadTerms));
-
-        //Function head = rule.getHead();
-        // URITemplates.getUriTemplateString((Function) head.getTerm(0));
     }
 
 }

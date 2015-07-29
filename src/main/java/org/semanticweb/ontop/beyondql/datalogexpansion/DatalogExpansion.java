@@ -115,8 +115,6 @@ public class DatalogExpansion {
                     }
                 }
             }
-
-
         }
 
         List<CQIE> cqies = Lists.newArrayList();

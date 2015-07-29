@@ -24,9 +24,9 @@ public class OntopOBDAApproximationCommand {
 
         long t1 = System.currentTimeMillis();
 
-        if(args.length != 4){
+        if(args.length != 4 && args.length != 5){
             System.err.println("Usage: OntopOBDAApproximationCommand ontology.owl mapping.obda " +
-                    "newOntology.owl newMapping.obda");
+                    "newOntology.owl newMapping.obda [depth]");
             System.exit(-1);
         }
 
@@ -36,7 +36,14 @@ public class OntopOBDAApproximationCommand {
         String rewrittenOntologyFile = args[2];
         String rewrittenOBDAFile = args[3];
 
-        HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile);
+        // default value of depth is 5
+        int depth = 5;
+
+        if(args.length == 5){
+            depth = Integer.parseInt(args[4]);
+        }
+
+        HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile, depth);
         rewriter.rewrite();
 
         OBDAModel newModel = rewriter.getRewrittenOBDAModel();
@@ -52,7 +59,6 @@ public class OntopOBDAApproximationCommand {
                 new FileOutputStream(rewrittenOntologyFile));
 
         System.err.println("new ontology saved in: " + rewrittenOntologyFile);
-
 
         long t2 = System.currentTimeMillis();
 

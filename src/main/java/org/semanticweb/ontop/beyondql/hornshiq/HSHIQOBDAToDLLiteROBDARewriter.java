@@ -50,6 +50,11 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * This is the main class for rewriting/approximating a OBDA setting (T,M) where T is in Horn-SHIQ to another (hopefully
+ * equivalent) OBDA setting (T', M')
+ *
+ */
 public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private static OBDADataFactory DATA_FACTORY = OBDADataFactoryImpl.getInstance();
@@ -59,6 +64,9 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
     private static Variable X = DATA_FACTORY.getVariable("X");
 
     private final String tempPrologFile;
+
+    private final int depth;
+
     private OWLOntologyManager manager;
 
     private OWLOntology ontology;
@@ -79,10 +87,11 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
     }
 
 
-    public HSHIQOBDAToDLLiteROBDARewriter(String ontologyFile, String obdaFile){
+    public HSHIQOBDAToDLLiteROBDARewriter(String ontologyFile, String obdaFile, int depth){
         int i = ontologyFile.lastIndexOf(".");
 
         this.tempPrologFile = ontologyFile.substring(0, i) + ".pl";
+        this.depth = depth;
 
         try {
             this.manager = OWLManager.createOWLOntologyManager();
@@ -105,14 +114,12 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     }
 
-
-    @SuppressWarnings("UnnecessaryLocalVariable")
     public void rewrite() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
-        OBDAModel newOBDAModel = rewrite(ontology, obdaModel, tempPrologFile);
+        rewrite(ontology, obdaModel, tempPrologFile, depth);
 
     }
 
-    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile)
+    private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile, int depth)
             throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, IOException {
 
         long t1 = System.currentTimeMillis();
@@ -145,7 +152,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
         //log.debug("translate program from Clipper {}", ontopProgram);
 
-        OBDAModel extendedObdaModel = rewriteMappings(ontology, obdaModel, tempPrologFile, newConceptsForConjunctions, ontopProgram);
+        OBDAModel extendedObdaModel = rewriteMappings(ontology, obdaModel, tempPrologFile, newConceptsForConjunctions, ontopProgram, depth);
 
         this.rewrittenOBDAModel = extendedObdaModel;
 
@@ -153,7 +160,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
     }
 
     private static OBDAModel rewriteMappings(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile,
-                                             Multimap<OWLClass, OWLClass> newConceptsForConjunctions, DatalogProgram ontopProgram)
+                                             Multimap<OWLClass, OWLClass> newConceptsForConjunctions, DatalogProgram ontopProgram, int depth)
             throws SQLException, OBDAException, DuplicateMappingException, IOException {
         long t3 = System.currentTimeMillis();
 
@@ -191,8 +198,6 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
             log.debug("compute mapping for {} ({}/{})", new Object[]{predicate, i, predicatesToDefine.size()});
             i++;
-
-            int depth = 5;
 
             List<CQIE> cqies = datalogExpansion.expand(String.format("'%s'", predicate.getName()), predicate.getArity(), depth);
 

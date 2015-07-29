@@ -15,6 +15,11 @@ import org.jpl7.Variable;
 
 import java.util.List;
 
+/**
+ * An internal SWI-Prolog representation of Datalog rule.
+ *
+ * It can be converted to Ontop Datalog rule using {@code toCQIE()} method.
+ */
 public class DatalogRule {
 
     static OBDADataFactory DATA_FACOTRY = OBDADataFactoryImpl.getInstance();
@@ -48,7 +53,7 @@ public class DatalogRule {
             try {
                 bodyAtoms.add(translate((Compound)bodyAtom.arg(1)));
             } catch (Exception e){
-                System.out.println();
+                e.printStackTrace();
             }
 
         }
@@ -81,8 +86,6 @@ public class DatalogRule {
 
         return DATA_FACOTRY.getFunction(predicate, args);
     }
-
-
 
 
     public String toString(){
