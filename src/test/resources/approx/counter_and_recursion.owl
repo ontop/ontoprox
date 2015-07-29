@@ -16,10 +16,11 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      ontologyIRI="http://www.semanticweb.org/counter">
-    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="" IRI="http://www.semanticweb.org/counter#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Declaration>
         <Class IRI="#A1"/>
     </Declaration>
@@ -37,6 +38,9 @@
     </Declaration>
     <Declaration>
         <Class IRI="#B1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#End"/>
     </Declaration>
     <Declaration>
         <Class IRI="#nB0"/>
@@ -89,6 +93,13 @@
                 <Class IRI="#nB1"/>
             </ObjectIntersectionOf>
         </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <ObjectIntersectionOf>
+            <Class IRI="#B0"/>
+            <Class IRI="#B1"/>
+        </ObjectIntersectionOf>
+        <Class IRI="#End"/>
     </SubClassOf>
     <SubClassOf>
         <ObjectIntersectionOf>
