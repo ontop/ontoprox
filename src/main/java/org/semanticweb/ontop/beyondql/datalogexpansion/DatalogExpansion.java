@@ -184,7 +184,6 @@ public class DatalogExpansion {
 
     public String getVocabularyRules(DatalogProgram ontopProgram, OBDAModel obdaModel) {
 
-
         StringBuilder sb = new StringBuilder();
 
         OBDADataSource dataSource = obdaModel.getSources().iterator().next();
@@ -219,6 +218,12 @@ public class DatalogExpansion {
             }
         });
 
+        //:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'/2.
+        for (Predicate predicate : orderedPredicates) {
+            sb.append(String.format(":- discontiguous '%s'/%d.\n", predicate.getName(), predicate.getArity()));
+        }
+
+        sb.append("\n");
 
         sb.append("edb(view(_)).\n");
 

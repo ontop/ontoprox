@@ -265,6 +265,57 @@ datalog_expansions_bf(P, Depth, Expansions) :-
 
 
 
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssistantProfessor'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssociateProfessor'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Book'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ClericalStaff'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ConferencePaper'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#FullProfessor'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateStudent'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#JournalArticle'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Lecturer'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Manual'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchAssistant'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchGroup'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Specification'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SystemsStaff'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TechnicalReport'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UndergraduateStudent'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UnofficialPublication'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'/1.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#emailAddress'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#enrollIn'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#firstName'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMajor'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAdvisedBy'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isCrazyAbout'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#lastName'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#name'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationAuthor'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#researchInterest'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#takesCourse'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#telephone'/2.
+:- discontiguous 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'/2.
 edb(view(_)).
 idb('http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(_)).
 idb('http://uob.iodt.ibm.com/univ-bench-dl.owl#AssistantProfessor'(_)).
