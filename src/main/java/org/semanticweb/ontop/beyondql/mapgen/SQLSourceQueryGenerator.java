@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.beyondql.hornshiq;
+package org.semanticweb.ontop.beyondql.mapgen;
 
 /*
  * #%L

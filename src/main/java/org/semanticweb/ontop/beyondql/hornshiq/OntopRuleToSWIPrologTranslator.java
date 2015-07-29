@@ -9,6 +9,10 @@ import it.unibz.krdb.obda.model.Predicate;
 
 import java.util.List;
 
+/**
+ * A simple converter from Ontop Rule to the String representation used in Prolog.
+ *
+ */
 public class OntopRuleToSWIPrologTranslator {
 
     public static String translate(List<CQIE> cqs) {
@@ -44,8 +48,6 @@ public class OntopRuleToSWIPrologTranslator {
         }
         sb.append(".");
         return sb.toString();
-
-
     }
 
     public static String translate(Function f){
