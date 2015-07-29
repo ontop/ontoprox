@@ -432,29 +432,40 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * a class expression in the original signature
 		 */
 		OWLClassExpression representativeClass = selectRepresentativeClass(equiv_classes);
+		
+		/**
+		 * We use namedClass for optimization reasons. 
+		 * Although, I am not sure it helps (Elena).
+		 */
 		OWLClass namedClass = selectNamedClass(equiv_classes);
 
+
+		/**
+		 * If equiv_classes are all inconsistent, we make sure that 
+		 * representative class and named class are Nothing
+		 */
+		if(!reasoner.isSatisfiable(representativeClass)) {
+			representativeClass = ontologyManager.getOWLDataFactory().getOWLNothing();
+			namedClass = ontologyManager.getOWLDataFactory().getOWLNothing();
+		}
+
+		
 		/**
 		 * Create the equivalent classes axioms for all class expressions in
 		 * equiv_classes
 		 * 
-		 * At the moment we add equivalent classes axioms only for satisfiable classes
+		 * At the moment we don't add equivalent classes axioms for Nothing
 		 */
-		if (reasoner.isSatisfiable(namedClass)) {
-			axioms.addAll(constructDLLiteEquivalentClassesAxioms(equiv_classes));
+		if (!namedClass.isOWLNothing()) {
+			axioms.addAll(constructDLLiteREquivalentClassesAxioms(equiv_classes));
 		}
 
 		/**
 		 * Create the subclass axiom between the representative class and the
 		 * super class
-		 * 
-		 * We do not create trivial axioms of the form "\bot \ISA A" or "A \ISA
-		 * \top"
 		 */
-		if (!superClass.isOWLThing() && !representativeClass.isOWLNothing()) {
-			axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
-		}
-
+		axioms.addAll(constructDLLiteRSubClassOfAxiom(representativeClass, superClass));
+		
 		/**
 		 * Create the disjoint class axioms
 		 * 
@@ -478,6 +489,52 @@ public class DLLiteRClosure extends OntologyTransformations {
 		for (Node<OWLClass> equiv_sub_classes : sub_classes) {
 			Set<OWLAxiom> naxioms = computeEntailedDLLiteRConceptAxioms(equiv_sub_classes, representativeClass, reasoner);
 			axioms.addAll(naxioms);
+		}
+
+		return axioms;
+	}
+
+	/**
+	 * We do not create trivial axioms of the form "\bot \ISA A" or "A \ISA
+	 * \top".
+	 * 
+	 * When possible, we create domain and range axioms for better readability.
+	 * 
+	 * @param representativeClass
+	 * @param superClass
+	 * @return
+	 */
+	private Set<OWLAxiom> constructDLLiteRSubClassOfAxiom(
+			OWLClassExpression representativeClass,
+			OWLClassExpression superClass) {
+		Set<OWLAxiom> axioms = new HashSet<>();
+		
+		// Only add non-trivial axioms
+		if (!superClass.isOWLThing() && !representativeClass.isOWLNothing() ) {
+			if(representativeClass instanceof OWLClass) {
+				/**
+				 * Add normal subclassof axiom
+				 */
+				axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
+			} else {// that is, representativeClass instanceof OWLObjectSomeValuesFrom
+				/**
+				 * Add either a domain or range axiom
+				 */
+				OWLObjectPropertyExpression property = ((OWLObjectSomeValuesFrom)representativeClass).getProperty();
+				if (!property.isAnonymous()) {
+					// representativeClass is of the form ∃R
+					axioms.add(ontologyManager.getOWLDataFactory().getOWLObjectPropertyDomainAxiom(
+									property.asOWLObjectProperty(),
+									superClass));
+				} else {
+					// representativeClass is of the form ∃R^-
+					axioms.add(ontologyManager.getOWLDataFactory().getOWLObjectPropertyRangeAxiom(
+									property.getNamedProperty(),
+									superClass));
+				}
+			}
+		} else {
+			// nothing to be added
 		}
 
 		return axioms;
@@ -640,7 +697,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	 * @param equiv_classes
 	 * @return
 	 */
-	private Set<OWLAxiom> constructDLLiteEquivalentClassesAxioms(
+	private Set<OWLAxiom> constructDLLiteREquivalentClassesAxioms(
 			Node<OWLClass> equiv_classes) {
 
 		Set<OWLClassExpression> equiv_class_in_orig_signature = new HashSet<>(
