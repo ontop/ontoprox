@@ -134,6 +134,27 @@
             <Class IRI="#nB1"/>
         </ObjectAllValuesFrom>
     </SubClassOf>
+    <SubClassOf>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#R"/>
+            <Class IRI="#A1"/>
+        </ObjectSomeValuesFrom>
+        <Class IRI="#A1"/>
+    </SubClassOf>
+    <SubClassOf>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#S"/>
+            <Class IRI="#A21"/>
+        </ObjectSomeValuesFrom>
+        <Class IRI="#A2"/>
+    </SubClassOf>
+    <SubClassOf>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#S"/>
+            <Class IRI="#A22"/>
+        </ObjectSomeValuesFrom>
+        <Class IRI="#A21"/>
+    </SubClassOf>
     <ClassAssertion>
         <Class IRI="#A1"/>
         <NamedIndividual IRI="#a"/>

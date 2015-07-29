@@ -1,20 +1,30 @@
-CREATE DATABASE simple
-  WITH OWNER = postgres
-       ENCODING = 'UTF8'
-       TABLESPACE = pg_default
-       LC_COLLATE = 'C'
-       LC_CTYPE = 'C'
-       CONNECTION LIMIT = -1;
-
-COMMENT ON DATABASE simple
-  IS 'a simple database for testing Compile and Rewrite implementation';
-
-CREATE TABLE "tableS"
+CREATE TABLE tableS
 (
   col1 integer NOT NULL,
-  col2 integer NOT NULL,
-  CONSTRAINT pkey PRIMARY KEY (col1, col2)
-)
-WITH (
-  OIDS=FALSE
+  col2 integer NOT NULL
 );
+
+CREATE TABLE tableA22
+(
+  col1 integer NOT NULL
+);
+
+CREATE TABLE tableR
+(
+  col1 integer NOT NULL,
+  col2 integer NOT NULL
+);
+
+CREATE TABLE tableA1
+(
+  col1 integer NOT NULL
+);
+
+INSERT INTO tableA1 VALUES (4);
+INSERT INTO tableR VALUES (3,4);
+INSERT INTO tableR VALUES (2,3);
+INSERT INTO tableR VALUES (1,2);
+
+INSERT INTO tableA22 VALUES (13);
+INSERT INTO tableS VALUES (12,13);
+INSERT INTO tableS VALUES (1,12);

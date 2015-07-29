@@ -1,0 +1,32 @@
+[PrefixDeclaration]
+:		http://www.semanticweb.org/counter#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xsd:		http://www.w3.org/2001/XMLSchema#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[SourceDeclaration]
+sourceUri	h2source
+connectionUrl	jdbc:h2:mem:questjunitdb
+username	sa
+password	
+driverClass	org.h2.Driver
+
+[MappingDeclaration] @collection [[
+mappingId	role R
+target		{col1} <http://www.semanticweb.org/counter#R> {col2} . 
+source		select col1, col2 from tableR
+
+mappingId	role S
+target		{col1} <http://www.semanticweb.org/counter#S> {col2} . 
+source		select col1, col2 from tableS
+
+mappingId	concept A22
+target		{col1} a <http://www.semanticweb.org/counter#A22> . 
+source		select col1 from tableA22
+
+mappingId	concept A1
+target		{col1} a<http://www.semanticweb.org/counter#A1> . 
+source		select col1 from tableA1
+]]
+
