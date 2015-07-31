@@ -1,4 +1,4 @@
-package inf.unibz.it.dllite.aproximation.semantic;
+package org.semanticweb.ontop.beyondql.approximation;
 
 import java.util.*;
 
@@ -47,13 +47,13 @@ import com.google.common.base.Joiner;
  * @author Elena Botoeva
  *
  *****************************************************************************/
-public class DLLiteRClosure extends OntologyTransformations {
+public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 	/**
 	 * @param manager
 	 * 
 	 */
-	public DLLiteRClosure(OWLOntologyManager manager) {
+	public DLLiteRClosureBuilder(OWLOntologyManager manager) {
 		super(manager);
 		new_classes = new HashMap<OWLClass, OWLClassExpression>();
 	}
@@ -62,7 +62,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	// introduced and its original equivalent descriptions. 
 	private HashMap<OWLClass, OWLClassExpression> new_classes;
 	// For the logging
-	private Logger log = LoggerFactory.getLogger(DLLiteRClosure.class);
+	private Logger log = LoggerFactory.getLogger(DLLiteRClosureBuilder.class);
 
 	
 	/**
@@ -94,7 +94,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 		OWLOntology extended_owl_ont = giveNamesToBasicConcepts(owl_ont);
 
 		
-		log.info("Creating a Hermit reasoner and precomputing inferences...");
+		log.info("  * Creating a Hermit reasoner and precomputing inferences...");
 
 		// Create a reasoner factory. In this case, we will use Hermit.
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
@@ -155,7 +155,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	 *         equivalent classes axioms
 	 **************************************************************************/
 	private OWLOntology giveNamesToBasicConcepts(OWLOntology owl_ont) {
-		log.info("Building the conservative extension for the basic concepts... ");
+		log.info("  * Giving names to the basic concepts... ");
 
 		/**
 		 * Collect all existential restrictions to be named
@@ -200,8 +200,6 @@ public class DLLiteRClosure extends OntologyTransformations {
 	 *************************************************************************/
 	private Set<OWLClassExpression> constructObjectSomeValuesFrom(
 			OWLOntology ont, boolean qualifiedExistentials) {
-		log.info("	* Adding existential restrictions for every object property...");
-
 		OWLClass classThing = ontologyManager.getOWLDataFactory().getOWLClass(
 				OWLRDFVocabulary.OWL_THING.getIRI());
 		Set<OWLObjectProperty> properties = ont
@@ -258,9 +256,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	 *************************************************************************/
 	private Set<OWLClassExpression> constructDataMinCardinalityRestrictions(
 			OWLOntology ont) {
-		log.info("	* Adding min cardinality restrictions for every "
-				+ "data property ...");
-
+	
 		Set<OWLClassExpression> dataMinCardinalityRestrictions = new HashSet<>();
 
 		Set<OWLDataProperty> dproperties = ont.getDataPropertiesInSignature();
@@ -286,8 +282,6 @@ public class DLLiteRClosure extends OntologyTransformations {
 	private Set<OWLAxiom> createDefinitionsForComplexExpressions(
 			Set<OWLClassExpression> complexExpressionsToBeNamed,
 			OWLOntology owl_ont) {
-
-		log.info("	* Adding Named classes for every complex class expression...");
 
 		OWLDataFactory factory = ontologyManager.getOWLDataFactory();
 
@@ -332,7 +326,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	private Set<OWLAxiom> computeEntailedDLLiteRConceptAxioms(
 			OWLReasoner reasoner) {
 
-		log.info("Computing the basic concept axioms... ");
+		log.info("  * Computing the basic concept axioms... ");
 
 		/**
 		 * we adopt a top-down approach, so we start from TOP = thing and then
@@ -371,7 +365,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 	 * @return the set of entailed DL-LiteR role axioms.
 	 */
 	private Set<OWLAxiom> computeEntailedDLLiteRRoleAxioms(OWLReasoner reasoner) {
-		log.info("Computing the basic role axioms... ");
+		log.info("  * Computing the basic role axioms... ");
 
 		/**
 		 * we adopt a top-down approach, so we start from the top role and then

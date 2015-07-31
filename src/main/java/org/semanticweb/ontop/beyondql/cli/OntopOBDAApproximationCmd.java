@@ -1,4 +1,4 @@
-package org.semanticweb.ontop.beyondql;
+package org.semanticweb.ontop.beyondql.cli;
 
 
 import it.unibz.krdb.obda.exception.DuplicateMappingException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class OntopOBDAApproximationCommand {
+public class OntopOBDAApproximationCmd {
 
     public static void main(String[] args) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException, OWLOntologyStorageException {
 

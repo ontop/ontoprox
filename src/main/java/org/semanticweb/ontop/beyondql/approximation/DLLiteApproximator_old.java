@@ -1,3 +1,4 @@
+package org.semanticweb.ontop.beyondql.approximation;
 //package inf.unibz.it.dllite.aproximation.semantic;
 //
 //import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertyParticipatesInQualifiedExistentialException;

@@ -1,4 +1,4 @@
-package inf.unibz.it.dllite.aproximation.semantic.exception;
+package org.semanticweb.ontop.beyondql.approximation.exception;
 
 /**
  * To handle invalid arguments in the DLLiteApproximator class. Required:

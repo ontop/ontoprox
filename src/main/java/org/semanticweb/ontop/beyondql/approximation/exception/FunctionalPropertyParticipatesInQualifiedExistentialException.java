@@ -1,4 +1,4 @@
-package inf.unibz.it.dllite.aproximation.semantic.exception;
+package org.semanticweb.ontop.beyondql.approximation.exception;
 /**
  * When an object property is functional, its functionality can be added in
  * the Dl Lite ontology when:
@@ -7,28 +7,31 @@ package inf.unibz.it.dllite.aproximation.semantic.exception;
  * positively in the right-hand side of an inclusion assertion), and
  * <li>It does not appear in an expression of the form ∃Q.C in T. 
  * <ul>
- * In this exception we cober the first case. 
+ * In this exception we cober the second case. 
  * @author Alejandra Lorenzo
  *
  */
+public class FunctionalPropertyParticipatesInQualifiedExistentialException
+		extends Exception {
 
-public class FunctionalPropertySpecializedException extends Exception {
-	
-	public FunctionalPropertySpecializedException() {
+	public FunctionalPropertyParticipatesInQualifiedExistentialException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FunctionalPropertySpecializedException(String arg0) {
+	public FunctionalPropertyParticipatesInQualifiedExistentialException(
+			String arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
 
-	public FunctionalPropertySpecializedException(Throwable arg0) {
+	public FunctionalPropertyParticipatesInQualifiedExistentialException(
+			Throwable arg0) {
 		super(arg0);
 		// TODO Auto-generated constructor stub
 	}
 
-	public FunctionalPropertySpecializedException(String arg0, Throwable arg1) {
+	public FunctionalPropertyParticipatesInQualifiedExistentialException(
+			String arg0, Throwable arg1) {
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}

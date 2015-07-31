@@ -1,14 +1,15 @@
-package inf.unibz.it.dllite.approximation.launch;
-
-import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
-import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
-import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
-import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
+package org.semanticweb.ontop.beyondql.cli;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
+import org.semanticweb.ontop.beyondql.approximation.ConjunctionNormalizer;
+import org.semanticweb.ontop.beyondql.approximation.DLLiteRClosureBuilder;
+import org.semanticweb.ontop.beyondql.approximation.EmptyConjunctionRemover;
+import org.semanticweb.ontop.beyondql.approximation.IRIUtils;
+import org.semanticweb.ontop.beyondql.approximation.OntologyTransformer;
+import org.semanticweb.ontop.beyondql.approximation.QualifiedExistentialNormalizer;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
 import org.semanticweb.owlapi.model.IRI;
@@ -22,7 +23,7 @@ import com.google.common.collect.ImmutableSet;
 
 import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
 
-public class ApproximationCmd {
+public class OntopOntologyApproximationCmd {
 
 	/**
 	 * @param args
@@ -41,13 +42,15 @@ public class ApproximationCmd {
 		
 	
 				// iris for the intermediate ontologies
-				IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
-				IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
-				IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
-				IRI file_iri_dllite_ont1 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step1");
-				IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
-				IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
-				IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
+				IRI iri_dllite_ont1_opt = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step1_opt");
+				IRI iri_dllite_ont2 = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+				IRI iri_dllite_ont3 = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
+				IRI iri_dllite_ont4 = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step4");
+				IRI file_iri_dllite_ont1 = IRIUtils.createIRIWithSuffix(file_iri_owl_ont, "step1");
+				IRI file_iri_dllite_ont1_opt = IRIUtils.createIRIWithSuffix(file_iri_owl_ont, "step1_opt");
+				IRI file_iri_dllite_ont2 = IRIUtils.createIRIWithSuffix(file_iri_owl_ont, "step2");
+				IRI file_iri_dllite_ont3 = IRIUtils.createIRIWithSuffix(file_iri_owl_ont, "step3");
+				IRI file_iri_dllite_ont4 = IRIUtils.createIRIWithSuffix(file_iri_owl_ont, "step4");
 
 				
 				// step 1
@@ -59,11 +62,16 @@ public class ApproximationCmd {
 
 		        OWLOntology ont1 = qaHornSHIQ.exportNormalizedAxiomsAndSaturatedEnforceRelations(ont.getOntologyID().getOntologyIRI().toString() + "_step1");
 				manager.saveOntology(ont1, new RDFXMLOntologyFormat(), new FileOutputStream(file_iri_dllite_ont1.toString()));
-				
+
+
+				// intermediate optimization step
+				EmptyConjunctionRemover emptyRemover = new EmptyConjunctionRemover(manager);
+				OWLOntology ont1opt = emptyRemover.transform(ont1, iri_dllite_ont1_opt);
+				manager.saveOntology(ont1opt, new FileOutputStream(file_iri_dllite_ont1_opt.toString()));
 
 				// step 2
 				QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
-				OWLOntology ont2 = dlliterNormalizer.transform(ont1, iri_dllite_ont2);
+				OWLOntology ont2 = dlliterNormalizer.transform(ont1opt, iri_dllite_ont2);
 				manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
 				
 				// step 3
@@ -72,7 +80,7 @@ public class ApproximationCmd {
 				manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 				
 				// step 4
-				DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
+				DLLiteRClosureBuilder dlliterClosure = new DLLiteRClosureBuilder(manager);
 				OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
 				manager.saveOntology(ont4, new FileOutputStream(file_iri_dllite_ont4.toString()));
 			

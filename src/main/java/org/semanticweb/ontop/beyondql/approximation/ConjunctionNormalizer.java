@@ -1,4 +1,4 @@
-package inf.unibz.it.dllite.aproximation.semantic;
+package org.semanticweb.ontop.beyondql.approximation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-public class ConjunctionNormalizer extends OntologyTransformations {
+public class ConjunctionNormalizer extends OntologyTransformer {
 	
 	private Multimap<OWLClass,OWLClass> newConceptsForConjunctions;
 	
@@ -151,7 +151,7 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 		// Get the prefix of the first element in classes
 		String prefix = "http://www.example.org/fresh#";//extractPrefix(classes.iterator().next().asOWLClass());
 		// Get the string of "_and_" separated concept names in conjunction 
-		String newName = extractConceptNamesFromConjunction(conjunction);
+		String newName = IRIUtils.extractConceptNamesFromConjunction(conjunction);
 		// Create fresh concept A1,A2,..,An \ISA
 		OWLClass freshClass = factory.getOWLClass(IRI.create(prefix + newName));
 

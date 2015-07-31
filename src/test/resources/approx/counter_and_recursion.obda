@@ -14,19 +14,19 @@ driverClass	org.h2.Driver
 
 [MappingDeclaration] @collection [[
 mappingId	role R
-target		:{X} <http://www.semanticweb.org/counter#R> :{Y} . 
+target		:{X} :R :{Y} . 
 source		select X, Y from T_R
 
 mappingId	role S
-target		:{X} <http://www.semanticweb.org/counter#S> :{Y} . 
+target		:{X} :S :{Y} . 
 source		select X, Y from T_S
 
 mappingId	concept A22
-target		:{X} a <http://www.semanticweb.org/counter#A22> . 
+target		:{X} a :A22 . 
 source		select X from T_A22
 
 mappingId	concept A1
-target		:{X} a <http://www.semanticweb.org/counter#A1> . 
+target		:{X} a :A1 . 
 source		select X from T_A1
 ]]
 

@@ -1,13 +1,13 @@
-package inf.unibz.it.dllite.approximation.semantic;
+package org.semanticweb.ontop.beyondql.approximation;
 
 import static org.junit.Assert.*;
-import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.semanticweb.ontop.beyondql.approximation.ConjunctionNormalizer;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;

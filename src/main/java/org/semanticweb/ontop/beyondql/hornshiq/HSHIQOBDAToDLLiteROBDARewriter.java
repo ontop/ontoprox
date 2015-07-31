@@ -3,10 +3,7 @@ package org.semanticweb.ontop.beyondql.hornshiq;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import inf.unibz.it.dllite.aproximation.semantic.ConjunctionNormalizer;
-import inf.unibz.it.dllite.aproximation.semantic.DLLiteRClosure;
-import inf.unibz.it.dllite.aproximation.semantic.OntologyTransformations;
-import inf.unibz.it.dllite.aproximation.semantic.QualifiedExistentialNormalizer;
+
 import it.unibz.krdb.obda.exception.DuplicateMappingException;
 import it.unibz.krdb.obda.exception.InvalidMappingException;
 import it.unibz.krdb.obda.io.ModelIOManager;
@@ -25,8 +22,15 @@ import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.JDBCConnectionManager;
+
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
+import org.semanticweb.ontop.beyondql.approximation.ConjunctionNormalizer;
+import org.semanticweb.ontop.beyondql.approximation.DLLiteRClosureBuilder;
+import org.semanticweb.ontop.beyondql.approximation.EmptyConjunctionRemover;
+import org.semanticweb.ontop.beyondql.approximation.IRIUtils;
+import org.semanticweb.ontop.beyondql.approximation.OntologyTransformer;
+import org.semanticweb.ontop.beyondql.approximation.QualifiedExistentialNormalizer;
 import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
 import org.semanticweb.ontop.beyondql.mapgen.DatalogToMappingAxiomTranslater;
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -302,18 +306,19 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private OWLOntology rewriteOntology(OWLOntology ont) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
 
-        IRI file_iri_owl_ont = this.ontology.getOntologyID().getOntologyIRI();
-        IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
-        IRI iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
-        IRI file_iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step3");
-        IRI iri_dllite_ont3 = OntologyTransformations.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
-        IRI file_iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step4");
-        IRI iri_dllite_ont4 = OntologyTransformations.createIRIWithSuffix(this.ontology.getOntologyID().getOntologyIRI(), "step4");
+        IRI iri_dllite_ont1_opt = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step1_opt");
+        IRI iri_dllite_ont2 = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step2");
+        IRI iri_dllite_ont3 = IRIUtils.createIRIWithSuffix(ont.getOntologyID().getOntologyIRI(), "step3");
+        IRI iri_dllite_ont4 = IRIUtils.createIRIWithSuffix(this.ontology.getOntologyID().getOntologyIRI(), "step4");
+
+		// intermediate optimization step
+		EmptyConjunctionRemover emptyRemover = new EmptyConjunctionRemover(manager);
+		OWLOntology ont1opt = emptyRemover.transform(ont, iri_dllite_ont1_opt);
 
 
         // step 2
         QualifiedExistentialNormalizer dlliterNormalizer = new QualifiedExistentialNormalizer(manager);
-        OWLOntology ont2 = dlliterNormalizer.transform(ont, iri_dllite_ont2);
+        OWLOntology ont2 = dlliterNormalizer.transform(ont1opt, iri_dllite_ont2);
         //manager.saveOntology(ont2, new FileOutputStream(file_iri_dllite_ont2.toString()));
 
         // step 3
@@ -323,7 +328,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         this.newConceptsForConjunctions = conjNormalizer.getNewConceptsForConjunctions();
 
         // step 4
-        DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);
+        DLLiteRClosureBuilder dlliterClosure = new DLLiteRClosureBuilder(manager);
         OWLOntology ont4 = dlliterClosure.transform(ont3, iri_dllite_ont4);
         return ont4;
     }

@@ -1,11 +1,10 @@
-package inf.unibz.it.dllite.aproximation.semantic;
-import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertyParticipatesInQualifiedExistentialException;
-import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertySpecializedException;
-
+package org.semanticweb.ontop.beyondql.approximation;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.semanticweb.ontop.beyondql.approximation.exception.FunctionalPropertyParticipatesInQualifiedExistentialException;
+import org.semanticweb.ontop.beyondql.approximation.exception.FunctionalPropertySpecializedException;
 import org.semanticweb.owlapi.model.OWLAnnotationAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;

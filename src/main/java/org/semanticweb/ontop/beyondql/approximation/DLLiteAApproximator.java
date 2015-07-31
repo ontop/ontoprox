@@ -1,11 +1,10 @@
-package inf.unibz.it.dllite.aproximation.semantic;
-
-import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertyParticipatesInQualifiedExistentialException;
-import inf.unibz.it.dllite.aproximation.semantic.exception.FunctionalPropertySpecializedException;
+package org.semanticweb.ontop.beyondql.approximation;
 
 import java.io.Serializable;
 import java.util.*;
 
+import org.semanticweb.ontop.beyondql.approximation.exception.FunctionalPropertyParticipatesInQualifiedExistentialException;
+import org.semanticweb.ontop.beyondql.approximation.exception.FunctionalPropertySpecializedException;
 import org.semanticweb.owlapi.model.AddAxiom;
 //import org.mindswap.pellet.owlapi.PelletReasonerFactory;
 import org.semanticweb.owlapi.model.IRI;
@@ -82,7 +81,7 @@ import org.slf4j.LoggerFactory;
  * @author Alejandra Lorenzo, Elena Botoeva
  *
  *****************************************************************************/
-public class DLLiteAApproximator extends OntologyTransformations {
+public class DLLiteAApproximator extends OntologyTransformer {
 	
 	/**
 	 * @param manager ************************************************************************

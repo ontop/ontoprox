@@ -1,4 +1,4 @@
-package inf.unibz.it.dllite.aproximation.semantic;
+package org.semanticweb.ontop.beyondql.approximation;
 
 import java.util.*;
 
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Elena Botoeva
  *
  *****************************************************************************/
-public class QualifiedExistentialNormalizer extends OntologyTransformations {
+public class QualifiedExistentialNormalizer extends OntologyTransformer {
 
 	/**
 	 * 
@@ -177,9 +177,9 @@ public class QualifiedExistentialNormalizer extends OntologyTransformations {
 
 		
 		// Create a fresh role name
-		IRI new_role_iri = IRI.create(extractPrefix(prop)  
-				+ extractPredicateName(prop) + roleFillerSeparator 
-				+ extractConceptNames(filler));
+		IRI new_role_iri = IRI.create(IRIUtils.extractPrefix(prop)  
+				+ IRIUtils.extractPredicateName(prop) + roleFillerSeparator 
+				+ IRIUtils.extractConceptNames(filler));
 		OWLObjectProperty new_role = ontologyManager.getOWLDataFactory()
 				.getOWLObjectProperty(new_role_iri);
 
