@@ -21,6 +21,7 @@ package org.semanticweb.ontop.beyondql.mapgen;
  */
 
 
+import ch.qos.logback.core.db.dialect.PostgreSQLDialect;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableTable;
@@ -28,6 +29,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import it.unibz.krdb.obda.model.DatatypePredicate;
 import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.HSQLDBDialectAdapter;
+import it.unibz.krdb.obda.owlrefplatform.core.queryevaluation.PostgreSQLDialectAdapter;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.DataDefinition;
 import it.unibz.krdb.sql.TableDefinition;
@@ -2613,7 +2615,19 @@ public class SQLSourceQueryGenerator {
 			if (def != null) {
 				final String viewName = sqladapter.sqlQuote(viewNames.get(atom));
 				if (def instanceof TableDefinition) {
-					return sqladapter.sqlTableName(tableNames.get(atom), viewName);
+
+                    String tablename = tableNames.get(atom);
+
+                    // FIXME: SUPER HACKY!!!!
+
+
+                    if(sqladapter instanceof PostgreSQLDialectAdapter){
+                        if(!tablename.startsWith("\"")){
+                            tablename = String.format("\"%s\"", tablename);
+                        }
+                    }
+
+                    return sqladapter.sqlTableName(tablename, viewName);
 				} else if (def instanceof ViewDefinition) {
 					String viewdef = ((ViewDefinition) def).getStatement();
 					String formatView = String.format("(%s) %s", viewdef, viewName);
