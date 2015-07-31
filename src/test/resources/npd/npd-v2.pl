@@ -303,8 +303,10 @@ datalog_expansions_bf(P, Depth, Expansions) :-
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#FieldStatus'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#FieldYearlyProduction'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#FixedFacility'/1.
+:- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#GasPipeline'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#GroundSurvey'/1.
+:- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#Group'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#InitialWellbore'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#InjectionWellbore'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#JackUp3LegsFacility'/1.
@@ -319,6 +321,7 @@ datalog_expansions_bf(P, Depth, Expansions) :-
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#LoadingSystemFacility'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#MainArea'/1.
+:- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#Member'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#MergerTakeoverTransfer'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#MonotowerFacility'/1.
 :- discontiguous 'http://sws.ifi.uio.no/vocab/npd-v2#MopustorFacility'/1.
@@ -769,8 +772,10 @@ idb('http://sws.ifi.uio.no/vocab/npd-v2#FieldReserve'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#FieldStatus'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#FieldYearlyProduction'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#FixedFacility'(_)).
+idb('http://sws.ifi.uio.no/vocab/npd-v2#Formation'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#GasPipeline'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#GroundSurvey'(_)).
+idb('http://sws.ifi.uio.no/vocab/npd-v2#Group'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#InitialWellbore'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#InjectionWellbore'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#JackUp3LegsFacility'(_)).
@@ -785,6 +790,7 @@ idb('http://sws.ifi.uio.no/vocab/npd-v2#LandfallFacility'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#LoadingSystemFacility'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#MainArea'(_)).
+idb('http://sws.ifi.uio.no/vocab/npd-v2#Member'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#MergerTakeoverTransfer'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#MonotowerFacility'(_)).
 idb('http://sws.ifi.uio.no/vocab/npd-v2#MopustorFacility'(_)).
@@ -1234,8 +1240,10 @@ idb('http://sws.ifi.uio.no/vocab/npd-v2-ptl#name'(_,_)).
 'http://sws.ifi.uio.no/vocab/npd-v2#FieldStatus'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#FieldStatus'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#FieldYearlyProduction'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#FieldYearlyProduction'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#FixedFacility'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#FixedFacility'(X)).
+'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#GasPipeline'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#GasPipeline'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#GroundSurvey'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#GroundSurvey'(X)).
+'http://sws.ifi.uio.no/vocab/npd-v2#Group'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#Group'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#InitialWellbore'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#InitialWellbore'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#InjectionWellbore'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#InjectionWellbore'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#JackUp3LegsFacility'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#JackUp3LegsFacility'(X)).
@@ -1250,6 +1258,7 @@ idb('http://sws.ifi.uio.no/vocab/npd-v2-ptl#name'(_,_)).
 'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#LoadingSystemFacility'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#LoadingSystemFacility'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#MainArea'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#MainArea'(X)).
+'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#Member'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#MergerTakeoverTransfer'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#MergerTakeoverTransfer'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#MonotowerFacility'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#MonotowerFacility'(X)).
 'http://sws.ifi.uio.no/vocab/npd-v2#MopustorFacility'(X) :- view('http://sws.ifi.uio.no/vocab/npd-v2#MopustorFacility'(X)).
@@ -1664,60 +1673,8 @@ fresh('http://www.example.org/fresh#_eliminatedtransfresh_0'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_3'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_1'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_2'(_)).
-fresh('http://www.example.org/fresh#Formation_and_LithostratigraphicUnit_and_Member'(_)).
-fresh('http://www.example.org/fresh#Collection_and_Concept'(_)).
-fresh('http://www.example.org/fresh#GenericallyDependentContinuant_and_SpecificallyDependentContinuant'(_)).
-fresh('http://www.example.org/fresh#ConnectedSpatiotemporalRegion_and_ScatteredSpatiotemporalRegion'(_)).
-fresh('http://www.example.org/fresh#FiatObjectPart_and_ObjectBoundary'(_)).
-fresh('http://www.example.org/fresh#Formation_and_Member'(_)).
-fresh('http://www.example.org/fresh#Object_and_ObjectBoundary'(_)).
-fresh('http://www.example.org/fresh#ProcessBoundary_and_ProcessualContext'(_)).
-fresh('http://www.example.org/fresh#Collection_and_ConceptScheme'(_)).
-fresh('http://www.example.org/fresh#Process_and_ProcessualContext'(_)).
-fresh('http://www.example.org/fresh#Process_and_ProcessBoundary'(_)).
-fresh('http://www.example.org/fresh#DependentContinuant_and_SpatialRegion'(_)).
-fresh('http://www.example.org/fresh#Formation_and_LithostratigraphicUnit'(_)).
-fresh('http://www.example.org/fresh#MaterialEntity_and_Site'(_)).
-fresh('http://www.example.org/fresh#FiatProcessPart_and_ProcessBoundary'(_)).
 fresh('http://www.example.org/fresh#LithostratigraphicUnit_and_Member'(_)).
-fresh('http://www.example.org/fresh#Object_and_ObjectAggregate'(_)).
-fresh('http://www.example.org/fresh#Process_and_ProcessAggregate'(_)).
-fresh('http://www.example.org/fresh#ProcessualEntity_and_TemporalRegion'(_)).
-fresh('http://www.example.org/fresh#Object_and_Site'(_)).
-fresh('http://www.example.org/fresh#Disposition_and_Function'(_)).
-fresh('http://www.example.org/fresh#Continuant_and_Occurrent'(_)).
-fresh('http://www.example.org/fresh#FiatObjectPart_and_ObjectAggregate'(_)).
-fresh('http://www.example.org/fresh#FiatObjectPart_and_Site'(_)).
-fresh('http://www.example.org/fresh#FiatObjectPart_and_Object'(_)).
-fresh('http://www.example.org/fresh#Feature_and_Geometry'(_)).
-fresh('http://www.example.org/fresh#ThreeDimensionalRegion_and_TwoDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#ObjectAggregate_and_Site'(_)).
-fresh('http://www.example.org/fresh#SpatiotemporalInstant_and_SpatiotemporalInterval'(_)).
-fresh('http://www.example.org/fresh#OneDimensionalRegion_and_ZeroDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#Quality_and_RealizableEntity'(_)).
-fresh('http://www.example.org/fresh#FiatProcessPart_and_Process'(_)).
-fresh('http://www.example.org/fresh#ProcessualEntity_and_SpatiotemporalRegion'(_)).
-fresh('http://www.example.org/fresh#DependentContinuant_and_IndependentContinuant'(_)).
-fresh('http://www.example.org/fresh#Group_and_Member'(_)).
-fresh('http://www.example.org/fresh#ProcessAggregate_and_ProcessBoundary'(_)).
-fresh('http://www.example.org/fresh#Concept_and_ConceptScheme'(_)).
-fresh('http://www.example.org/fresh#ProcessAggregate_and_ProcessualContext'(_)).
-fresh('http://www.example.org/fresh#Formation_and_Group'(_)).
-fresh('http://www.example.org/fresh#OneDimensionalRegion_and_TwoDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#ObjectAggregate_and_ObjectBoundary'(_)).
-fresh('http://www.example.org/fresh#IndependentContinuant_and_SpatialRegion'(_)).
-fresh('http://www.example.org/fresh#ObjectBoundary_and_Site'(_)).
-fresh('http://www.example.org/fresh#Function_and_Role'(_)).
-fresh('http://www.example.org/fresh#MaterialEntity_and_ObjectBoundary'(_)).
-fresh('http://www.example.org/fresh#FiatProcessPart_and_ProcessAggregate'(_)).
-fresh('http://www.example.org/fresh#TemporalInstant_and_TemporalInterval'(_)).
-fresh('http://www.example.org/fresh#ConnectedTemporalRegion_and_ScatteredTemporalRegion'(_)).
-fresh('http://www.example.org/fresh#ThreeDimensionalRegion_and_ZeroDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#FiatProcessPart_and_ProcessualContext'(_)).
-fresh('http://www.example.org/fresh#TwoDimensionalRegion_and_ZeroDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#Disposition_and_Role'(_)).
-fresh('http://www.example.org/fresh#OneDimensionalRegion_and_ThreeDimensionalRegion'(_)).
-fresh('http://www.example.org/fresh#SpatiotemporalRegion_and_TemporalRegion'(_)).
+fresh('http://www.example.org/fresh#Formation_and_LithostratigraphicUnit'(_)).
 
 
 'http://sws.ifi.uio.no/vocab/npd-v2#ExplorationWell'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#AppraisalWell'(X).
@@ -2382,57 +2339,5 @@ fresh('http://www.example.org/fresh#SpatiotemporalRegion_and_TemporalRegion'(_))
 'http://www.w3.org/2004/02/skos/core#exactMatch'(X,Z) :- 'http://www.w3.org/2004/02/skos/core#exactMatch'(X,Y),'http://www.w3.org/2004/02/skos/core#exactMatch'(Y,Z).
 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'(X,Z) :- 'http://www.w3.org/2004/02/skos/core#narrowerTransitive'(X,Y),'http://www.w3.org/2004/02/skos/core#narrowerTransitive'(Y,Z).
 'http://www.w3.org/2004/02/skos/core#broaderTransitive'(X,Z) :- 'http://www.w3.org/2004/02/skos/core#broaderTransitive'(X,Y),'http://www.w3.org/2004/02/skos/core#broaderTransitive'(Y,Z).
-'http://www.example.org/fresh#Formation_and_LithostratigraphicUnit_and_Member'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X).
-'http://www.example.org/fresh#Collection_and_Concept'(X) :- 'http://www.w3.org/2004/02/skos/core#Collection'(X),'http://www.w3.org/2004/02/skos/core#Concept'(X).
-'http://www.example.org/fresh#GenericallyDependentContinuant_and_SpecificallyDependentContinuant'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#GenericallyDependentContinuant'(X),'http://www.ifomis.org/bfo/1.1/snap#SpecificallyDependentContinuant'(X).
-'http://www.example.org/fresh#ConnectedSpatiotemporalRegion_and_ScatteredSpatiotemporalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ConnectedSpatiotemporalRegion'(X),'http://www.ifomis.org/bfo/1.1/span#ScatteredSpatiotemporalRegion'(X).
-'http://www.example.org/fresh#FiatObjectPart_and_ObjectBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#FiatObjectPart'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectBoundary'(X).
-'http://www.example.org/fresh#Formation_and_Member'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X).
-'http://www.example.org/fresh#Object_and_ObjectBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Object'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectBoundary'(X).
-'http://www.example.org/fresh#ProcessBoundary_and_ProcessualContext'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ProcessBoundary'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessualContext'(X).
-'http://www.example.org/fresh#Collection_and_ConceptScheme'(X) :- 'http://www.w3.org/2004/02/skos/core#Collection'(X),'http://www.w3.org/2004/02/skos/core#ConceptScheme'(X).
-'http://www.example.org/fresh#Process_and_ProcessualContext'(X) :- 'http://www.ifomis.org/bfo/1.1/span#Process'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessualContext'(X).
-'http://www.example.org/fresh#Process_and_ProcessBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/span#Process'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessBoundary'(X).
-'http://www.example.org/fresh#DependentContinuant_and_SpatialRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#DependentContinuant'(X),'http://www.ifomis.org/bfo/1.1/snap#SpatialRegion'(X).
-'http://www.example.org/fresh#Formation_and_LithostratigraphicUnit'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X).
-'http://www.example.org/fresh#MaterialEntity_and_Site'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#MaterialEntity'(X),'http://www.ifomis.org/bfo/1.1/snap#Site'(X).
-'http://www.example.org/fresh#FiatProcessPart_and_ProcessBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/span#FiatProcessPart'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessBoundary'(X).
 'http://www.example.org/fresh#LithostratigraphicUnit_and_Member'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X).
-'http://www.example.org/fresh#Object_and_ObjectAggregate'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Object'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectAggregate'(X).
-'http://www.example.org/fresh#Process_and_ProcessAggregate'(X) :- 'http://www.ifomis.org/bfo/1.1/span#Process'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessAggregate'(X).
-'http://www.example.org/fresh#ProcessualEntity_and_TemporalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ProcessualEntity'(X),'http://www.ifomis.org/bfo/1.1/span#TemporalRegion'(X).
-'http://www.example.org/fresh#Object_and_Site'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Object'(X),'http://www.ifomis.org/bfo/1.1/snap#Site'(X).
-'http://www.example.org/fresh#Disposition_and_Function'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Disposition'(X),'http://www.ifomis.org/bfo/1.1/snap#Function'(X).
-'http://www.example.org/fresh#Continuant_and_Occurrent'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Continuant'(X),'http://www.ifomis.org/bfo/1.1/span#Occurrent'(X).
-'http://www.example.org/fresh#FiatObjectPart_and_ObjectAggregate'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#FiatObjectPart'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectAggregate'(X).
-'http://www.example.org/fresh#FiatObjectPart_and_Site'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#FiatObjectPart'(X),'http://www.ifomis.org/bfo/1.1/snap#Site'(X).
-'http://www.example.org/fresh#FiatObjectPart_and_Object'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#FiatObjectPart'(X),'http://www.ifomis.org/bfo/1.1/snap#Object'(X).
-'http://www.example.org/fresh#Feature_and_Geometry'(X) :- 'http://www.opengis.net/ont/geosparql#Feature'(X),'http://www.opengis.net/ont/geosparql#Geometry'(X).
-'http://www.example.org/fresh#ThreeDimensionalRegion_and_TwoDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#ThreeDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#TwoDimensionalRegion'(X).
-'http://www.example.org/fresh#ObjectAggregate_and_Site'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#ObjectAggregate'(X),'http://www.ifomis.org/bfo/1.1/snap#Site'(X).
-'http://www.example.org/fresh#SpatiotemporalInstant_and_SpatiotemporalInterval'(X) :- 'http://www.ifomis.org/bfo/1.1/span#SpatiotemporalInstant'(X),'http://www.ifomis.org/bfo/1.1/span#SpatiotemporalInterval'(X).
-'http://www.example.org/fresh#OneDimensionalRegion_and_ZeroDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#OneDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#ZeroDimensionalRegion'(X).
-'http://www.example.org/fresh#Quality_and_RealizableEntity'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Quality'(X),'http://www.ifomis.org/bfo/1.1/snap#RealizableEntity'(X).
-'http://www.example.org/fresh#FiatProcessPart_and_Process'(X) :- 'http://www.ifomis.org/bfo/1.1/span#FiatProcessPart'(X),'http://www.ifomis.org/bfo/1.1/span#Process'(X).
-'http://www.example.org/fresh#ProcessualEntity_and_SpatiotemporalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ProcessualEntity'(X),'http://www.ifomis.org/bfo/1.1/span#SpatiotemporalRegion'(X).
-'http://www.example.org/fresh#DependentContinuant_and_IndependentContinuant'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#DependentContinuant'(X),'http://www.ifomis.org/bfo/1.1/snap#IndependentContinuant'(X).
-'http://www.example.org/fresh#Group_and_Member'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Group'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Member'(X).
-'http://www.example.org/fresh#ProcessAggregate_and_ProcessBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ProcessAggregate'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessBoundary'(X).
-'http://www.example.org/fresh#Concept_and_ConceptScheme'(X) :- 'http://www.w3.org/2004/02/skos/core#Concept'(X),'http://www.w3.org/2004/02/skos/core#ConceptScheme'(X).
-'http://www.example.org/fresh#ProcessAggregate_and_ProcessualContext'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ProcessAggregate'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessualContext'(X).
-'http://www.example.org/fresh#Formation_and_Group'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Group'(X).
-'http://www.example.org/fresh#OneDimensionalRegion_and_TwoDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#OneDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#TwoDimensionalRegion'(X).
-'http://www.example.org/fresh#ObjectAggregate_and_ObjectBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#ObjectAggregate'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectBoundary'(X).
-'http://www.example.org/fresh#IndependentContinuant_and_SpatialRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#IndependentContinuant'(X),'http://www.ifomis.org/bfo/1.1/snap#SpatialRegion'(X).
-'http://www.example.org/fresh#ObjectBoundary_and_Site'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#ObjectBoundary'(X),'http://www.ifomis.org/bfo/1.1/snap#Site'(X).
-'http://www.example.org/fresh#Function_and_Role'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Function'(X),'http://www.ifomis.org/bfo/1.1/snap#Role'(X).
-'http://www.example.org/fresh#MaterialEntity_and_ObjectBoundary'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#MaterialEntity'(X),'http://www.ifomis.org/bfo/1.1/snap#ObjectBoundary'(X).
-'http://www.example.org/fresh#FiatProcessPart_and_ProcessAggregate'(X) :- 'http://www.ifomis.org/bfo/1.1/span#FiatProcessPart'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessAggregate'(X).
-'http://www.example.org/fresh#TemporalInstant_and_TemporalInterval'(X) :- 'http://www.ifomis.org/bfo/1.1/span#TemporalInstant'(X),'http://www.ifomis.org/bfo/1.1/span#TemporalInterval'(X).
-'http://www.example.org/fresh#ConnectedTemporalRegion_and_ScatteredTemporalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/span#ConnectedTemporalRegion'(X),'http://www.ifomis.org/bfo/1.1/span#ScatteredTemporalRegion'(X).
-'http://www.example.org/fresh#ThreeDimensionalRegion_and_ZeroDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#ThreeDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#ZeroDimensionalRegion'(X).
-'http://www.example.org/fresh#FiatProcessPart_and_ProcessualContext'(X) :- 'http://www.ifomis.org/bfo/1.1/span#FiatProcessPart'(X),'http://www.ifomis.org/bfo/1.1/span#ProcessualContext'(X).
-'http://www.example.org/fresh#TwoDimensionalRegion_and_ZeroDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#TwoDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#ZeroDimensionalRegion'(X).
-'http://www.example.org/fresh#Disposition_and_Role'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#Disposition'(X),'http://www.ifomis.org/bfo/1.1/snap#Role'(X).
-'http://www.example.org/fresh#OneDimensionalRegion_and_ThreeDimensionalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/snap#OneDimensionalRegion'(X),'http://www.ifomis.org/bfo/1.1/snap#ThreeDimensionalRegion'(X).
-'http://www.example.org/fresh#SpatiotemporalRegion_and_TemporalRegion'(X) :- 'http://www.ifomis.org/bfo/1.1/span#SpatiotemporalRegion'(X),'http://www.ifomis.org/bfo/1.1/span#TemporalRegion'(X).
+'http://www.example.org/fresh#Formation_and_LithostratigraphicUnit'(X) :- 'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X),'http://sws.ifi.uio.no/vocab/npd-v2#Formation'(X),'http://sws.ifi.uio.no/vocab/npd-v2#LithostratigraphicUnit'(X).

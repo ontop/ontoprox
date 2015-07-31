@@ -435,9 +435,14 @@ fresh('http://www.example.org/fresh#_eliminatedtransfresh_1'(_)).
 fresh('http://www.example.org/fresh#not_Man'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_3'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_2'(_)).
-fresh('http://www.example.org/fresh#eliminateMinCard_fresh3_eliminateMinCard_fresh5'(_)).
-fresh('http://www.example.org/fresh#eliminateMinCard_fresh3_eliminateMinCard_fresh4'(_)).
-fresh('http://www.example.org/fresh#eliminateMinCard_fresh4_eliminateMinCard_fresh5'(_)).
+fresh('http://www.example.org/fresh#Person_and_worksFor_some_Organization'(_)).
+fresh('http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(_)).
+fresh('http://www.example.org/fresh#Person_and_teachingAssistantOf_some_Course'(_)).
+fresh('http://www.example.org/fresh#Person_and_like_some_Sports'(_)).
+fresh('http://www.example.org/fresh#Person_and_isStudentOf_some_Organization'(_)).
+fresh('http://www.example.org/fresh#Person_and_isHeadOf_some_Program'(_)).
+fresh('http://www.example.org/fresh#Student_and_hasMajor_some_Science'(_)).
+fresh('http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(_)).
 
 
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X).
@@ -619,18 +624,12 @@ fresh('http://www.example.org/fresh#eliminateMinCard_fresh4_eliminateMinCard_fre
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,Z).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,Z).
-'http://www.example.org/fresh#eliminateMinCard_fresh3_eliminateMinCard_fresh5'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh3'(X),'http://www.example.org/fresh#eliminateMinCard_fresh5'(X).
-'http://www.example.org/fresh#eliminateMinCard_fresh3_eliminateMinCard_fresh4'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh3'(X),'http://www.example.org/fresh#eliminateMinCard_fresh4'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_teachingAssistantOf_some_Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X).
+'http://www.example.org/fresh#Person_and_worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#worksFor_some_Organization'(X).
+'http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X).
+'http://www.example.org/fresh#Person_and_teachingAssistantOf_some_Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X).
 'http://www.example.org/fresh#isHeadOf_some_College'(X) :- 'http://www.example.org/fresh#isHeadOf_some_College'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Department'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man_not_Man'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X),'http://www.example.org/fresh#not_Man'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man_Woman'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#worksFor_some_Organization'(X).
-'http://www.example.org/fresh#eliminateMinCard_fresh4_eliminateMinCard_fresh5'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh4'(X),'http://www.example.org/fresh#eliminateMinCard_fresh5'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#like_some_Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent_hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student_hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person_isHeadOf_some_Program'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Program'(X).
+'http://www.example.org/fresh#Person_and_like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#like_some_Sports'(X).
+'http://www.example.org/fresh#Person_and_isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
+'http://www.example.org/fresh#Person_and_isHeadOf_some_Program'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Program'(X).
+'http://www.example.org/fresh#Student_and_hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
+'http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Department'(X).
