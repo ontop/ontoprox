@@ -279,15 +279,15 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
     private static List<Predicate> getDeclaredPredicates(OWLOntology ontology) {
         List<Predicate> predicatesToDefine = Lists.newArrayList();
 
-        for (OWLClass owlClass : ontology.getClassesInSignature()) {
+        for (OWLClass owlClass : ontology.getClassesInSignature(true)) {
             predicatesToDefine.add(DATA_FACTORY.getClassPredicate(owlClass.getIRI().toString()));
         }
 
-        for (OWLObjectProperty owlObjectProperty : ontology.getObjectPropertiesInSignature()) {
+        for (OWLObjectProperty owlObjectProperty : ontology.getObjectPropertiesInSignature(true)) {
             predicatesToDefine.add(DATA_FACTORY.getObjectPropertyPredicate(owlObjectProperty.getIRI().toString()));
         }
 
-        for (OWLDataProperty owlDatatypeProperty : ontology.getDataPropertiesInSignature()) {
+        for (OWLDataProperty owlDatatypeProperty : ontology.getDataPropertiesInSignature(true)) {
             predicatesToDefine.add(DATA_FACTORY.getDataPropertyPredicate(owlDatatypeProperty.getIRI().toString()));
         }
         return predicatesToDefine;
