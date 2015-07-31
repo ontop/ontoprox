@@ -37,11 +37,13 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -114,13 +116,14 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     }
 
-    public void rewrite() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    public void rewrite() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException,
+            OBDAException, DuplicateMappingException, OWLOntologyStorageException {
         rewrite(ontology, obdaModel, tempPrologFile, depth);
 
     }
 
     private OBDAModel rewrite(OWLOntology ontology, OBDAModel obdaModel, String tempPrologFile, int depth)
-            throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, IOException {
+            throws SQLException, OBDAException, DuplicateMappingException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
 
         long t1 = System.currentTimeMillis();
 
@@ -297,7 +300,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         return predicates;
     }
 
-    private OWLOntology rewriteOntology(OWLOntology ont) throws OWLOntologyCreationException, FileNotFoundException {
+    private OWLOntology rewriteOntology(OWLOntology ont) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
 
         IRI file_iri_owl_ont = this.ontology.getOntologyID().getOntologyIRI();
         IRI file_iri_dllite_ont2 = OntologyTransformations.createIRIWithSuffix(file_iri_owl_ont, "step2");
@@ -318,8 +321,6 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         OWLOntology ont3 = conjNormalizer.transform(ont2, iri_dllite_ont3);
 
         this.newConceptsForConjunctions = conjNormalizer.getNewConceptsForConjunctions();
-
-        //manager.saveOntology(ont3, new FileOutputStream(file_iri_dllite_ont3.toString()));
 
         // step 4
         DLLiteRClosure dlliterClosure = new DLLiteRClosure(manager);

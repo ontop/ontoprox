@@ -27,6 +27,7 @@ import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 
 import java.io.File;
@@ -111,7 +112,7 @@ public class CompilationTest {
 
 
     @Test
-    public  void testCompileNPD() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    public  void testCompileNPD() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException, OWLOntologyStorageException {
         String ontologyFile =  "src/test/resources/npd/npd-v2.owl";
         String obdaFile = "src/test/resources/npd/npd-v2.obda";
         String extendedObdaFile = "src/test/resources/npd/extended-npd-v2.obda";
@@ -121,7 +122,8 @@ public class CompilationTest {
         modelIOManager.save(extendedObdaFile);
     }
 
-    private OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException {
+    private OBDAModel compileHSHIQtoMappings(String ontologyFile, String obdaFile) throws SQLException, IOException,
+            InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException, OWLOntologyStorageException {
         HSHIQOBDAToDLLiteROBDARewriter rewriter = new HSHIQOBDAToDLLiteROBDARewriter(ontologyFile, obdaFile, 5);
         rewriter.rewrite();
         OBDAModel newModel = rewriter.getRewrittenOBDAModel();
@@ -130,7 +132,7 @@ public class CompilationTest {
     }
 
     @Test
-    public  void testCompileNPDQL() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    public  void testCompileNPDQL() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException, OWLOntologyStorageException {
         String ontologyFile =  "src/test/resources/npd_ql/npd-v2-ql_a.owl";
         String obdaFile = "src/test/resources/npd_ql/npd-v2-ql_a_postgres.obda";
         String extendedObdaFile = "src/test/resources/npd_ql/extended-npd-v2-ql_a_postgres.obda";
@@ -141,7 +143,7 @@ public class CompilationTest {
     }
 
     @Test
-    public  void testCompileUOBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    public  void testCompileUOBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException, OWLOntologyStorageException {
         String ontologyFile = "src/test/resources/uobm/univ-bench-dl.owl";
         String obdaFile =     "src/test/resources/uobm/univ-bench-dl.obda";
         String extendedObdaFile = "src/test/resources/uobm/extended-univ-bench-dl.obda";
@@ -152,7 +154,7 @@ public class CompilationTest {
     }
 
     @Test
-    public  void testCompileLUBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException {
+    public  void testCompileLUBM() throws OWLOntologyCreationException, IOException, InvalidMappingException, SQLException, OBDAException, DuplicateMappingException, OWLOntologyStorageException {
         String ontologyFile = "src/test/resources/lubm/univ-benchQL.owl";
         String obdaFile =     "src/test/resources/lubm/univ-benchQL.obda";
         String extendedObdaFile = "src/test/resources/lubm/extended-univ-benchQL.obda";

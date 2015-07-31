@@ -136,10 +136,9 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 	 */
 	private Set<OWLAxiom> constructNewAxiomsForConjunctionOnLHS(
 			OWLSubClassOfAxiom axiom) {
-		OWLObjectIntersectionOf conjunction = (OWLObjectIntersectionOf)((OWLSubClassOfAxiom) axiom)
-				.getSubClass();
+		OWLObjectIntersectionOf conjunction = (OWLObjectIntersectionOf) axiom.getSubClass();
 		Set<OWLClassExpression> classes = conjunction.getOperands();
-		OWLClassExpression superClass= ((OWLSubClassOfAxiom) axiom).getSuperClass();
+		OWLClassExpression superClass= axiom.getSuperClass();
 		
 		
 		OWLDataFactory factory = ontologyManager.getOWLDataFactory();
@@ -158,6 +157,9 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 
 		
 		Set<OWLAxiom> newAxioms = new HashSet<>();
+
+        newAxioms.add(factory.getOWLDeclarationAxiom(freshClass));
+
 		// Add axiom A1,A2,..,An \ISA C
 		newAxioms.add(factory.getOWLSubClassOfAxiom(freshClass, superClass));
 		// Add axioms A1,A2,..,An \ISA Ai
