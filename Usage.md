@@ -16,7 +16,7 @@ $ sudo apt-get install swi-prolog-java
 ```
 $ java -Djava.library.path=<swipl-lib-directory> \
  -Djava.ext.dirs=<jdbc-directory> -jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar \
-  <ontology.owl> <mapping.obda> <newMapping.obda>
+  <ontology.owl> <mapping.obda> <newOntology.owl> <newMapping.obda> [depth]
 ```  
 
 For instance, on my machine,
@@ -24,6 +24,6 @@ For instance, on my machine,
 ```
 java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-7.2.2/lib/x86_64-darwin14.4.0 \
 -Djava.ext.dirs=/Users/xiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ \
--jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar  ../src/test/resources/uobm/univ-bench-dl.owl \ 
-../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
+-jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar  ../src/test/resources/uobm/univ-bench-dl.owl \
+../src/test/resources/uobm/univ-bench-dl.obda newOntology.owl newUOBM.obda 
 ```

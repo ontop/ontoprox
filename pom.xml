@@ -113,7 +113,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.semanticweb.ontop.beyondql.OntopOBDAApproximationCommand</mainClass>
+                            <mainClass>org.semanticweb.ontop.beyondql.cli.OntopOBDAApproximationCmd</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
