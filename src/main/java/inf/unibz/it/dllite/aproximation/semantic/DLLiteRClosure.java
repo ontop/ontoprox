@@ -93,9 +93,12 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 */
 		OWLOntology extended_owl_ont = giveNamesToBasicConcepts(owl_ont);
 
+		
+		log.info("Creating a Hermit reasoner and precomputing inferences...");
+
 		// Create a reasoner factory. In this case, we will use Hermit.
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
-		// Load the workng ontology into the reasoner.
+		// Load the extended ontology into the reasoner.
 		OWLReasoner reasoner = reasonerFactory.createReasoner(extended_owl_ont);
 		// Asks the reasoner to classify the ontology.
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY,
@@ -434,8 +437,8 @@ public class DLLiteRClosure extends OntologyTransformations {
 		OWLClassExpression representativeClass = selectRepresentativeClass(equiv_classes);
 		
 		/**
-		 * We use namedClass for optimization reasons. 
-		 * Although, I am not sure it helps (Elena).
+		 * We use namedClass for optimization reasons:
+		 * the reasoner has precomputed the hierarchy for the named classes. 
 		 */
 		OWLClass namedClass = selectNamedClass(equiv_classes);
 
@@ -456,7 +459,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * 
 		 * At the moment we don't add equivalent classes axioms for Nothing
 		 */
-		if (!namedClass.isOWLNothing()) {
+		if (!representativeClass.isOWLNothing()) {
 			axioms.addAll(constructDLLiteREquivalentClassesAxioms(equiv_classes));
 		}
 
@@ -482,7 +485,7 @@ public class DLLiteRClosure extends OntologyTransformations {
 		 * The representative class will be the superClass for each set of
 		 * subclasses.
 		 * 
-		 *	We use namedClass to get the disjoint classes for
+		 * We use namedClass to get the subclasses for
 		 * performance reasons
 		 */
 		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(namedClass, true); // only direct sublasses

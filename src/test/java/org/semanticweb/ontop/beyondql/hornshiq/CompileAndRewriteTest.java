@@ -107,14 +107,14 @@ public class CompileAndRewriteTest {
 		QuestOWLConnection questConn = reasoner.getConnection();
 		QuestOWLStatement st = questConn.createStatement();
 
-//		String query = "PREFIX : <http://www.semanticweb.org/counter#> "
-//				+ "SELECT ?x WHERE { ?x :counter ?y. "
-//				+ "?y :counter ?z."
-//				+ "?z :counter ?w."
-//				+ "?w :counter ?v."
-//				+ "?v a :End. }";
 		String query = "PREFIX : <http://www.semanticweb.org/counter#> "
-				+ "SELECT ?x WHERE { ?x :counter ?y. }";
+				+ "SELECT ?x WHERE { ?x :counter ?y. "
+				+ "?y :counter ?z."
+				+ "?z :counter ?w."
+				+ "?w :counter ?v."
+				+ "?v a :End. }";
+//		String query = "PREFIX : <http://www.semanticweb.org/counter#> "
+//				+ "SELECT ?x WHERE { ?x :counter ?y. }";
 		
 		try {
 			

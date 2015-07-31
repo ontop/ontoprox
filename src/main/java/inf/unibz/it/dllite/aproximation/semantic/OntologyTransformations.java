@@ -1,5 +1,6 @@
 package inf.unibz.it.dllite.aproximation.semantic;
 
+import java.io.StringWriter;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -12,12 +13,15 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.util.SimpleShortFormProvider;
+
+import uk.ac.manchester.cs.owl.owlapi.mansyntaxrenderer.ManchesterOWLSyntaxObjectRenderer;
 
 import com.google.common.base.Joiner;
 
 public abstract class OntologyTransformations {
 
-	private static final char conceptSeparator = '_';
+	private static final String conceptSeparator = "_and_";
 	protected final OWLOntologyManager ontologyManager;
 
 	/**
@@ -72,6 +76,16 @@ public abstract class OntologyTransformations {
 	 */
 	protected static String extractConceptNamesFromConjunction(
 			OWLObjectIntersectionOf clazz) {
+		
+//        StringWriter writer = new StringWriter();
+//        ManchesterOWLSyntaxObjectRenderer renderer = new ManchesterOWLSyntaxObjectRenderer(writer, new SimpleShortFormProvider());
+//        clazz.accept(renderer);
+//
+//        String className = writer.toString();
+//        String newName = className.replaceAll("\\(","").replaceAll("\\)","").replaceAll("\\s+", "_");
+//
+//        return newName;
+
 		Set<OWLClassExpression> operands = ((OWLObjectIntersectionOf) clazz)
 				.getOperands();
 
@@ -88,7 +102,12 @@ public abstract class OntologyTransformations {
 
 
 	protected static String extractPredicateName(OWLClass clazz) {
-		return clazz.getIRI().getFragment();
+		String name = clazz.getIRI().getFragment();
+		if (name == null) {
+			String iri = clazz.getIRI().toString();
+			name = iri.substring(iri.indexOf('#')+1, iri.length());
+		}
+		return name;
 	}
 
 	protected static String extractPrefix(OWLClass clazz) {

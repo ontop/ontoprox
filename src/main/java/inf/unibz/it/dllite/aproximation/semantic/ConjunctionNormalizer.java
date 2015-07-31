@@ -144,9 +144,14 @@ public class ConjunctionNormalizer extends OntologyTransformations {
 		
 		OWLDataFactory factory = ontologyManager.getOWLDataFactory();
 
+		/**
+		 * here we try to be consistent with the naming of fresh concepts
+		 * by clipper, so that we do not create new names for something
+		 * that already exists.
+		 */
 		// Get the prefix of the first element in classes
-		String prefix = extractPrefix(classes.iterator().next().asOWLClass());
-		// Get the string of comma separated concept names in conjunction 
+		String prefix = "http://www.example.org/fresh#";//extractPrefix(classes.iterator().next().asOWLClass());
+		// Get the string of "_and_" separated concept names in conjunction 
 		String newName = extractConceptNamesFromConjunction(conjunction);
 		// Create fresh concept A1,A2,..,An \ISA
 		OWLClass freshClass = factory.getOWLClass(IRI.create(prefix + newName));
