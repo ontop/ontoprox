@@ -1,5 +1,6 @@
 package org.semanticweb.ontop.beyondql.hornshiq;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -82,7 +83,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
     private OBDAModel rewrittenOBDAModel;
 
-    private Multimap<OWLClass, OWLClass> newConceptsForConjunctions;
+    private Multimap<OWLClass, OWLClass> newConceptsForConjunctions = ArrayListMultimap.create();
 
     public OBDAModel getRewrittenOBDAModel() {
         return rewrittenOBDAModel;

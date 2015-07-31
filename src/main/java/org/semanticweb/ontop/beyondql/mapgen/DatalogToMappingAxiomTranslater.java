@@ -3,6 +3,7 @@ package org.semanticweb.ontop.beyondql.mapgen;
 import com.google.common.collect.Lists;
 import it.unibz.krdb.obda.model.CQIE;
 import it.unibz.krdb.obda.model.DatalogProgram;
+import it.unibz.krdb.obda.model.DatatypePredicate;
 import it.unibz.krdb.obda.model.Function;
 import it.unibz.krdb.obda.model.OBDADataFactory;
 import it.unibz.krdb.obda.model.OBDADataSource;
@@ -10,6 +11,7 @@ import it.unibz.krdb.obda.model.OBDAException;
 import it.unibz.krdb.obda.model.OBDAMappingAxiom;
 import it.unibz.krdb.obda.model.Predicate;
 import it.unibz.krdb.obda.model.Term;
+import it.unibz.krdb.obda.model.URITemplatePredicate;
 import it.unibz.krdb.obda.model.ValueConstant;
 import it.unibz.krdb.obda.model.Variable;
 import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
@@ -110,28 +112,39 @@ public class DatalogToMappingAxiomTranslater {
         for (Term term : rule.getHead().getTerms()) {
 
             if (term instanceof Function) {
-                List<Term> args = ((Function) term).getTerms();
+                Function function = (Function) term;
+
+                Predicate functionSymbol = function.getFunctionSymbol();
+
+                List<Term> args = function.getTerms();
 
                 List<Term> newArgs = Lists.newArrayList();
-                newArgs.add(args.get(0));
+//                newArgs.add(args.get(0));
 
-                for (int i = 1; i < args.size(); i++) {
+                for (int i = 0; i < args.size(); i++) {
                     Term arg_i = args.get(i);
                     if (arg_i instanceof Variable) {
                         headVariables.add((Variable) arg_i);
                         newArgs.add(arg_i);
                     } else if (arg_i instanceof ValueConstant) {
                         // If we encounter a constant, then we introduce a new variable for it
-                        Variable newVar = DATA_FACTORY.getVariable("v_" + ((ValueConstant) arg_i).getValue());
-                        newVariableMap.put(newVar, (ValueConstant) arg_i);
-                        headVariables.add(newVar);
-                        newArgs.add(newVar);
+                        if ((functionSymbol instanceof URITemplatePredicate && i == 0)){
+                            // in a URI template term, the first argument is a template.
+                            // We do not need to introduce a variable for it
+                            newArgs.add(arg_i);
+                        } else {
+                            Variable newVar = DATA_FACTORY.getVariable("v_" + ((ValueConstant) arg_i).getValue());
+                            newVariableMap.put(newVar, (ValueConstant) arg_i);
+                            headVariables.add(newVar);
+                            newArgs.add(newVar);
+                        }
+
                     } else {
                         throw new UnsupportedOperationException();
                     }
                 }
 
-                newHeadTerms.add(DATA_FACTORY.getFunction(((Function) term).getFunctionSymbol(), newArgs));
+                newHeadTerms.add(DATA_FACTORY.getFunction(function.getFunctionSymbol(), newArgs));
             } else if (term instanceof Variable) {
                 newHeadTerms.add(term);
                 headVariables.add((Variable) term);
