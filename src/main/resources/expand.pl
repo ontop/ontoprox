@@ -1,3 +1,5 @@
+:- dynamic fresh/1.
+
 %%%%%%%%%% various utility predicates for lists and sequences %%%%%%%%%%
 
 flatten(T, [T]) :- (var(T); atomic(T)), !.
