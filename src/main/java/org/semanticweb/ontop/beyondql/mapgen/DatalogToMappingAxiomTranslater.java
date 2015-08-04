@@ -140,7 +140,7 @@ public class DatalogToMappingAxiomTranslater {
                         }
 
                     } else {
-                        throw new UnsupportedOperationException();
+                        throw new UnsupportedOperationException(String.format("Don't know how to translate %s in %s", arg_i, rule));
                     }
                 }
 
