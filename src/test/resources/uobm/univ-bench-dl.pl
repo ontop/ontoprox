@@ -422,214 +422,214 @@ idb('http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(_,_)).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#telephone'(X, Y) :- view('http://uob.iodt.ibm.com/univ-bench-dl.owl#telephone'(X, Y)).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X, Y) :- view('http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X, Y)).
 fresh('http://www.example.org/fresh#worksFor_some_Organization'(_)).
-fresh('http://www.example.org/fresh#like_some_Sports'(_)).
-fresh('http://www.example.org/fresh#isCrazyAbout_some_Sports'(_)).
-fresh('http://www.example.org/fresh#hasMajor_some_Science'(_)).
 fresh('http://www.example.org/fresh#isStudentOf_some_Organization'(_)).
+fresh('http://www.example.org/fresh#hasMajor_some_Science'(_)).
+fresh('http://www.example.org/fresh#like_some_Sports'(_)).
 fresh('http://www.example.org/fresh#isHeadOf_some_Program'(_)).
-fresh('http://www.example.org/fresh#teachingAssistantOf_some_Course'(_)).
-fresh('http://www.example.org/fresh#isHeadOf_some_College'(_)).
+fresh('http://www.example.org/fresh#isCrazyAbout_some_Sports'(_)).
 fresh('http://www.example.org/fresh#isHeadOf_some_Department'(_)).
+fresh('http://www.example.org/fresh#isHeadOf_some_College'(_)).
+fresh('http://www.example.org/fresh#teachingAssistantOf_some_Course'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_0'(_)).
-fresh('http://www.example.org/fresh#_eliminatedtransfresh_1'(_)).
 fresh('http://www.example.org/fresh#not_Man'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_3'(_)).
+fresh('http://www.example.org/fresh#_eliminatedtransfresh_1'(_)).
 fresh('http://www.example.org/fresh#_eliminatedtransfresh_2'(_)).
-fresh('http://www.example.org/fresh#Person_and_worksFor_some_Organization'(_)).
-fresh('http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(_)).
-fresh('http://www.example.org/fresh#Person_and_teachingAssistantOf_some_Course'(_)).
-fresh('http://www.example.org/fresh#Person_and_like_some_Sports'(_)).
 fresh('http://www.example.org/fresh#Person_and_isStudentOf_some_Organization'(_)).
+fresh('http://www.example.org/fresh#Person_and_worksFor_some_Organization'(_)).
+fresh('http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(_)).
+fresh('http://www.example.org/fresh#Person_and_like_some_Sports'(_)).
+fresh('http://www.example.org/fresh#Person_and_teachingAssistantOf_some_Course'(_)).
 fresh('http://www.example.org/fresh#Person_and_isHeadOf_some_Program'(_)).
 fresh('http://www.example.org/fresh#Student_and_hasMajor_some_Science'(_)).
-fresh('http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(_)).
+fresh('http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(_)).
 
 
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(X).
-'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
-'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh3'(X),'http://www.example.org/fresh#eliminateMinCard_fresh5'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchGroup'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Program'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Insterest'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Music'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_1'(X).
-'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#PostDoc'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Work'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_0'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X) :- 'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssociateProfessor'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateStudent'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Manual'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Specification'(X).
-'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#FullProfessor'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Institute'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchAssistant'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#HumanitiesAndSocial'(X).
-'http://www.example.org/fresh#like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X).
-'http://www.example.org/fresh#like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
 'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X),'http://www.example.org/fresh#not_Man'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Science'(X).
-'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UnofficialPublication'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X) :- 'http://www.example.org/fresh#isHeadOf_some_College'(X).
-'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X).
-'http://www.example.org/fresh#hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Department'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X).
-'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X) :- 'http://www.example.org/fresh#isHeadOf_some_Program'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssistantProfessor'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
+'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X) :- 'http://www.example.org/fresh#like_some_Sports'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateCourse'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TechnicalReport'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#JournalArticle'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_0'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#HumanitiesAndSocial'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
+'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh2'(X),'http://www.example.org/fresh#eliminateMinCard_fresh1'(X).
+'http://www.example.org/fresh#isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
+'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X).
+'http://www.example.org/fresh#hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X).
+'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Work'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_2'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'(X).
+'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#hasMajor_some_Science'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Manual'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Insterest'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
+'http://www.example.org/fresh#like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X).
+'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh3'(X),'http://www.example.org/fresh#eliminateMinCard_fresh2'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Insterest'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Music'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ClericalStaff'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Institute'(X).
+'http://www.example.org/fresh#isHeadOf_some_Program'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ConferencePaper'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#PeopleWithHobby'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X) :- 'http://www.example.org/fresh#isHeadOf_some_College'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Engineering'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Science'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X) :- 'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X).
+'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
+'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchAssistant'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#FineArts'(X).
+'http://www.example.org/fresh#like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsFan'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UndergraduateStudent'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#PostDoc'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Specification'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SystemsStaff'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://www.example.org/fresh#worksFor_some_Organization'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
+'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Lecturer'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#FullProfessor'(X).
+'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchGroup'(X).
+'http://www.example.org/fresh#isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#VisitingProfessor'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchAssistant'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Book'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#VisitingProfessor'(X).
-'http://www.example.org/fresh#isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_2'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Insterest'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#SportsLover'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#like_some_Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UndergraduateStudent'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Lecturer'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ConferencePaper'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#JournalArticle'(X).
-'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchAssistant'(X).
-'http://www.example.org/fresh#isHeadOf_some_Program'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SystemsStaff'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateCourse'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#FineArts'(X).
-'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh4'(X),'http://www.example.org/fresh#eliminateMinCard_fresh3'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Work'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#worksFor_some_Organization'(X).
-'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_3'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Man'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ClericalStaff'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Program'(X).
-'http://www.example.org/fresh#worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Director'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#NonScienceStudent'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Employee'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#SupportingStaff'(X).
-'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh4'(X),'http://www.example.org/fresh#eliminateMinCard_fresh5'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssistantProfessor'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TechnicalReport'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Engineering'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#PeopleWithHobby'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X) :- 'http://www.example.org/fresh#hasMajor_some_Science'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(X) :- 'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Article'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Work'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Program'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_1'(X).
 'http://www.example.org/fresh#isHeadOf_some_College'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Dean'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Woman'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X).
-'http://www.example.org/fresh#isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
-'http://www.example.org/fresh#_eliminatedtransfresh_0'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareDocumentation'(X,Y).
-'http://www.example.org/fresh#hasMajor_some_Science'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Science'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMajor'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#takesCourse'(Y,X).
-'http://www.example.org/fresh#like_some_Sports'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationResearch'(Y,X).
-'http://www.example.org/fresh#isCrazyAbout_some_Sports'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isCrazyAbout'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateCourse'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#takesCourse'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateStudent'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(Y,X).
-'http://www.example.org/fresh#teachingAssistantOf_some_Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateStudent'(X).
+'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Chair'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#UnofficialPublication'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X) :- 'http://www.example.org/fresh#_eliminatedtransfresh_3'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#AssociateProfessor'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#ScienceStudent'(X).
+'http://www.w3.org/2002/07/owl#Nothing'(X) :- 'http://www.example.org/fresh#eliminateMinCard_fresh3'(X),'http://www.example.org/fresh#eliminateMinCard_fresh1'(X).
 'http://www.example.org/fresh#isHeadOf_some_Program'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Program'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareDocumentation'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationResearch'(X,Y).
-'http://www.example.org/fresh#_eliminatedtransfresh_1'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X),'http://www.example.org/fresh#_eliminatedtransfresh_1'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMajor'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliateOf'(X,Y).
-'http://www.example.org/fresh#not_Man'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAdvisedBy'(Y,X).
-'http://www.example.org/fresh#_eliminatedtransfresh_1'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliatedOrganizationOf'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#orgPublication'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliateOf'(Y,X).
-'http://www.example.org/fresh#isHeadOf_some_Department'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#orgPublication'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y).
-'http://www.example.org/fresh#_eliminatedtransfresh_3'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y),'http://www.example.org/fresh#_eliminatedtransfresh_3'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationAuthor'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareVersion'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAdvisedBy'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#tenured'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teacherOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchGroup'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#researchProject'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#researchProject'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#UndergraduateStudent'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
-'http://www.example.org/fresh#_eliminatedtransfresh_2'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,X).
-'http://www.example.org/fresh#isHeadOf_some_College'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationDate'(Y,X).
-'http://www.example.org/fresh#_eliminatedtransfresh_3'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y).
-'http://www.example.org/fresh#isStudentOf_some_Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y).
+'http://www.example.org/fresh#_eliminatedtransfresh_0'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y),'http://www.example.org/fresh#_eliminatedtransfresh_0'(X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#enrollIn'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(Y,X).
-'http://www.example.org/fresh#worksFor_some_Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliatedOrganizationOf'(X,Y).
-'http://www.example.org/fresh#_eliminatedtransfresh_0'(Y) :- 'http://www.example.org/fresh#_eliminatedtransfresh_0'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliateOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(X,Y).
-'http://www.example.org/fresh#_eliminatedtransfresh_2'(Y) :- 'http://www.example.org/fresh#_eliminatedtransfresh_2'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationAuthor'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#Schedule'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#listedCourse'(Y,X).
+'http://www.example.org/fresh#isStudentOf_some_Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X).
+'http://www.example.org/fresh#teachingAssistantOf_some_Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(X,Y).
+'http://www.example.org/fresh#not_Man'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationResearch'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliateOf'(Y,X).
+'http://www.example.org/fresh#isHeadOf_some_Department'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Department'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliatedOrganizationOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationAuthor'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#orgPublication'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#researchProject'(X,Y).
+'http://www.example.org/fresh#_eliminatedtransfresh_3'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAdvisedBy'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(X,Y).
+'http://www.example.org/fresh#isCrazyAbout_some_Sports'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isCrazyAbout'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(X,Y).
+'http://www.example.org/fresh#_eliminatedtransfresh_3'(Y) :- 'http://www.example.org/fresh#_eliminatedtransfresh_3'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#AcademicSubject'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMajor'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#University'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#tenured'(Y,X).
+'http://www.example.org/fresh#_eliminatedtransfresh_0'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Research'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationResearch'(X,Y).
+'http://www.example.org/fresh#_eliminatedtransfresh_1'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,X).
+'http://www.example.org/fresh#like_some_Sports'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Sports'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareDocumentation'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#takesCourse'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#TeachingAssistant'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teachingAssistantOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateCourse'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#GraduateStudent'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#takesCourse'(X,Y).
+'http://www.example.org/fresh#worksFor_some_Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y).
+'http://www.example.org/fresh#_eliminatedtransfresh_2'(Y) :- 'http://www.example.org/fresh#_eliminatedtransfresh_2'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y).
+'http://www.example.org/fresh#hasMajor_some_Science'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMajor'(Y,X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#Science'(X).
+'http://www.example.org/fresh#_eliminatedtransfresh_2'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAffiliatedOrganizationOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareDocumentation'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Software'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#softwareVersion'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#listedCourse'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#love'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isCrazyAbout'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#ResearchGroup'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#researchProject'(Y,X).
+'http://www.example.org/fresh#_eliminatedtransfresh_1'(Y) :- 'http://www.example.org/fresh#_eliminatedtransfresh_1'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,X).
+'http://www.example.org/fresh#isHeadOf_some_College'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#College'(X),'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#UndergraduateStudent'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#WomanCollege'(X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Organization'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Schedule'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#listedCourse'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Course'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teacherOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Faculty'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Professor'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isAdvisedBy'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#orgPublication'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#Publication'(Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#publicationDate'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#enrollIn'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#love'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#enrollIn'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDoctoralDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#love'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMasterDegreeFrom'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#worksFor'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isHeadOf'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#enrollIn'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#love'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isFriendOf'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasUndergraduateDegreeFrom'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#like'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isCrazyAbout'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasStudent'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isStudentOf'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(Y,X).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teacherOf'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#teacherOf'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isTaughtBy'(X,Y).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(Y,X).
 'http://uob.iodt.ibm.com/univ-bench-dl.owl#isMemberOf'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasMember'(X,Y).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,Z).
-'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,Z).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(Y,X).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasAlumnus'(Y,X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasDegreeFrom'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(Y,Z),'http://uob.iodt.ibm.com/univ-bench-dl.owl#hasSameHomeTownWith'(X,Y).
+'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Z) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(Y,Z),'http://uob.iodt.ibm.com/univ-bench-dl.owl#subOrganizationOf'(X,Y).
+'http://www.example.org/fresh#Person_and_isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
 'http://www.example.org/fresh#Person_and_worksFor_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#worksFor_some_Organization'(X).
-'http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X).
+'http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Department'(X).
+'http://www.example.org/fresh#Person_and_like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#like_some_Sports'(X).
 'http://www.example.org/fresh#Person_and_teachingAssistantOf_some_Course'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#teachingAssistantOf_some_Course'(X).
 'http://www.example.org/fresh#isHeadOf_some_College'(X) :- 'http://www.example.org/fresh#isHeadOf_some_College'(X).
-'http://www.example.org/fresh#Person_and_like_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#like_some_Sports'(X).
-'http://www.example.org/fresh#Person_and_isStudentOf_some_Organization'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isStudentOf_some_Organization'(X).
 'http://www.example.org/fresh#Person_and_isHeadOf_some_Program'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Program'(X).
 'http://www.example.org/fresh#Student_and_hasMajor_some_Science'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Student'(X),'http://www.example.org/fresh#hasMajor_some_Science'(X).
-'http://www.example.org/fresh#Person_and_isHeadOf_some_Department'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isHeadOf_some_Department'(X).
+'http://www.example.org/fresh#Person_and_isCrazyAbout_some_Sports'(X) :- 'http://uob.iodt.ibm.com/univ-bench-dl.owl#Person'(X),'http://www.example.org/fresh#isCrazyAbout_some_Sports'(X).
