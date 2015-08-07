@@ -24,6 +24,12 @@ import org.slf4j.LoggerFactory;
  * Clipper will create all possible conjunctions in the saturation step. 
  * Some of the conjunctions will be empty concepts due to the
  * disjointness axioms. This transformer will remove all such axioms from the ontology.
+ * To know which conjunctions are empty, we use a reasoner.
+ * 
+ * This will optimize the steps 2-4 of the Compile and Rewrite procedure
+ * as the number of fresh concept names introduced in steps 2 and 3 
+ * will be smaller, therefore in step 4 the reasoner will need to
+ * classify and traverse less concepts.
  *
  */
 public class EmptyConjunctionRemover extends OntologyTransformer {
@@ -36,7 +42,9 @@ public class EmptyConjunctionRemover extends OntologyTransformer {
 		super(manager);
 	}
 
-	// For the logging
+	/**
+	 * For the logging
+	 */
 	private Logger log = LoggerFactory.getLogger(EmptyConjunctionRemover.class);
 
 	
@@ -49,11 +57,12 @@ public class EmptyConjunctionRemover extends OntologyTransformer {
 		
 		log.info("  * Creating a Hermit reasoner and precomputing inferences...");
 
-		// Create a reasoner factory. In this case, we will use Hermit.
+		/**
+		 * Create a Hermit reasoner, load the extended ontology into it,
+		 * and precompute the class hierarchy.
+		 */
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
-		// Load the extended ontology into the reasoner.
 		OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
-		// Asks the reasoner to classify the ontology.
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY,
 				InferenceType.DISJOINT_CLASSES);
 
@@ -61,7 +70,9 @@ public class EmptyConjunctionRemover extends OntologyTransformer {
 		log.info("  * Removing axioms talking about empty conjunctions...");
 		Set<OWLAxiom> axioms = new HashSet<>();
 		for( OWLAxiom axiom: ontology.getAxioms()) {
-			// keep the axiom if it should not be removed
+			/**
+			 * Keep the axiom if it should not be removed
+			 */
 			if(!isToBeRemovedSubClassOfAxiom(axiom, reasoner)) {
 				axioms.add(axiom);
 			}

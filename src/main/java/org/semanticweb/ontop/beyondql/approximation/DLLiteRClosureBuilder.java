@@ -12,26 +12,20 @@ import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
-import org.semanticweb.owlapi.model.OWLObjectInverseOf;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Joiner;
 
 /******************************************************************************
  * This class implements the step 4 of the Compile and Rewrite
@@ -55,13 +49,15 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	 */
 	public DLLiteRClosureBuilder(OWLOntologyManager manager) {
 		super(manager);
-		new_classes = new HashMap<OWLClass, OWLClassExpression>();
+		new_classes = new HashMap<>();
 	}
 
-	// This set contains the mapping between the new classes that we
-	// introduced and its original equivalent descriptions. 
-	private HashMap<OWLClass, OWLClassExpression> new_classes;
-	// For the logging
+	/**
+	 * This set contains the mapping between the new classes that we
+	 * introduced and its original equivalent descriptions.
+	 */
+ 	private HashMap<OWLClass, OWLClassExpression> new_classes;
+	/** For the logging */
 	private Logger log = LoggerFactory.getLogger(DLLiteRClosureBuilder.class);
 
 	
@@ -84,7 +80,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	{
 		log.info("Computing the DL-LiteR closure of the ontology " + owl_ont.getOntologyID().getOntologyIRI());
 				
-		// we use this set to keep track of the freshly introduced names
+		/**
+		 * We use this set to keep track of the freshly introduced names
+		 */
 		new_classes = new HashMap<>();
 		
 		/**
@@ -96,11 +94,12 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		
 		log.info("  * Creating a Hermit reasoner and precomputing inferences...");
 
-		// Create a reasoner factory. In this case, we will use Hermit.
+		/**
+		 * Create a Hermit reasoner, load the extended ontology into it,
+		 * and precompute the class and role hierarchies.
+		 */
 		OWLReasonerFactory reasonerFactory = new org.semanticweb.HermiT.Reasoner.ReasonerFactory();
-		// Load the extended ontology into the reasoner.
 		OWLReasoner reasoner = reasonerFactory.createReasoner(extended_owl_ont);
-		// Asks the reasoner to classify the ontology.
 		reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY,
 				InferenceType.OBJECT_PROPERTY_HIERARCHY,
 				InferenceType.DATA_PROPERTY_HIERARCHY,
@@ -129,7 +128,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 				+ dlliter_ont.getOntologyID().getOntologyIRI() + " with " +
 				dlliter_ont.getAxiomCount() + " axioms");
 
-		// clear the set of freshly introduced names
+		/**
+		 * Clear the set of freshly introduced names
+		 */
 		new_classes.clear();
 
 		return dlliter_ont;
@@ -138,16 +139,16 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	/**************************************************************************
 	 * Returns the TBox of the original ontology completed with the definitions
 	 * for existential restrictions. That is, returns a complete ontology
-	 * corresponding to the input ontology, -- plus a new equivalent class axiom
-	 * for the domain and range of every object property in the ontology; --
-	 * plus a new equivalent class axiom for the domain of every data property
-	 * in the ontology.
-	 * <p>
+	 * corresponding to the input ontology,
+	 * <pre> 
+	 *   -- plus a new equivalent class axiom for the domain and range 
+	 *   	of every object property in the ontology; 
+	 *   -- plus a new equivalent class axiom for the domain 
+	 *   	of every data property in the ontology.
+	 * </pre>
+	 *
 	 * All these new axioms added will help in the classification, to obtain
 	 * some further inferences.
-	 * <p>
-	 * This method does not add the individual axioms or "abox assertions" from
-	 * the owl ontology, so that we don't classify them later.
 	 * 
 	 * @param owl_ont
 	 *            the input ontolgy
@@ -159,15 +160,17 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 		/**
 		 * Collect all existential restrictions to be named
+		 * 
+		 * First, all domains and ranges of object properties 
+		 * (concepts of the form `∃R.T`)
 		 */
-		// construct all domains and ranges of object properties (concepts of
-		// the form `ER.T`)
-		Set<OWLClassExpression> existentialRestrictionsToBeNamed = constructObjectSomeValuesFrom(
-				owl_ont, false);
-		// construct all domains of data properties (concepts of the form `min 1
-		// P`)
-		existentialRestrictionsToBeNamed
-				.addAll(constructDataMinCardinalityRestrictions(owl_ont));
+		Set<OWLClassExpression> existentialRestrictionsToBeNamed = constructObjectSomeValuesFrom(owl_ont, false);
+		
+		/** 
+		 * Second, all domains of data properties 
+		 * (concepts of the form `min 1P`)
+		 */
+		existentialRestrictionsToBeNamed.addAll(constructDataMinCardinalityRestrictions(owl_ont));
 
 		/**
 		 * Now create all the corresponding definitions for the existential
@@ -188,10 +191,6 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	 * qualified existentials is true, the filler will be every atomic concept
 	 * in the original ontology.
 	 * <p>
-	 * TODO In this method we just added the first nesting level
-	 * -someValuesOf(R,T)-. It is possible to go on adding further levels. For
-	 * example: someValuesOf(R,someValuesOf(R,T)) In this case we should add all
-	 * the possible combinations.
 	 * 
 	 * @param ont
 	 *            the original ontology
@@ -200,40 +199,44 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	 *************************************************************************/
 	private Set<OWLClassExpression> constructObjectSomeValuesFrom(
 			OWLOntology ont, boolean qualifiedExistentials) {
-		OWLClass classThing = ontologyManager.getOWLDataFactory().getOWLClass(
-				OWLRDFVocabulary.OWL_THING.getIRI());
-		Set<OWLObjectProperty> properties = ont
-				.getObjectPropertiesInSignature();
+		OWLClass classThing = ontologyManager.getOWLDataFactory().getOWLThing();
+		Set<OWLObjectProperty> properties = ont.getObjectPropertiesInSignature();
 		Set<OWLClass> classes = ont.getClassesInSignature();
 
 		Set<OWLClassExpression> existentialRestrictions = new HashSet<>();
 		for (OWLObjectProperty oprop : properties) {
-			// add the restriction R some Thing
+			/**
+			 * add the restriction R some Thing
+			 */
 			OWLObjectSomeValuesFrom res = ontologyManager.getOWLDataFactory()
 					.getOWLObjectSomeValuesFrom(oprop, classThing);
 			existentialRestrictions.add(res);
 
-			// add the restriction inv(R) some Thing
+			/**
+			 * add the restriction inv(R) some Thing
+			 */
 			res = ontologyManager.getOWLDataFactory()
 					.getOWLObjectSomeValuesFrom(
-							ontologyManager.getOWLDataFactory()
-									.getOWLObjectInverseOf(oprop), classThing);
+							ontologyManager.getOWLDataFactory().getOWLObjectInverseOf(oprop), classThing);
 			existentialRestrictions.add(res);
 
 			if (qualifiedExistentials) {
-				// now add for every atomic concept in the ontology
+				/**
+				 * now add the restriction for every atomic concept in the ontology
+				 */
 				for (OWLClass clazz : classes) {
-					// R some A
-					res = ontologyManager.getOWLDataFactory()
-							.getOWLObjectSomeValuesFrom(oprop, clazz);
+					/**
+					 * R some A
+					 */
+					res = ontologyManager.getOWLDataFactory().getOWLObjectSomeValuesFrom(oprop, clazz);
 					existentialRestrictions.add(res);
 
-					// inv(R) some A
+					/**
+					 * inv(R) some A
+					 */
 					res = ontologyManager.getOWLDataFactory()
 							.getOWLObjectSomeValuesFrom(
-									ontologyManager.getOWLDataFactory()
-											.getOWLObjectInverseOf(oprop),
-									clazz);
+									ontologyManager.getOWLDataFactory().getOWLObjectInverseOf(oprop), clazz);
 					existentialRestrictions.add(res);
 				}
 			}
@@ -247,8 +250,6 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	 * <p>
 	 * The form is: min 1 DataProperty
 	 * <p>
-	 * TODO: add also axioms of the form: min 1 DataProperty DataRange, where
-	 * DataRange are the Datatypes in the ontology.
 	 * 
 	 * @param ont
 	 *            the original ontology
@@ -261,12 +262,12 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 		Set<OWLDataProperty> dproperties = ont.getDataPropertiesInSignature();
 		for (OWLDataProperty dprop : dproperties) {
-			// add the restriction without range
+			/**
+			 * add the restriction without range
+			 */
 			OWLDataMinCardinality res = ontologyManager.getOWLDataFactory()
 					.getOWLDataMinCardinality(1, dprop);
 			dataMinCardinalityRestrictions.add(res);
-			// TODO
-			// now add for every data type, or data range valid in DL LITE
 		}
 		return dataMinCardinalityRestrictions;
 	}
@@ -289,14 +290,17 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 		int n = 0;
 		for (OWLClassExpression expression : complexExpressionsToBeNamed) {
-			// create a new class with a name `Fresh#`
+			/**
+			 * create a new class with a name `Fresh_#`
+			 */
 			OWLClass new_class = factory.getOWLClass(IRI.create(owl_ont
 					.getOntologyID().getOntologyIRI() + "#Fresh_" + n));
 			new_classes.put(new_class, expression);
 
-			// create a new equivalent class axiom defining the new class
-			OWLEquivalentClassesAxiom new_ax = factory
-					.getOWLEquivalentClassesAxiom(new_class, expression);
+			/**
+			 * create a new equivalent class axiom defining the new class
+			 */
+			OWLEquivalentClassesAxiom new_ax = factory.getOWLEquivalentClassesAxiom(new_class, expression);
 			axioms.add(new_ax);
 
 			n++;
@@ -421,7 +425,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			Node<OWLClass> equiv_classes, OWLClassExpression superClass,
 			OWLReasoner reasoner) {
 
-		// The set of DL-Lite axioms to be returned
+		/**
+		 * The set of DL-Lite axioms to be returned
+		 */
 		Set<OWLAxiom> axioms = new HashSet<>();
 
 		/**
@@ -468,9 +474,13 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		 * 
 		 * We use namedClass to get the disjoint classes for
 		 * performance reasons
+		 * 
+		 * Disabled at the moment, slows down performance, while the disjointness
+		 * axioms are not relevant for query answering. 
+		 * 
 		 */
-//		NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(namedClass);
-//		axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
+		//NodeSet<OWLClass> disjointClasses = reasoner.getDisjointClasses(namedClass);
+		//axioms.addAll(constructDLLiteDisjointClassesAxioms(representativeClass, disjointClasses));
 
 		/**
 		 * The recursive part of the method.
@@ -482,7 +492,7 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		 * We use namedClass to get the subclasses for
 		 * performance reasons
 		 */
-		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(namedClass, true); // only direct sublasses
+		NodeSet<OWLClass> sub_classes = reasoner.getSubClasses(namedClass, true); /** only direct sublasses */
 		for (Node<OWLClass> equiv_sub_classes : sub_classes) {
 			Set<OWLAxiom> naxioms = computeEntailedDLLiteRConceptAxioms(equiv_sub_classes, representativeClass, reasoner);
 			axioms.addAll(naxioms);
@@ -506,32 +516,41 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			OWLClassExpression superClass) {
 		Set<OWLAxiom> axioms = new HashSet<>();
 		
-		// Only add non-trivial axioms
+		/**
+		 * Only add non-trivial axioms
+		 */
 		if (!superClass.isOWLThing() && !representativeClass.isOWLNothing() ) {
 			if(representativeClass instanceof OWLClass) {
 				/**
 				 * Add normal subclassof axiom
 				 */
 				axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(representativeClass, superClass));
-			} else {// that is, representativeClass instanceof OWLObjectSomeValuesFrom
+			} else {
 				/**
-				 * Add either a domain or range axiom
+				 * representativeClass instanceof OWLObjectSomeValuesFrom, so
+				 * add either a domain or range axiom
 				 */
 				OWLObjectPropertyExpression property = ((OWLObjectSomeValuesFrom)representativeClass).getProperty();
 				if (!property.isAnonymous()) {
-					// representativeClass is of the form ∃R
+					/**
+					 * representativeClass is of the form ∃R
+					 */
 					axioms.add(ontologyManager.getOWLDataFactory().getOWLObjectPropertyDomainAxiom(
 									property.asOWLObjectProperty(),
 									superClass));
 				} else {
-					// representativeClass is of the form ∃R^-
+					/**
+					 * representativeClass is of the form ∃R^-
+					 */
 					axioms.add(ontologyManager.getOWLDataFactory().getOWLObjectPropertyRangeAxiom(
 									property.getNamedProperty(),
 									superClass));
 				}
 			}
 		} else {
-			// nothing to be added
+			/**
+			 * nothing to be added
+			 */
 		}
 
 		return axioms;
@@ -561,7 +580,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	private Set<OWLAxiom> computeEntailedDLLiteRObjectPropertyAxioms(
 			Node<OWLObjectPropertyExpression> equiv_roles,
 			OWLObjectPropertyExpression superRole, OWLReasoner reasoner) {
-		// The set of DL-Lite axioms to be returned
+		/**
+		 * The set of DL-Lite axioms to be returned
+		 */
 		Set<OWLAxiom> axioms = new HashSet<>();
 
 		/**
@@ -593,6 +614,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 		/**
 		 * Create the disjoint properties axioms
+
+		 * Disabled at the moment, slows down performance, while the disjointness
+		 * axioms are not relevant for query answering. 
 		 */
 		//NodeSet<OWLObjectPropertyExpression> disjointProperties = reasoner.getDisjointObjectProperties(representativeRole);
 		//axioms.addAll(constructDLLiteDisjointPropertiesAxioms(representativeRole, disjointProperties));
@@ -605,9 +629,7 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		 * subroles.
 		 */
 		NodeSet<OWLObjectPropertyExpression> sub_roles = reasoner
-				.getSubObjectProperties(representativeRole, true); // only
-																	// direct
-																	// sublasses
+				.getSubObjectProperties(representativeRole, true); /** only direct sublasses */
 		for (Node<OWLObjectPropertyExpression> equiv_sub_roles : sub_roles) {
 			Set<OWLAxiom> naxioms = computeEntailedDLLiteRObjectPropertyAxioms(
 					equiv_sub_roles, representativeRole, reasoner);
@@ -629,7 +651,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	private Set<OWLAxiom> computeEntailedDLLiteRDataPropertyAxioms(
 			Node<OWLDataProperty> equiv_roles, OWLDataProperty superRole,
 			OWLReasoner reasoner) {
-		// The set of DL-Lite axioms to be returned
+		/**
+		 * The set of DL-Lite axioms to be returned
+		 */
 		Set<OWLAxiom> axioms = new HashSet<>();
 
 		/**
@@ -660,11 +684,12 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 
 		/**
 		 * Create the disjoint properties axioms
+		 *
+		 * Disabled at the moment, slows down performance, while the disjointness
+		 * axioms are not relevant for query answering. 
 		 */
-		NodeSet<OWLDataProperty> disjointProperties = reasoner
-				.getDisjointDataProperties(representativeRole);
-		axioms.addAll(constructDLLiteDisjointDataPropertiesAxioms(
-				representativeRole, disjointProperties));
+		//NodeSet<OWLDataProperty> disjointProperties = reasoner.getDisjointDataProperties(representativeRole);
+		//axioms.addAll(constructDLLiteDisjointDataPropertiesAxioms(representativeRole, disjointProperties));
 
 		/**
 		 * The recursive part of the method.
@@ -674,7 +699,7 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		 * subroles.
 		 */
 		NodeSet<OWLDataProperty> sub_roles = reasoner.getSubDataProperties(
-				representativeRole, true); // only direct sublasses
+				representativeRole, true); /** only direct subroles */
 		for (Node<OWLDataProperty> equiv_sub_roles : sub_roles) {
 			Set<OWLAxiom> naxioms = computeEntailedDLLiteRDataPropertyAxioms(
 					equiv_sub_roles, representativeRole, reasoner);
@@ -700,7 +725,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		Set<OWLClassExpression> equiv_class_in_orig_signature = new HashSet<>(
 				equiv_classes.getSize());
 
-		// First, substitute fresh names by their definitions
+		/**
+		 * First, substitute fresh names by their definitions
+		 */
 		for (OWLClass clazz : equiv_classes) {
 			if (new_classes.containsKey(clazz)) {
 				OWLClassExpression existentialRestriction = new_classes
@@ -711,7 +738,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			}
 		}
 
-		// Second, create the equivalent classes axiom
+		/**
+		 * Second, create the equivalent classes axiom
+		 */
 		Set<OWLAxiom> axioms = new HashSet<>();
 		if (equiv_class_in_orig_signature.size() > 1) {
 			OWLEquivalentClassesAxiom axiom = ontologyManager
@@ -736,7 +765,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			Node<OWLClass> equiv_classes) {
 		OWLClassExpression selected_class = null;
 
-		// First try to select an original named class
+		/**
+		 * First, try to select an original named class
+		 */
 		for (OWLClass clazz : equiv_classes) {
 			if (!new_classes.containsKey(clazz)) {
 				selected_class = clazz;
@@ -744,7 +775,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			}
 		}
 
-		// Otherwise get the definition of the first class
+		/**
+		 * Otherwise get the definition of the first class
+		 */
 		if (selected_class == null) {
 			for (OWLClass clazz : equiv_classes) {
 				if (new_classes.containsKey(clazz)) {
@@ -761,7 +794,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			Node<OWLObjectPropertyExpression> equiv_properties) {
 		OWLObjectPropertyExpression selected_property = null;
 
-		// First try to select a direct property
+		/**
+		 * First try to select a direct property
+		 */
 		for (OWLObjectPropertyExpression prop : equiv_properties) {
 			if (!prop.isAnonymous()) {
 				selected_property = prop;
@@ -769,8 +804,10 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			}
 		}
 
-		// if all properties are non-direct, then we choose the first inverse
-		// property
+		/**
+		 * if all properties are non-direct, then we choose the first inverse
+		 * property
+		 */
 		if (selected_property == null) {
 			for (OWLObjectPropertyExpression prop : equiv_properties) {
 				selected_property = prop;
@@ -785,7 +822,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			Node<OWLDataProperty> equiv_properties) {
 		OWLDataProperty selected_property = null;
 
-		// Select a first property
+		/**
+		 * Select a first property
+		 */
 		for (OWLDataProperty prop : equiv_properties) {
 			selected_property = prop;
 			break;
@@ -805,7 +844,9 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 	private OWLClass selectNamedClass(Node<OWLClass> equiv_classes) {
 		OWLClass named_class = null;
 
-		// First try to select an original named class
+		/**
+		 * First try to select an original named class
+		 */
 		for (OWLClass clazz : equiv_classes) {
 			if (!new_classes.containsKey(clazz)) {
 				named_class = clazz;
@@ -839,10 +880,11 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		if (mainClass.isOWLNothing())
 			return axioms;
 
-		// For each equivalence class choose a representative and
-		// if the representative is not OWL Nothing, add a disjoint classes
-		// axioms between
-		// the main class and the representative
+		/**
+		 * For each equivalence class choose a representative and
+		 * if the representative is not OWL Nothing, add a disjoint classes
+		 * axioms between the main class and the representative
+		 */
 		for (Node<OWLClass> equiv_classes : disjointClasses) {
 			OWLClassExpression representative_class = selectRepresentativeClass(equiv_classes);
 			if (!representative_class.isOWLNothing()) {
@@ -863,10 +905,11 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		if (mainRole.isOWLBottomObjectProperty())
 			return axioms;
 
-		// For each equivalence class choose a representative and
-		// if the representative is not a bottom role, add a disjoint object
-		// properties axioms between
-		// the main role and the representative
+		/** 
+		 * For each equivalence class choose a representative and
+		 * if the representative is not a bottom role, add a disjoint object
+		 * properties axioms between the main role and the representative
+		 */
 		for (Node<OWLObjectPropertyExpression> equiv_roles : disjointProperties) {
 			OWLObjectPropertyExpression representative_role = selectRepresentativeObjectProperty(equiv_roles);
 			if (!representative_role.isBottomEntity()) {
@@ -887,10 +930,11 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		if (mainRole.isOWLBottomDataProperty())
 			return axioms;
 
-		// For each equivalence class choose a representative and
-		// if the representative is not a bottom role, add a disjoint data
-		// properties axioms between
-		// the main role and the representative
+		/** 
+		 * For each equivalence class choose a representative and
+		 * if the representative is not a bottom role, add a disjoint data
+		 * properties axioms between the main role and the representative
+		 */ 
 		for (Node<OWLDataProperty> equiv_roles : disjointProperties) {
 			OWLDataProperty representative_role = selectRepresentativeDataProperty(equiv_roles);
 			if (!representative_role.isBottomEntity()) {

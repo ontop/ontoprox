@@ -1,24 +1,21 @@
 package org.semanticweb.ontop.beyondql.approximation;
 
-import java.io.StringWriter;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 
-import uk.ac.manchester.cs.owl.owlapi.mansyntaxrenderer.ManchesterOWLSyntaxObjectRenderer;
 
-import com.google.common.base.Joiner;
-
+/**
+ * An abstract ontology transformer class that provides 
+ * a field ontologyManager and a constructor for its initialization.
+ * 
+ * It subclasses should implement the method transform that 
+ * takes as input an ontology and an outputIRI, and returns a transformed
+ * ontology whose IRI is the outputIRI.  
+ * 
+ */
 public abstract class OntologyTransformer {
 
 	
@@ -33,6 +30,17 @@ public abstract class OntologyTransformer {
 	}
 	
 	
+	/**
+	 * The main transformer method.
+	 * 
+	 * Transforms the given ontology with respect to its logic
+	 * and returns a new ontology whose IRI is the outputIRI.
+	 * 
+	 * @param ontology
+	 * @param outputIRI
+	 * @return transformed ontology
+	 * @throws OWLOntologyCreationException
+	 */
 	public abstract OWLOntology transform(OWLOntology ontology,
 			IRI outputIRI) throws OWLOntologyCreationException;
 	

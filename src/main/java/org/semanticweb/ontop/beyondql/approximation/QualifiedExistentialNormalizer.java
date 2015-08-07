@@ -20,19 +20,31 @@ import org.slf4j.LoggerFactory;
 
 
 /******************************************************************************
- * This class implements the step 2 of the Compile and Rewrite
- * procedure.
- * <ul>
- * <li>Step 2 is the additional normalization step that takes as input a
+ * This transformer class implements the step 2 of the Compile and Rewrite
+ * procedure. Step 2 is the additional normalization step that takes as input a
  * normalized Horn-ALCHIQ TBox and substitutes qualified existentials on the
- * right-hand side of concept inclusions with appropriate Dl-LiteR axioms. This
- * step is implemented by method "normalizeQualifiedExistentialRestrictions"
- * </ul>
+ * right-hand side of concept inclusions with appropriate Dl-LiteR axioms. 
+ * Namely, for each occurrence of qualified existential restriction
+ * on the right-hand side of concept inclusions
+ *  
+ * <pre> 
+ * 		C \ISA ∃R.(A1 \AND ... \AND An)
+ * </pre>
+ * 
+ * We introduce a fresh role name P and substitute the original axioms with
+ * the axioms:
+ * 
+ * <pre>
+ * 		C \ISA ∃P.Top 
+ * 		P \ISA R 
+ * 		∃P^- \ISA A1 
+ * 			... 
+ * 		∃P^- \ISA An
+ * </pre>
+ * 
  * 
  * The constructor for this class requires an OWLOntologyManager to create and
  * manipulate ontologies.
- * 
- * @author Elena Botoeva
  *
  *****************************************************************************/
 public class QualifiedExistentialNormalizer extends OntologyTransformer {
@@ -45,9 +57,16 @@ public class QualifiedExistentialNormalizer extends OntologyTransformer {
 		super(manager);
 	}
 
-	// For the logging
+	/**
+	 * For the logging
+	 */
 	private Logger log = LoggerFactory.getLogger(QualifiedExistentialNormalizer.class);
-	private final String roleFillerSeparator = "__";
+	
+	
+	/** 
+	 * The string used when creating fresh role names
+	 */
+	private static final String roleFillerSeparator = "__";
 
 
 	/**
@@ -120,15 +139,21 @@ public class QualifiedExistentialNormalizer extends OntologyTransformer {
 				OWLClassExpression filler = ((OWLObjectSomeValuesFrom) superClass)
 						.getFiller();
 							
-				// Filler must not be Thing
+				/**
+				 * Filler must not be Thing
+				 */
 				if(filler.isOWLThing()){
-					// does nothing
+					/** does nothing */
 				}
-				// Filler can be a concept name or
+				/**
+				 * Filler can be a concept name or
+				 */
 				else if (filler instanceof OWLClass) {
 					requires = true;
 				}
-				// a conjunction of concept names
+				/**
+				 * a conjunction of concept names
+				 */
 				else if (filler instanceof OWLObjectIntersectionOf) {
 					requires = true;
 					for (OWLClassExpression clazz : ((OWLObjectIntersectionOf) filler)
@@ -176,25 +201,33 @@ public class QualifiedExistentialNormalizer extends OntologyTransformer {
 				.getFiller();
 
 		
-		// Create a fresh role name
+		/**
+		 * Create a fresh role name
+		 */
 		IRI new_role_iri = IRI.create(IRIUtils.extractPrefix(prop)  
 				+ IRIUtils.extractPredicateName(prop) + roleFillerSeparator 
 				+ IRIUtils.extractConceptNames(filler));
 		OWLObjectProperty new_role = ontologyManager.getOWLDataFactory()
 				.getOWLObjectProperty(new_role_iri);
 
-		// add the axiom C \ISA ∃P.Top
+		/**
+		 * Add the axiom C \ISA ∃P.Top
+		 */
 		axioms.add(ontologyManager.getOWLDataFactory().getOWLSubClassOfAxiom(
 				subClass,
 				ontologyManager.getOWLDataFactory().getOWLObjectSomeValuesFrom(
 						new_role,
 						ontologyManager.getOWLDataFactory().getOWLThing())));
 
-		// add the axiom P \ISA R
+		/**
+		 * Add the axiom P \ISA R
+		 */
 		axioms.add(ontologyManager.getOWLDataFactory()
 				.getOWLSubObjectPropertyOfAxiom(new_role, prop));
 
-		// add the axioms ∃P^- \ISA Ai
+		/**
+		 * Add the axioms ∃P^- \ISA Ai
+		 */
 		if (filler instanceof OWLClass) {
 			axioms.add(ontologyManager.getOWLDataFactory()
 					.getOWLObjectPropertyRangeAxiom(new_role, filler));

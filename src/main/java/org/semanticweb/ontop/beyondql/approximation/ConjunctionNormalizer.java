@@ -19,11 +19,39 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+/**
+ * This transformer implements the step 3 of the Compile and Rewrite
+ * procedure. It takes as input a Horn-ALCHIQ ontology in normal_E form
+ * and returns its extension. Namely, for each occurrence of conjunction of 
+ * atomic concepts on the left-hand side of concept inclusions
+ *  
+ * <pre>
+ * 		A1 \AND ... \AND An \ISA C
+ * </pre>
+ * 
+ * it creates a fresh concept name "A1_and_..._and_An" and adds the following
+ * axioms
+ * 
+ * <pre>
+ * 		A1_and_..._and_An \ISA C
+ * 		A1_and_..._and_An \ISA A_i
+ * </pre>
+ * 
+ * To keep track of the fresh concept names, it stores a Multimap
+ * newConceptsForConjunctions that maps each fresh concept name
+ * A1_and_..._and_An to the set {A1,...,An}.  
+ */
 public class ConjunctionNormalizer extends OntologyTransformer {
 	
+	/**
+	 * The map for the fresh names and the conjunction of atomic
+	 * concepts it was introduced for.
+	 */
 	private Multimap<OWLClass,OWLClass> newConceptsForConjunctions;
 	
-	// For the logging
+	/**
+	 * For the logging
+	 */
 	private Logger log = LoggerFactory.getLogger(ConjunctionNormalizer.class);
 
 	/**
@@ -64,7 +92,9 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 			} 
 		}
 
-		// copy all axioms
+		/**
+		 * Copy all original axioms
+		 */
 		newAxioms.addAll(ontology.getAxioms());
 		
 		/**
@@ -101,6 +131,7 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 						.getOperands()) {
 					if (!(clazz instanceof OWLClass)) {
 						hasConjunction = false;
+						break;
 					}
 				}
 			}
@@ -116,18 +147,18 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 	 * </pre>
 	 * We create a fresh concept named
 	 * <pre>
-	 * 		A1,A2,..,An
+	 * 		A1_and_..._and_An
 	 * </pre>
 	 * and add the axioms
 	 * <pre>
-	 * 		A1,A2,..,An \ISA C
-	 * 		A1,A2,..,An \ISA A1
+	 * 		A1_and_..._and_An \ISA C
+	 * 		A1_and_..._and_An \ISA A1
 	 * 			...
-	 * 		A1,A2,..,An \ISA An
+	 * 		A1_and_..._and_An \ISA An
 	 * </pre>
 	 * to newAxioms and add the pairs
 	 * <pre>
-	 * 		(A1,A2,..,An , Ai)
+	 * 		(A1_and_..._and_An , Ai)
 	 * </pre>
 	 * to the map newConceptsForConjunctions.
 	 * 
@@ -144,15 +175,22 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 		OWLDataFactory factory = ontologyManager.getOWLDataFactory();
 
 		/**
-		 * here we try to be consistent with the naming of fresh concepts
+		 * Here we try to be consistent with the naming of fresh concepts
 		 * by clipper, so that we do not create new names for something
 		 * that already exists.
 		 */
-		// Get the prefix of the first element in classes
+		
+		/**
+		 * Get the prefix of the first element in classes
+		 */
 		String prefix = "http://www.example.org/fresh#";//extractPrefix(classes.iterator().next().asOWLClass());
-		// Get the string of "_and_" separated concept names in conjunction 
+		/**
+		 * Get the string of "_and_" separated concept names in conjunction 
+		 */
 		String newName = IRIUtils.extractConceptNamesFromConjunction(conjunction);
-		// Create fresh concept A1,A2,..,An \ISA
+		/**
+		 * Create fresh concept A1_and_..._and_An \ISA
+		 */
 		OWLClass freshClass = factory.getOWLClass(IRI.create(prefix + newName));
 
 		
@@ -160,14 +198,20 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 
         newAxioms.add(factory.getOWLDeclarationAxiom(freshClass));
 
-		// Add axiom A1,A2,..,An \ISA C
+		/**
+		 * Add axiom A1_and_..._and_An \ISA C
+		 */
 		newAxioms.add(factory.getOWLSubClassOfAxiom(freshClass, superClass));
-		// Add axioms A1,A2,..,An \ISA Ai
+		/**
+		 * Add axioms A1_and_..._and_An \ISA Ai
+		 */
 		for(OWLClassExpression classInConjunction : classes) {
 			newAxioms.add(factory.getOWLSubClassOfAxiom(freshClass, classInConjunction));
 		}
 		
-		// Add the pairs (A1,A2,..,An , Ai) to newConceptsForConjunctions
+		/**
+		 * Add the pairs (A1_and_..._and_An , Ai) to newConceptsForConjunctions
+		 */
 		for(OWLClassExpression classInConjunction : classes) {
 			newConceptsForConjunctions.put(freshClass, classInConjunction.asOWLClass());
 		}
