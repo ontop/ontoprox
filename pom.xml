@@ -68,6 +68,7 @@
             <artifactId>jgrapht</artifactId>
             <version>0.8.3</version>
         </dependency>
+
         <dependency>
             <groupId>jgraph</groupId>
             <artifactId>jgraph</artifactId>
