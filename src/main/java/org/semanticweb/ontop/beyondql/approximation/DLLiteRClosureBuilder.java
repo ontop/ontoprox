@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
@@ -81,6 +82,17 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		log.info("Computing the DL-LiteR closure of the ontology " + owl_ont.getOntologyID().getOntologyIRI());
 				
 		/**
+		 * Create explicit declaration axioms for each concept and role in owl_ont
+		 * and copy them over to the final set of axioms
+		 */
+		Set<OWLDeclarationAxiom> declarationAxioms = new HashSet<>(owl_ont.getSignature().size());
+		for (OWLEntity entity : owl_ont.getSignature()) {
+		//	if(!entity.getIRI().getNamespace().startsWith(ConjunctionNormalizer.FRESH_PREFIX)) {
+				declarationAxioms.add(ontologyManager.getOWLDataFactory().getOWLDeclarationAxiom(entity));
+		//	}
+		}
+
+		/**
 		 * We use this set to keep track of the freshly introduced names
 		 */
 		new_classes = new HashMap<>();
@@ -108,15 +120,12 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 		/**
 		 * Collect all entailed DL-LiteR axioms, that is, concept and role
 		 * axioms.
+		 * 
+		 * Also add the declaration axioms
 		 */
 		Set<OWLAxiom> dlliterAxioms = computeEntailedDLLiteRConceptAxioms(reasoner);
 		dlliterAxioms.addAll(computeEntailedDLLiteRRoleAxioms(reasoner));
 		
-		
-		/**
-		 * Copy over all declaration axioms
-		 */
-		Set<OWLDeclarationAxiom> declarationAxioms = owl_ont.getAxioms(AxiomType.DECLARATION);
 		dlliterAxioms.addAll(declarationAxioms);
 
 		
@@ -293,8 +302,7 @@ public class DLLiteRClosureBuilder extends OntologyTransformer {
 			/**
 			 * create a new class with a name `Fresh_#`
 			 */
-			OWLClass new_class = factory.getOWLClass(IRI.create(owl_ont
-					.getOntologyID().getOntologyIRI() + "#Fresh_" + n));
+			OWLClass new_class = factory.getOWLClass(IRI.create(ConjunctionNormalizer.FRESH_PREFIX + "Fresh_" + n));
 			new_classes.put(new_class, expression);
 
 			/**

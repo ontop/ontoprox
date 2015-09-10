@@ -43,6 +43,8 @@ import com.google.common.collect.Multimap;
  */
 public class ConjunctionNormalizer extends OntologyTransformer {
 	
+	public static final String FRESH_PREFIX = "http://www.example.org/fresh#";
+	
 	/**
 	 * The map for the fresh names and the conjunction of atomic
 	 * concepts it was introduced for.
@@ -181,17 +183,13 @@ public class ConjunctionNormalizer extends OntologyTransformer {
 		 */
 		
 		/**
-		 * Get the prefix of the first element in classes
-		 */
-		String prefix = "http://www.example.org/fresh#";//extractPrefix(classes.iterator().next().asOWLClass());
-		/**
 		 * Get the string of "_and_" separated concept names in conjunction 
 		 */
 		String newName = IRIUtils.extractConceptNamesFromConjunction(conjunction);
 		/**
 		 * Create fresh concept A1_and_..._and_An \ISA
 		 */
-		OWLClass freshClass = factory.getOWLClass(IRI.create(prefix + newName));
+		OWLClass freshClass = factory.getOWLClass(IRI.create(FRESH_PREFIX + newName));
 
 		
 		Set<OWLAxiom> newAxioms = new HashSet<>();

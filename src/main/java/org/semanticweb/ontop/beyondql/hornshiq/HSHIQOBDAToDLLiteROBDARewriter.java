@@ -21,8 +21,11 @@ import it.unibz.krdb.obda.model.Variable;
 import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
+import it.unibz.krdb.obda.utils.MappingParser;
 import it.unibz.krdb.sql.DBMetadata;
 import it.unibz.krdb.sql.JDBCConnectionManager;
+import it.unibz.krdb.sql.api.RelationJSQL;
+import net.sf.jsqlparser.JSQLParserException;
 
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
 import org.semanticweb.clipper.hornshiq.rule.CQ;
@@ -184,8 +187,25 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         OBDADataSource obdaDataSource = obdaModel.getSources().iterator().next();
         ArrayList<OBDAMappingAxiom> mappingAxioms = obdaModel.getMappings(obdaDataSource.getSourceID());
 
-        DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource);
+        
+        /**
+         *  Get the table names.
+         *  
+         *  We do it because in some cases Oracle does not find the metadata for the tables
+         *  we are interested in.
+         */
+        List<RelationJSQL> realTables = null;
+		MappingParser mParser = new MappingParser(JDBCConnectionManager.getJDBCConnectionManager().getConnection(obdaDataSource), mappingAxioms);
+		try {
+			realTables = mParser.getRealTables();
+		} catch (JSQLParserException e) {
+			e.printStackTrace();
+		}
+        
+		
+        DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource, realTables);
 
+        
         //Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter();
 
         /**
