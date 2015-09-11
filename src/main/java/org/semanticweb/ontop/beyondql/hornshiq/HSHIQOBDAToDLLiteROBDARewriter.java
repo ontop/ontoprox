@@ -38,6 +38,7 @@ import org.semanticweb.ontop.beyondql.approximation.QualifiedExistentialNormaliz
 import org.semanticweb.ontop.beyondql.datalogexpansion.DatalogExpansion;
 import org.semanticweb.ontop.beyondql.mapgen.DatalogToMappingAxiomTranslater;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -147,6 +148,8 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
         String originalIRI = ontology.getOntologyID().getOntologyIRI().toString();
 
         OWLOntology owlOntology_step1 = qaHornSHIQ.exportNormalizedAxiomsAndSaturatedEnforceRelations(originalIRI + "_step1");
+
+//        OWLManager.createOWLOntologyManager().saveOntology(owlOntology_step1, new RDFXMLOntologyFormat(), new FileOutputStream("tmp_step1.owl"));
 
         this.rewrittenOntology = rewriteOntology(owlOntology_step1);
 

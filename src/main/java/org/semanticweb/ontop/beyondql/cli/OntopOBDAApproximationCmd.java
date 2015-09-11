@@ -20,7 +20,9 @@ import java.sql.SQLException;
 
 public class OntopOBDAApproximationCmd {
 
-    public static void main(String[] args) throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException, OWLOntologyCreationException, OWLOntologyStorageException {
+    public static void main(String[] args)
+            throws SQLException, IOException, InvalidMappingException, DuplicateMappingException, OBDAException,
+            OWLOntologyCreationException, OWLOntologyStorageException {
 
         long t1 = System.currentTimeMillis();
 
