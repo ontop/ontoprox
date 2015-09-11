@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <clipper.version>0.2-SNAPSHOT</clipper.version>
+        <clipper.version>0.3.0-SNAPSHOT</clipper.version>
     </properties>
     <artifactId>ontop-beyond-ql</artifactId>
 
