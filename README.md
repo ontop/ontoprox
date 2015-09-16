@@ -70,7 +70,7 @@ $ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -
 `-Djava.library.path=/usr/lib/swi-prolog/lib/amd64`
 
 
-## Generating all-in-one jar for testing:
+## Generating an all-in-one jar for testing:
 
 ```
 $ mvn clean compile package -DskipTests
