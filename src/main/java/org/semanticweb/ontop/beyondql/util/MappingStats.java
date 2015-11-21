@@ -3,6 +3,7 @@ package org.semanticweb.ontop.beyondql.util;
 import it.unibz.krdb.obda.exception.InvalidMappingException;
 import it.unibz.krdb.obda.io.ModelIOManager;
 import it.unibz.krdb.obda.model.OBDADataFactory;
+import it.unibz.krdb.obda.model.OBDAMappingAxiom;
 import it.unibz.krdb.obda.model.OBDAModel;
 import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import it.unibz.krdb.obda.utils.MappingSplitter;
@@ -10,6 +11,7 @@ import it.unibz.krdb.obda.utils.MappingSplitter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 public class MappingStats {
 
@@ -28,12 +30,13 @@ public class MappingStats {
 
         URI sourceURI = obdaModel.getSources().iterator().next().getSourceID();
 
-        int size = obdaModel.getMappings(sourceURI).size();
+        List<OBDAMappingAxiom> mappings = obdaModel.getMappings(sourceURI);
+        int size = mappings.size();
 
         System.out.println("Nr. of mapping declarations in the obda file: " + size);
 
 
-        MappingSplitter.splitMappings(obdaModel, sourceURI);
+        MappingSplitter.splitMappings(mappings);
 
         size = obdaModel.getMappings(sourceURI).size();
 
