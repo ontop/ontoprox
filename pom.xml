@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>ontop</artifactId>
-        <groupId>it.unibz.inf.ontop</groupId>
-        <version>1.16.1</version>
-    </parent>
+
+    <groupId>it.unibz.inf.ontop</groupId>
+    <artifactId>ontoprox</artifactId>
+
+    <version>1.0.0-SNAPSHOT</version>
+
     <modelVersion>4.0.0</modelVersion>
 
+    <url>https://github.com/ontop/ontoprox</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <inceptionYear>2015</inceptionYear>
+    <organization>
+        <name>Free University of Bozen-Bolzano</name>
+    </organization>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <scm>
+        <connection>scm:git:git@github.com:ontop/ontoprox.git</connection>
+        <developerConnection>scm:git:git@github.com:ontop/ontoprox.git</developerConnection>
+        <url>git@github.com:ontop/ontoprox.git</url>
+    </scm>
+
     <properties>
+        <ontop.version>1.16.1</ontop.version>
         <clipper.version>0.3.0-SNAPSHOT</clipper.version>
     </properties>
-    <artifactId>ontop-beyond-ql</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>org.semanticweb.clipper</groupId>
             <artifactId>clipper-reasoner</artifactId>
@@ -46,21 +73,21 @@
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-obdalib-core</artifactId>
-            <version>${project.version}</version>
+            <version>${ontop.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-reformulation-core</artifactId>
-            <version>${project.version}</version>
+            <version>${ontop.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-quest-owlapi3</artifactId>
-            <version>${project.version}</version>
+            <version>${ontop.version}</version>
         </dependency>
 
         <dependency>
@@ -69,17 +96,6 @@
             <version>0.8.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>jgraph</groupId>
-            <artifactId>jgraph</artifactId>
-            <version>5.13.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.22</version>
-        </dependency>
 
         <dependency>
             <groupId>com.oracle</groupId>
@@ -99,6 +115,20 @@
             <groupId>org.jpl7</groupId>
             <artifactId>jpl</artifactId>
             <version>7.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jgraph</groupId>
+            <artifactId>jgraph</artifactId>
+            <version>5.13.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.22</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
