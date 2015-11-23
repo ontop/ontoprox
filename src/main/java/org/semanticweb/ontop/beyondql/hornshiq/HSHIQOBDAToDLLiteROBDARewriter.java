@@ -1,6 +1,7 @@
 package org.semanticweb.ontop.beyondql.hornshiq;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -23,8 +24,8 @@ import it.unibz.krdb.obda.owlrefplatform.core.unfolding.DatalogUnfolder;
 import it.unibz.krdb.obda.utils.Mapping2DatalogConverter;
 import it.unibz.krdb.obda.utils.MappingParser;
 import it.unibz.krdb.sql.DBMetadata;
+import it.unibz.krdb.sql.DBMetadataExtractor;
 import it.unibz.krdb.sql.JDBCConnectionManager;
-import it.unibz.krdb.sql.api.RelationJSQL;
 import net.sf.jsqlparser.JSQLParserException;
 
 import org.semanticweb.clipper.hornshiq.queryanswering.QAHornSHIQ;
@@ -54,6 +55,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -188,7 +190,8 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
          * We assume we are in Virtual mode and therefore we only have one data source.
          */
         OBDADataSource obdaDataSource = obdaModel.getSources().iterator().next();
-        ArrayList<OBDAMappingAxiom> mappingAxioms = obdaModel.getMappings(obdaDataSource.getSourceID());
+
+        List<OBDAMappingAxiom> mappingAxioms = obdaModel.getMappings(obdaDataSource.getSourceID());
 
         
         /**
@@ -197,18 +200,24 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
          *  We do it because in some cases Oracle does not find the metadata for the tables
          *  we are interested in.
          */
-        List<RelationJSQL> realTables = null;
-		MappingParser mParser = new MappingParser(JDBCConnectionManager.getJDBCConnectionManager().getConnection(obdaDataSource), mappingAxioms);
-		try {
-			realTables = mParser.getRealTables();
-		} catch (JSQLParserException e) {
-			e.printStackTrace();
-		}
-        
-		
-        DBMetadata dbMetadata = JDBCConnectionManager.getJDBCConnectionManager().getMetaData(obdaDataSource, realTables);
+//        List<RelationJSQL> realTables = null;
+//		MappingParser mParser = new MappingParser(JDBCConnectionManager.getJDBCConnectionManager().getConnection(obdaDataSource), mappingAxioms);
+//		try {
+//			realTables = mParser.getRealTables();
+//		} catch (JSQLParserException e) {
+//			e.printStackTrace();
+//		}
+//
 
-        
+        JDBCConnectionManager connManager = JDBCConnectionManager.getJDBCConnectionManager();
+
+
+        Connection conn = connManager.getConnection(obdaDataSource);
+        DBMetadata dbMetadata = DBMetadataExtractor.createMetadata(conn);
+        // this operation is EXPENSIVE
+        DBMetadataExtractor.loadMetadata(dbMetadata, conn, null);
+
+
         //Mapping2DatalogConverter mapping2DatalogConverter = new Mapping2DatalogConverter();
 
         /**
@@ -219,7 +228,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
 
         List<CQIE> newMappingRules = Lists.newArrayList();
 
-        Map<Predicate, List<Integer>> pkeys = DBMetadata.extractPKs(dbMetadata, mappingProgram);
+        //Map<Predicate, List<Integer>> pkeys = DBMetadata.extractPKs(dbMetadata, mappingProgram);
 
         int i = 0;
 
@@ -239,7 +248,7 @@ public class HSHIQOBDAToDLLiteROBDARewriter {
                 DatalogProgram queryAndMappingProgram = DATA_FACTORY.getDatalogProgram();
                 queryAndMappingProgram.appendRule(mappingProgram);
 
-                DatalogUnfolder unfolder = new DatalogUnfolder(mappingProgram, pkeys);
+                DatalogUnfolder unfolder = new DatalogUnfolder(mappingProgram, HashMultimap.<Predicate, List<Integer>>create());
 
                 /**
                  * Unfold the rules for the predicate w.r.t. the input mappings

@@ -9,6 +9,7 @@ import it.unibz.krdb.obda.model.OBDADataFactory;
 import it.unibz.krdb.obda.model.OBDADataSource;
 import it.unibz.krdb.obda.model.OBDAException;
 import it.unibz.krdb.obda.model.OBDAMappingAxiom;
+import it.unibz.krdb.obda.model.OBDASQLQuery;
 import it.unibz.krdb.obda.model.Predicate;
 import it.unibz.krdb.obda.model.Term;
 import it.unibz.krdb.obda.model.URITemplatePredicate;
@@ -56,7 +57,7 @@ public class DatalogToMappingAxiomTranslater {
 
         String jdbcDriverClassName = obdaDataSource.getParameter(RDBMSourceParameterConstants.DATABASE_DRIVER);
 
-        SQLDialectAdapter sqladapter = SQLAdapterFactory.getSQLDialectAdapter(jdbcDriverClassName);
+        SQLDialectAdapter sqladapter = SQLAdapterFactory.getSQLDialectAdapter(jdbcDriverClassName, dbMetadata.getDbmsVersion());
 
         SQLSourceQueryGenerator sqlGenerator = new SQLSourceQueryGenerator(dbMetadata, sqladapter, false);
 
@@ -72,11 +73,13 @@ public class DatalogToMappingAxiomTranslater {
             }
         }
 
-        String sourceQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, signature, newVariableMap);
+        String sqlQuery = sqlGenerator.generateSourceQuery(programForSourceQuery, signature, newVariableMap);
+
+        OBDASQLQuery sourceQuery = DATA_FACTORY.getSQLQuery(sqlQuery);
 
         CQIE targetQuery = generateTargetQuery(cqieClone, newHeadTerms);
 
-        OBDAMappingAxiom mappingAxiom = DATA_FACTORY.getRDBMSMappingAxiom(sourceQuery, targetQuery);
+        OBDAMappingAxiom mappingAxiom = DATA_FACTORY.getRDBMSMappingAxiom(sourceQuery, targetQuery.getBody());
         return mappingAxiom;
     }
 
