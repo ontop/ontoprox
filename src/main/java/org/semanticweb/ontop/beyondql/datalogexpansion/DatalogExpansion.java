@@ -194,9 +194,9 @@ public class DatalogExpansion {
         Set<Predicate> predicates = new HashSet<>();
 
         for (OBDAMappingAxiom mappingAxiom : mappingAxioms) {
-            CQIE targetQuery = (CQIE) mappingAxiom.getTargetQuery();
+            List<Function> targetQuery = mappingAxiom.getTargetQuery();
 
-            for (Function function : targetQuery.getBody()) {
+            for (Function function : targetQuery) {
 
                 Predicate predicate = function.getFunctionSymbol();
 

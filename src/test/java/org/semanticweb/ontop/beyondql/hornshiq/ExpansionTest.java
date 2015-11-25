@@ -47,9 +47,9 @@ public class ExpansionTest {
         Set<Predicate> predicates = new HashSet<>();
 
         for (OBDAMappingAxiom mappingAxiom : mappingAxioms) {
-            CQIE targetQuery = (CQIE) mappingAxiom.getTargetQuery();
+            List<Function> targetQuery = mappingAxiom.getTargetQuery();
 
-            for (Function function : targetQuery.getBody()) {
+            for (Function function : targetQuery) {
 
                 Predicate predicate = function.getFunctionSymbol();
 
@@ -59,16 +59,13 @@ public class ExpansionTest {
 
         List<Predicate> orderedPredicates = Lists.newArrayList(predicates);
 
-        Collections.sort(orderedPredicates, new Comparator<Predicate>() {
-            @Override
-            public int compare(Predicate o1, Predicate o2) {
-                if (o1.getArity() != o2.getArity()) {
-                    return o1.getArity() - o2.getArity();
-                } else {
-                    return o1.getName().compareTo(o2.getName());
-                }
-
+        Collections.sort(orderedPredicates, (o1, o2) -> {
+            if (o1.getArity() != o2.getArity()) {
+                return o1.getArity() - o2.getArity();
+            } else {
+                return o1.getName().compareTo(o2.getName());
             }
+
         });
 
 
