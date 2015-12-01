@@ -4,8 +4,6 @@ Ontoprox is a system for OBDA with expressive ontologies. It rewrites OBDA speci
  “equivalent” ones with a DL-LiteR ontology, if possible, and to approximate them otherwise. 
 
 
-
-
 ## How to build
 
 
@@ -14,10 +12,9 @@ Ontoprox is a system for OBDA with expressive ontologies. It rewrites OBDA speci
 ```
 $ git clone https://github.com/ghxiao/clipper
 $ cd clipper
-$ git checkout develop
 $ mvn install -DskipTests
 $ cd ..
-$ git clone git@gitlab.com:ghxiao/ontop-beyond-ql.git
+$ git clone git@github.com:ontop/ontoprox.git
 $ cd ontop-beyond-ql
 $ mvn install -DskipTests
 ```
@@ -42,7 +39,7 @@ $ mvn install:install-file -Dfile=jpl.jar  -DgroupId=org.jpl7 -DartifactId=jpl -
 ```
 
 
- #### Ubuntu Linux   
+#### Ubuntu Linux   
  
  * install swi-prolog via apt-get:
  
@@ -81,7 +78,7 @@ $ mvn clean compile package -DskipTests
 Then you can find the generated jar file in the target directory
 
 
-#### OS X
+* OS X
 
 ```
 $ java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-7.2.2/lib/x86_64-darwin14.4.0 \
@@ -89,7 +86,7 @@ $ java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-
   ../src/test/resources/uobm/univ-bench-dl.owl ../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
 ```
 
-#### Linux
+* Linux
 
 ```
 $ java -Djava.library.path=/usr/lib/swi-prolog/lib/amd64 \
