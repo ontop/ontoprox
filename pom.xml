@@ -38,7 +38,7 @@
 
     <properties>
         <ontop.version>1.16.1</ontop.version>
-        <clipper.version>0.3.0-SNAPSHOT</clipper.version>
+        <clipper.version>0.3.0-20151204</clipper.version>
     </properties>
 
     <dependencies>
@@ -51,6 +51,10 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.dlvsystem</groupId>
+                    <artifactId>DLVWrapper</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -62,6 +66,10 @@
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.dlvsystem</groupId>
+                    <artifactId>DLVWrapper</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -130,13 +138,12 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
 
 
     <repositories>
         <repository>
-            <!-- for R2RML api -->
+            <!-- for R2RML api and Clipper -->
             <id>bolzano-nexus-public</id>
             <url>http://obdavm.inf.unibz.it:8080/nexus/content/groups/public/</url>
             <releases>

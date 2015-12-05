@@ -6,17 +6,11 @@ Ontoprox is a system for OBDA with expressive ontologies. It rewrites OBDA speci
 
 ## How to build
 
-
-- Get the develop version of ontop and clipper and install them to local maven repo.
+### Git clone the code base
 
 ```
-$ git clone https://github.com/ghxiao/clipper
-$ cd clipper
-$ mvn install -DskipTests
-$ cd ..
 $ git clone git@github.com:ontop/ontoprox.git
-$ cd ontop-beyond-ql
-$ mvn install -DskipTests
+$ cd ontoprox
 ```
 
 ### Configure SWI-prolog
@@ -77,12 +71,13 @@ $ mvn clean compile package -DskipTests
 
 Then you can find the generated jar file in the target directory
 
+## Usage
 
 * OS X
 
 ```
 $ java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-7.2.2/lib/x86_64-darwin14.4.0 \
- -Djava.ext.dirs=/Users/xiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar \
+ -Djava.ext.dirs=/Users/xiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontoprox-1.0-jar-with-dependencies.jar \
   ../src/test/resources/uobm/univ-bench-dl.owl ../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
 ```
 
@@ -90,14 +85,6 @@ $ java -Djava.library.path=/usr/local/Cellar/swi-prolog/7.2.2/libexec/lib/swipl-
 
 ```
 $ java -Djava.library.path=/usr/lib/swi-prolog/lib/amd64 \
- -Djava.ext.dirs=/home/gxiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontop-beyond-ql-1.15.0-jar-with-dependencies.jar \
+ -Djava.ext.dirs=/home/gxiao/.m2/repository/mysql/mysql-connector-java/5.1.35/ -jar ontoprox-1.0-jar-with-dependencies.jar \
   ../src/test/resources/uobm/univ-bench-dl.owl ../src/test/resources/uobm/univ-bench-dl.obda newUOBM.obda
 ```
-
-
-
-
-
-
-
-
