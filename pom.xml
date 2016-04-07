@@ -138,6 +138,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.dlvsystem</groupId>
+            <artifactId>DLVWrapper</artifactId>
+            <version>4.2</version>
+        </dependency>
+
     </dependencies>
 
 
